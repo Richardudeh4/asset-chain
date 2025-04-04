@@ -2,10 +2,10 @@
 import Image from 'next/image'
 import React from 'react'
 import assetChainLogo from '../../public/assets/assetChainLogo.svg';
-import arrow from '../../public/assets/arrow.svg';
-import gas from '../../public/assets/gas.svg';
-import mask from '../../public/assets/mask.svg';
-import arrowDown from '../../public/assets/arrowDown.svg';
+// import arrow from '../../public/assets/arrow.svg';
+// import gas from '../../public/assets/gas.svg';
+// import mask from '../../public/assets/mask.svg';
+// import arrowDown from '../../public/assets/arrowDown.svg';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { usePathname } from 'next/navigation';

@@ -5,7 +5,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -19,9 +18,9 @@ export function BuySelect() {
       <SelectTrigger className="w-[236.40px] rounded-[54.11px]">
         <SelectValue className="text-[#8298AF] text-[15px] font-[450]" placeholder="Search Network" />
       </SelectTrigger>
-      <SelectContent className="bg-[#0B131E] border border-[#8298AF]">
-        <SelectGroup className="text-white pt-3">
-          <SelectItem value="assetChain" className="flex flex-row space-x-2.5">
+      <SelectContent className="bg-[#0B131E] border py-2.5 border-[#8298AF]">
+        <SelectGroup className="text-white  pt-3">
+          <SelectItem value="assetChain" className="flex flex-row space-x-2.5 hover:bg-red-400">
             <Image src={assetChain} width={32} height={32} alt="assetChain"/>
             <p className="text-gray-500">AssetChain</p>
           </SelectItem>
