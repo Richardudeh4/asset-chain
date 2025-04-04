@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
+import { Geist, Geist_Mono, Fira_Sans} from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+
+const firaSans = Fira_Sans({
+  subsets: ['latin'], 
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-fira-sans', 
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${firaSans.variable} antialiased  flex flex-col`}
       >
+        <Navbar/>
+        <main className="flex-grow overflow-y-auto">
         {children}
+        </main>
+        <footer className="bg-[#0B131E] text-white">
+        <Footer/>
+        </footer>
       </body>
     </html>
   );
