@@ -9,6 +9,7 @@ import video from "../../../public/assets/video.svg";
 import React from 'react'
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { BuySelect } from './components/BuySelect';
 
 
 const Bridge = () => {
@@ -46,10 +47,10 @@ const Bridge = () => {
                 </div>
                 <div className='flex flex-row justify-between items-center'>
                 <div>
-                   richard
+                   <BuySelect/>
                 </div> 
-                <div>
-                   richard
+                <div className=''>
+                <BuySelect/>
                 </div> 
                 </div>
                 <div className='flex flex-row justify-center items-center cursor-pointer'>
@@ -132,6 +133,7 @@ const Bridge = () => {
             </div>
             <div className='py-3 px-5 border border-[#070E17] z-50 bg-[#1A2739] rounded-[10px]'>
             <div className="flex flex-col gap-3">
+
             </div>
             </div>
         </div>
