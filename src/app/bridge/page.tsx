@@ -1,10 +1,10 @@
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Repeat } from 'lucide-react'
+import { Select, SelectContent, SelectGroup, SelectTrigger, SelectValue } from '@/components/ui/select'
+// import { Repeat } from 'lucide-react'
 import Image from 'next/image'
 import repeat from "../../../public/assets/repeat.svg";
-import usdc from "../../../public/assets/usdc.svg";
-import tether from "../../../public/assets/tether.svg";
-import xend from "../../../public/assets/xend.svg";
+// import usdc from "../../../public/assets/usdc.svg";
+// import tether from "../../../public/assets/tether.svg";
+// import xend from "../../../public/assets/xend.svg";
 import video from "../../../public/assets/video.svg";
 import React from 'react'
 import { Button } from '@/components/ui/button';
