@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectGroup, SelectTrigger, SelectValue } from '@/components/ui/select'
 // import { Repeat } from 'lucide-react'
-import Image from 'next/image'
+// import Image from 'next/image'
 import repeat from "../../../public/assets/repeat.svg";
 // import usdc from "../../../public/assets/usdc.svg";
 // import tether from "../../../public/assets/tether.svg";
@@ -8,6 +8,7 @@ import repeat from "../../../public/assets/repeat.svg";
 import video from "../../../public/assets/video.svg";
 import React from 'react'
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 
 const Bridge = () => {
@@ -28,7 +29,7 @@ const Bridge = () => {
             <div className='flex justify-end items-center'>
                 <Button variant="outline" className='z-40 rounded-[25.26px] -mb-4.5 bg-[#0A111A] mr-2.5 flex flex-row gap-1.5 '>
                     <p>Watch to learn</p>
-                    <Image alt="playVideo" src={video} width={20} height={20} color='#3CCACE'/>
+                    <Image src={video} alt="playVideo" width={20} height={20} color='#3CCACE'/>
                 </Button>
             </div>
         <div className='grid grid-cols-2 gap-2'>
