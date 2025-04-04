@@ -10,6 +10,7 @@ import React from 'react'
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { BuySelect } from './components/BuySelect';
+import { SelectAsset } from './components/SelectAsset';
 
 
 const Bridge = () => {
@@ -64,17 +65,8 @@ const Bridge = () => {
                 <h1 className='font-[450] text-[16px] font-circular pl-2.5'>You Send</h1>
                 <div className='border border-transparent rounded-[10px] bg-[#030A13]'>
                     <div className='px-3 py-2 w-[236.40px] flex flex-col gap-3.5'>
-                            <div>
-                            <Select>
-                    <SelectTrigger className="w-[142.82px] rounded-[36.14px]">
-                    <SelectValue placeholder="Select asset" />
-                    </SelectTrigger>
-                    <SelectContent className='bg-[#0B131E] w-[142.82px]'>
-                    <SelectGroup >
-                    {/*selected items should be here */}
-                    </SelectGroup>
-                    </SelectContent>
-                    </Select>
+                    <div>
+                     <SelectAsset/>
                     </div>
 
                     <div className='flex flex-row justify-between items-center'>
@@ -89,16 +81,7 @@ const Bridge = () => {
                 <div className='border border-transparent rounded-[10px] bg-[#030A13]'>
                     <div className='px-3 py-2 w-[236.40px] flex flex-col gap-3.5'>
                             <div>
-                            <Select>
-                    <SelectTrigger className="w-[142.82px] rounded-[36.14px]">
-                    <SelectValue placeholder="Select asset" />
-                    </SelectTrigger>
-                    <SelectContent className='bg-[#0B131E] w-[142.82px]'>
-                    <SelectGroup >
-                    {/*selected items should be here */}
-                    </SelectGroup>
-                    </SelectContent>
-                    </Select>
+                       <SelectAsset/>
                     </div>
 
                     <div className='flex flex-row justify-between items-center'>
