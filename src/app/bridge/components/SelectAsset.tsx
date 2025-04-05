@@ -21,30 +21,28 @@ export function SelectAsset() {
       <SelectTrigger className="w-[142.82px] rounded-[36.14px] h-[48px] bg-[#132032]">
         <SelectValue className="text-[#8298AF] text-[15px] font-[450]" placeholder="Select Asset" />
       </SelectTrigger>
-      <SelectContent className="bg-[#0B131E] border py-2.5 border-[#8298AF]">
+      <SelectContent className="bg-[#0B131E] border-none w-[172.82px] border py-2.5">
         <SelectGroup className="text-white">
-          <SelectItem value="usdc" className="flex flex-row space-x-1 items-center hover:!bg-[#8298AF]">
+          <SelectItem value="usdc" className="flex flex-row space-x-1 items-center  pl-0.5 !bg-[#0B131E] hover:!bg-[#8298AF]">
           <SelectItemIndicator className="hidden" />
                 <Image src={usdc} alt="usdc" width={28} height={28}/>
-                <div className="flex flex-col text-white space-y-0.5">
+                <div className="flex flex-col text-white">
                     <p>USDC</p>
-                    <p>USD coin</p>
+    
                 </div>
           </SelectItem>
-          <SelectItem value="tether" className="flex flex-row space-x-1 items-center hover:!bg-[#8298AF]">
+          <SelectItem value="tether" className="flex flex-row space-x-1 items-center pl-0.5 !bg-[#0B131E] hover:!bg-[#8298AF]">
           <SelectItemIndicator className="hidden" />
-                <Image src={tether} alt="tether" width={28} height={28}/>
-                <div className="flex flex-col">
+                <Image src={tether} alt="tether" width={28} height={28} />
+                <div className="flex flex-col text-white ">
                     <p>USDT</p>
-                    <p>Tether</p>
                 </div>
           </SelectItem>
-          <SelectItem value="xend" className="flex flex-row space-x-1 items-center hover:!bg-[#8298AF]">
+          <SelectItem value="xend" className="flex flex-row space-x-1 items-center  pl-0.5 !bg-[#0B131E] hover:!bg-[#8298AF]">
           <SelectItemIndicator className="hidden" />
                 <Image src={xend} alt="xend" width={28} height={28}/>
-                <div className="flex flex-col  text-white space-y-0.5">
+                <div className="flex flex-col  text-white ">
                     <p>XEND</p>
-                    <p>Xend Finance</p>
                 </div>
           </SelectItem>
         </SelectGroup>

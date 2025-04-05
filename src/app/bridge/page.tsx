@@ -25,21 +25,22 @@ const transactionCategory = [
 
 const Bridge = () => {
   return (
-    <div className='w-full relative px-42 py-8 bg-[#0B131E] min-h-screen text-white'>
+    <div className='w-full relative  py-8 bg-[#0B131E] min-h-screen text-white'>
         {/* Background text */}
-        <div className='absolute inset-0  flex items-center -top-85 -z-[9999px] justify-center overflow-hidden'>
-        <h1 className='text-[7rem] font-bold text-gray-600 opacity-10'> 
-            <span className='pl-140  tracking-[22.5px]'>Asset Chain</span><br/> <span className='tracking-[23.5px]'>Cross Chain Bridge</span>
-            </h1>
+        <div className='top-[25.05px] z-[9999px]  overflow-hidden'>
+        <div className=' font-semibold tracking-[0%] flex flex-col '> 
+            <h1 className='text-[154.29px] absolute left-[600px] -mt-7 text-left font-semibold text-gray-600 opacity-10'>Asset <span className="italic font-medium">Chain</span></h1> 
+            <h1 className=' text-[154.29px] absolute mt-32 left-1.5 font-semibold  text-gray-600 opacity-10'>Cross Chain Bridge</h1>
+        </div>
         </div>
       
-        <div className='flex flex-col space-y-6'>
+        <div className='flex flex-col space-y-6 px-42'>
             <div className='flex flex-col gap-3'>
             <h1 className='navbar-text font-[450] text-[40px] font-circular'>Bridge</h1>
             <p className='text-[#8298AF] text-[16px] font-[450] leading-[120%] font-circular'>Effortlessly transfer assets from multiple blockchain networks to the <br/> Asset Chain with seamless interoperability and enhanced security.</p>
             </div>
             <div className='flex justify-end items-center'>
-                <Button variant="outline" className='z-40 rounded-[25.26px] -mb-4.5 bg-[#0A111A] mr-2.5 flex flex-row gap-1.5 '>
+                <Button variant="outline" className='z-40 rounded-[25.26px] cursor-pointer -mb-4.5 bg-[#0A111A] mr-2.5 flex flex-row gap-1.5 '>
                     <p>Watch to learn</p>
                     <Image src={video} alt="playVideo" width={20} height={20} color='#3CCACE'/>
                 </Button>
@@ -60,7 +61,7 @@ const Bridge = () => {
                 <div>
                    <BuySelect/>
                 </div> 
-                <div className=''>
+                <div>
                 <BuySelect/>
                 </div> 
                 </div>
@@ -114,7 +115,7 @@ const Bridge = () => {
                                 <p className='font-[450] text-[20px] text-white'>$45,8799</p>
                                 <p className='text-[#8298AF] text-[12px] font-medium'>0.43% Gas fee</p>
                             </div> 
-                            <Button className='w-[215px] bg-[#2042B8] rounded-[25.26px]'>
+                            <Button className='w-[215px] bg-[#2042B8] cursor-pointer rounded-[25.26px]'>
                                 Connect Wallet
                             </Button>     
                     </div>
@@ -125,7 +126,7 @@ const Bridge = () => {
                 </div>
             </div>
             <div className='py-3 px-5 border border-[#1A2739] z-30 bg-[#070E17] rounded-[10px]'>
-            <div className="flex flex-col gap-3 z-50">
+            <div className="flex flex-col gap-[3px] z-50">
                 <p className="text-[16px] font-[450] leading-[145%] font-circular text-white">Transaction History</p>
                 <p className="text-[#8298AF] text-[15px] ">View and claim bridged asset</p>
                 <Separator className="my-4 bg-[#1A2739]" />
@@ -161,7 +162,7 @@ const Bridge = () => {
                                 <p className="text-[16px] pl-1 font-[450] text-[#00F482] font-circular">Verifed</p>
                             </div>
                         </div>
-                        <Button className="bg-[#2042B8] w-[139px] rounded-[25.26px]">
+                        <Button className="bg-[#2042B8] cursor-pointer w-[139px] rounded-[25.26px]">
                             Claim
                         </Button>
                     </div>
@@ -180,7 +181,7 @@ const Bridge = () => {
                         </div>
                         <div className="flex flex-col gap-2">
                         <h1 className="text-[#8298AF] text-[14px] font-[450]">17-05-2056 23:78</h1>
-                        <Button className="font-italic text-[14px] font-[450] text-[#5CFFF3] bg-[#040A13] w-[86px] ml-8 rounded-[22px]">Trx Hash</Button>
+                        <Button className="font-italic text-[14px] font-[450] text-[#5CFFF3] cursor-pointer bg-[#040A13] w-[86px] ml-8 rounded-[22px]">Trx Hash</Button>
                         </div>
                       
                     </div>
@@ -193,7 +194,7 @@ const Bridge = () => {
                                 <p className="text-[16px] pl-1 font-[450] text-[#00F482] font-circular">Verifed</p>
                             </div>
                         </div>
-                        <Button className="bg-[#070E17] w-[139px] rounded-[25.26px] border border-[#213040]">
+                        <Button className="bg-[#070E17] w-[139px] rounded-[25.26px] cursor-pointer border border-[#213040]">
                             Claimed
                         </Button>
                     </div>

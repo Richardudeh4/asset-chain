@@ -15,13 +15,13 @@ import { SelectItemIndicator } from "@radix-ui/react-select";
 
 export function BuySelect() {
   return (
-    <Select>
-      <SelectTrigger className="w-[236.40px] rounded-[54.11px] bg-[#030A13]">
+    <Select >
+      <SelectTrigger className="w-[236.40px] h-[48px] rounded-[54.11px] bg-[#030A13] active:border active:border-[#2F87A5]">
         <SelectValue className="text-[#8298AF] text-[15px] font-[450]" placeholder="Search Network" />
       </SelectTrigger>
-      <SelectContent className="bg-[#0B131E] border py-2.5 border-[#8298AF]">
-        <SelectGroup className="text-white pt-3">
-          <SelectItem value="assetChain" className="flex flex-row space-x-2.5 hover:!bg-[#8298AF]">
+      <SelectContent className="!bg-[#0B131E] border py-2.5 border-[#0B131E]">
+        <SelectGroup className="text-white pt-3 !bg-[#0B131E]">
+          <SelectItem value="assetChain" className="flex flex-row space-x-2.5  !bg-[#0B131E]  hover:!bg-[#8298AF]">
           <SelectItemIndicator className="!hidden" />
             <Image src={assetChain} width={32} height={32} alt="assetChain"/>
             <p className="text-white">AssetChain</p>

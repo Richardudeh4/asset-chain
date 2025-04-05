@@ -25,7 +25,7 @@ const Navbar = () => {
     <div className='w-full bg-[#1A2739] border-b z-[9999px] border-b-gray-400'>
       <div className='px-[27.38px] py-[27.43px] flex flex-row justify-between items-center'>
         {/* logo */}
-            <div>
+            <div className='cursor-pointer'>
                 <Link href="/">
                 <Image src={assetChainLogo} alt="assetChainLogo" height={22} width={126}/>
                 </Link>
