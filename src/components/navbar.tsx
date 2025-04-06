@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import React from 'react'
 import assetChainLogo from '../../public/assets/assetChainLogo.svg';
+import hamburger from '../../public/assets/hamburger.svg';
 // import arrow from '../../public/assets/arrow.svg';
 // import gas from '../../public/assets/gas.svg';
 // import mask from '../../public/assets/mask.svg';
@@ -22,19 +23,22 @@ const navbarLinks = [
 const Navbar = () => {
     const pathName = usePathname();
   return (
-    <div className='w-full bg-[#1A2739] border-b z-[9999px] border-b-gray-400'>
+    <div className='w-full bg-[#1A2739] border-b-[1px] z-[9999px] border-b-[#1A2739]'>
       <div className='px-[27.38px] py-[27.43px] flex flex-row justify-between items-center'>
+        <div className="flex md:hidden">
+        <Image src={hamburger} width={39} height={39} alt="hamburger"/>
+        </div>
         {/* logo */}
-            <div className='cursor-pointer'>
+            <div className='cursor-pointer hidden md:flex '>
                 <Link href="/">
                 <Image src={assetChainLogo} alt="assetChainLogo" height={22} width={126}/>
                 </Link>
             </div>
             {/* Navlinks */}
-            <div className='flex flex-row items-center space-x-7'>
+            <div className='flex-row items-center space-x-7 hidden md:flex'>
                 {
                     navbarLinks.map((link, index) => (
-                        <Link href={link.href} key={index} className={`${pathName === link.href} ? "text-[#3CC9CD]" : ""`}>
+                        <Link href={link.href} key={index} className={`${pathName === link.href} ? "text-[#3CC9CD]" : "" hidden md:flex`}>
                                 <p className={`text-[16px] font-semibold navbar-text ${pathName === link.href ? "text-[#3CC9CD] relative  after:content-[''] after:absolute after:left-0 after:bottom-[-30px] after:w-full after:h-[3px] after:bg-[#00FFF0]": "text-[#FFFFFF]"}`}>
                                 {link.label} 
                             </p>
@@ -45,16 +49,7 @@ const Navbar = () => {
             
             </div>
 
-            <div className='flex '>
-            {/* <Button variant="outline" className='rounded-[65.37px] bg-transparent flex flex-row space-x-1.5'>
-                <Image src={gas} alt="gas" width={20} height={20}/>
-                <p className='md:flex hidden font-circular text-white'>Get Gas</p>
-            </Button>
-            <Button variant="outline" className='rounded-[65.37px] flex bg-transparent flex-row space-x-0.25'>
-                <Image src={mask} width={22} height={19} alt="mask logo"/>
-                <p className='font-semibold text-[12.51px] leading-2 font-fira text-white'>0xtG...45Fgh0</p>
-                <Image src={arrowDown} width={16} height={16} alt="arrowDown"/>
-            </Button> */}
+            <div className=''>
             <Button className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
                 Connect Wallet
             </Button>
