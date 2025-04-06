@@ -1,4 +1,4 @@
-
+"use client";
 // import { Repeat } from 'lucide-react'
 // import Image from 'next/image'
 import repeat from "../../../public/assets/repeat.svg";
@@ -6,7 +6,7 @@ import repeat from "../../../public/assets/repeat.svg";
 // import tether from "../../../public/assets/tether.svg";
 // import xend from "../../../public/assets/xend.svg";
 import video from "../../../public/assets/video.svg";
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { BuySelect } from './components/BuySelect';
@@ -25,6 +25,7 @@ const transactionCategory = [
 ]
 
 const Bridge = () => {
+    const [isConnected, setIsConnected] = useState(false);
   return (
     <div className='w-full relative  py-8 bg-[#0B131E] min-h-screen text-white'>
         {/* Background text */}
