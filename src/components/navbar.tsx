@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import React from 'react'
 import assetChainLogo from '../../public/assets/assetChainLogo.svg';
-import hamburger from '../../public/assets/hamburger.svg';
+import hamBurger from '../../public/assets/hamBurger.svg';
 // import arrow from '../../public/assets/arrow.svg';
 // import gas from '../../public/assets/gas.svg';
 // import mask from '../../public/assets/mask.svg';
@@ -26,7 +26,7 @@ const Navbar = () => {
     <div className='w-full bg-[#1A2739] border-b-[1px] z-[9999px] border-b-[#1A2739]'>
       <div className='px-[27.38px] py-[27.43px] flex flex-row justify-between items-center'>
         <div className="flex md:hidden">
-        <Image src={hamburger} width={39} height={39} alt="hamburger"/>
+        <Image src={hamBurger} width={39} height={39} alt="hamburger"/>
         </div>
         {/* logo */}
             <div className='cursor-pointer hidden md:flex '>
