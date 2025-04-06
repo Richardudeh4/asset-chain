@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import AssetChainBadge from "@/components/assetChainBadge";
 
+
 const firaSans = Fira_Sans({
   subsets: ['latin'], 
   weight: ['400', '500', '600', '700'],
