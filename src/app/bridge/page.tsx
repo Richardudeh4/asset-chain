@@ -15,6 +15,7 @@ import { Separator } from '@/components/ui/separator';
 import polygon from "../../../public/assets/polygon.svg";
 import assetChain from "../../../public/assets/assetChain.svg";
 import greenCheck from "../../../public/assets/greenCheck.svg";
+import {ConnectWallet} from "./components/ConnectWallet";
 
 
 const transactionCategory = [
@@ -115,9 +116,8 @@ const Bridge = () => {
                                 <p className='font-[450] text-[20px] text-white'>$45,8799</p>
                                 <p className='text-[#8298AF] text-[12px] font-medium'>0.43% Gas fee</p>
                             </div> 
-                            <Button className='w-[215px] bg-[#2042B8] cursor-pointer rounded-[25.26px]'>
-                                Connect Wallet
-                            </Button>     
+                            <ConnectWallet/>
+                               
                     </div>
 
                 </div>
