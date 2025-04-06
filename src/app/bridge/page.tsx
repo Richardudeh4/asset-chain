@@ -117,7 +117,11 @@ const Bridge = () => {
                                 <p className='font-[450] text-[20px] text-white'>$45,8799</p>
                                 <p className='text-[#8298AF] text-[12px] font-medium'>0.43% Gas fee</p>
                             </div> 
-                            <ConnectWallet/>
+                            <ConnectWallet 
+                             onConnected={() => setIsConnected(true)} 
+                             isConnected={isConnected}
+                             bottonLabel={isConnected ? "Bridge" : "Connect Wallet"}
+                            />
                                
                     </div>
 

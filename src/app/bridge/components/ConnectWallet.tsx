@@ -22,30 +22,39 @@ const connectWalletItems = [
     {name: "WalletConnet", icon: walletConnect},
     {name: "Trust", icon: trust},
 ]
-export function ConnectWallet() {
-  const [openDialog, setOpenDialog] = useState<"first" | "second" | null>(null);
+export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConnected: () => void, isConnected: boolean,bottonLabel: string}) {
+  const [openDialog, setOpenDialog] = useState<"first" | "second" | "bridge" | null>(null);
   useEffect(() => {
     if (openDialog === "second") {
       const timer = setTimeout(() => {
-        setOpenDialog(null); // Close after 5 seconds
+        setOpenDialog(null);
+        onConnected(); 
       }, 3000);
 
-      return () => clearTimeout(timer); // Cleanup if dialog closes early
+      return () => clearTimeout(timer); 
     }
-  }, [openDialog]);
+  }, [openDialog, onConnected]);
+
+  const handleButtonClick = () => {
+    if (isConnected) {
+      setOpenDialog("bridge");
+    } else {
+      setOpenDialog("first");
+    }
+  };
 
   return (
     <>
     {/* Button to trigger to the first modal */}
     <Dialog>
       <DialogTrigger asChild>
-      <Button  onClick={() => setOpenDialog("first")} className='w-[215px] bg-[#2042B8] cursor-pointer rounded-[25.26px]'>
-            Connect Wallet
+      <Button onClick={handleButtonClick} className='w-[215px] bg-[#2042B8] cursor-pointer rounded-[25.26px]'>
+            {bottonLabel}
         </Button>  
       </DialogTrigger>
       {
-        openDialog === "first" && (
-          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] border-none h-[546px] translate-y-0 top-1/2 -translate-y-1/2 
+        !isConnected && openDialog === "first" && (
+          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] border-none h-[546px]  top-1/2 -translate-y-1/2 
           transition-all duration-500 ease-in-out">
         <div className="flex justify-center flex-col  gap-2.5">
         <DialogHeader className="text-center">
@@ -77,7 +86,7 @@ export function ConnectWallet() {
     {/* second modal  */}
 
     {
-        openDialog === "second" && (
+       !isConnected && openDialog === "second" && (
           <DialogContent className="sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[546px] translate-y-0 top-1/2 -translate-y-1/2 
           transition-all duration-500 ease-in-out">
         <div className="flex px-10 py-1.5 flex-col justify-between">
@@ -94,6 +103,15 @@ export function ConnectWallet() {
     </div>
        </div>
       </DialogContent>
+        )
+      }
+
+      {
+        isConnected && openDialog === "bridge" && (
+          <DialogContent>
+          {/* Show bridge-related dialog */}
+          <p>You are now ready to bridge assets!</p>
+        </DialogContent>
         )
       }
     </Dialog>
