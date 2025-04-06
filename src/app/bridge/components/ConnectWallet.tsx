@@ -14,6 +14,8 @@ import trust from "../../../../public/assets/trust.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import spin from "../../../../public/assets/spin.svg";
+import { Progress } from "@/components/ui/progress";
+import loader from "../../../../public/assets/loader.svg";
 
 
 
@@ -23,7 +25,9 @@ const connectWalletItems = [
     {name: "Trust", icon: trust},
 ]
 export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConnected: () => void, isConnected: boolean,bottonLabel: string}) {
-  const [openDialog, setOpenDialog] = useState<"first" | "second" | "bridge" | null>(null);
+  const [openDialog, setOpenDialog] = useState<"first" | "second" | "bridge" | null>(null);  
+  const [showBridgeLoader, setShowBridgeLoader] = useState(true);
+
   useEffect(() => {
     if (openDialog === "second") {
       const timer = setTimeout(() => {
@@ -34,6 +38,16 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
       return () => clearTimeout(timer); 
     }
   }, [openDialog, onConnected]);
+
+  useEffect(() => {
+    if (openDialog === "bridge") {
+      setShowBridgeLoader(true);
+      const loaderTimer = setTimeout(() => {
+        setShowBridgeLoader(false);
+      }, 7000);
+      return () => clearTimeout(loaderTimer);
+    }
+  }, [openDialog]);
 
   const handleButtonClick = () => {
     if (isConnected) {
@@ -108,9 +122,43 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
 
       {
         isConnected && openDialog === "bridge" && (
-          <DialogContent>
-          {/* Show bridge-related dialog */}
-          <p>You are now ready to bridge assets!</p>
+          <DialogContent className="w-[658px] bg-[#0B131E] flex-col  rounded-[7.54px] border-none">
+            {
+              showBridgeLoader ? (
+                  <div className="py-10">
+                <div className="flex flex-col gap-8">
+                    
+              <DialogHeader className="flex items-center flex-row space-x-0 text-white mt-3">
+            <h1>Bridge</h1>
+            <Progress 
+            className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]" value={15}/>
+            <h2>Transfer</h2>
+            <Progress 
+            className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]" value={15}/>
+            <h3>Done</h3>
+            </DialogHeader>
+            <div>
+                <Image 
+                src={loader} className="animate-spin"
+                alt="spinLoader" width={214} height={214}/>
+            </div>
+                </div>
+            
+
+                  </div>
+              ): (
+                <DialogHeader className="flex items-center flex-row space-x-0 text-white mt-3">
+            <h1>Bridge</h1>
+            <Progress 
+            className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]" value={15}/>
+            <h2>Transfer</h2>
+            <Progress 
+            className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]" value={15}/>
+            <h3>Done</h3>
+            </DialogHeader>
+              )
+            }
+            
         </DialogContent>
         )
       }
