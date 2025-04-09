@@ -8,9 +8,9 @@ import repeat from "../../../public/assets/repeat.svg";
 import video from "../../../public/assets/video.svg";
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import { BuySelect } from './components/BuySelect';
-import { SelectAsset } from './components/SelectAsset';
+import Image, { StaticImageData } from 'next/image';
+import  BuySelect from './components/BuySelect';
+import  SelectAsset  from './components/SelectAsset';
 import { Separator } from '@/components/ui/separator';
 import polygon from "../../../public/assets/polygon.svg";
 import assetChain from "../../../public/assets/assetChain.svg";
@@ -18,23 +18,30 @@ import greenCheck from "../../../public/assets/greenCheck.svg";
 import {ConnectWallet} from "./components/ConnectWallet";
 
 
+interface Asset {
+    value: string;
+    icon: StaticImageData;
+  }
 const transactionCategory = [
     {name:"All"},
     {name:"Claimed"},
     {name:"Unclaimed"},
 ]
-
+const assets :Asset[] = [
+    { value: "Polygon", icon: polygon },
+    { value: "Asset Chain",icon :assetChain },
+  ]
 const Bridge = () => {
     const [isConnected, setIsConnected] = useState(false);
   return (
     <div className='w-full relative  py-8 bg-[#0B131E] min-h-screen text-white'>
         {/* Background text */}
-        <div className='top-[25.05px] z-[1] overflow-hidden hidden md:block'>
+        {/* <div className='top-[25.05px] z-[1] overflow-hidden hidden md:block'>
             <div className='font-semibold tracking-[0%] flex flex-col'> 
                 <h1 className='text-[81.08px] md:text-[120px] lg:text-[154.29px] absolute left-0 md:left-[200px] lg:left-[600px] -mt-7 text-left font-semibold text-gray-600 opacity-10'>Asset <span className="italic font-medium">Chain</span></h1> 
                 <h1 className='text-[81.08px] md:text-[120px] lg:text-[154.29px] absolute mt-32 left-1.5 font-semibold text-gray-600 opacity-10'>Cross Chain Bridge</h1>
             </div>
-        </div>
+        </div> */}
       
         <div className='flex flex-col space-y-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl mx-auto'>
             <div className='flex flex-col gap-3'>
@@ -42,72 +49,58 @@ const Bridge = () => {
             <p className='text-[#8298AF] text-[16px] font-[450] leading-[120%] font-circular'>Effortlessly transfer assets from multiple blockchain networks to the <br/> Asset Chain with seamless interoperability and enhanced security.</p>
             </div>
             <div className='flex justify-end items-center'>
-                <Button variant="outline" className='z-40 rounded-[25.26px] cursor-pointer -mb-4.5 bg-[#0A111A] mr-2.5 flex flex-row gap-1.5 '>
+                <Button variant="outline" className='z-40 rounded-[25.26px] cursor-pointer hidden  -mb-4.5 bg-[#0A111A] mr-2.5 md:flex flex-row gap-1.5 '>
                     <p>Watch to learn</p>
                     <Image src={video || "/placeholder.svg"} alt="playVideo" width={20} height={20} color='#3CCACE'/>
                 </Button>
             </div>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6'>
-            <div className='py-4.5 px-5 col-span-[554.32px] border border-[#1A2739]  bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5'>
-                <div className='flex flex-row justify-between'>
-                <div className='flex flex-col gap-1 pl-2.5'>
-                    <h1 className='text-[16px] leading-[145%] font-[450] font-circular'>From</h1>
-                    <p className='text-[#8298AF] text-[12px] font-[450] '>Source Network</p>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-[15px] md:gap-[15px]'>
+            <div className='py-4.5 px-5 col-span-[554.32px] border border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5'>
+               <div className="flex md:flex-row flex-col md:justify-between items-center">
+                <div className="flex flex-col gap-6 w-full border-none ">
+                <div className="flex flex-col gap-1">
+                    <h1>From</h1>
+                    <p className="text-[#8298AF] text-[12px] font-[450]">source network</p>
                 </div>
-                <div className='flex flex-col gap-1 pr-32'>
-                    <h1 className='text-[16px] leading-[145%] font-[450] font-circular'>From</h1>
-                    <p className='text-[#8298AF] text-[12px] font-[450] '>Source Network</p>
-                </div>
-                </div>
-                <div className='flex flex-row justify-between items-center'>
-                <div>
-                   <BuySelect/>
-                </div> 
-                <div>
-                <BuySelect/>
-                </div> 
-                </div>
-                <div className='flex flex-row justify-center items-center cursor-pointer'>
-                    <div className='py-2.5 px-3 rounded-[50%] border border-transparent bg-[#269497]'>
-                        <Image src={repeat || "/placeholder.svg"} width={14} height={17} alt="repeat" color='#3CCACE' className=''/>
+                <BuySelect
+                />
+                    <div className="pt-10 flex flex-col gap-2">
+                        <h1 className="text-[16px] font-[450]  pl-5">You Send</h1>
+                        <div className="bg-[#030A13] rounded-[10px] text-white px-3.5 py-2 flex flex-col gap-4.5">
+                    <SelectAsset/>
+                    <div className="flex flex-row justify-between items-center">
+                        <h1 className='font-[450] text-[16px] text-white font-circular'>45,8799</h1>
+                        <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
                     </div>
-                </div>
-                {/*  START OF THE SEND AND RECEIVE CARD */}
-                <div className='flex flex-col sm:flex-row justify-between gap-4'>
-                    <div className='flex flex-col gap-3 w-full sm:w-1/2'>
-                        <h1 className='font-[450] text-[16px] font-circular pl-2.5'>You Send</h1>
-                        <div className='border border-transparent rounded-[10px] bg-[#030A13]'>
-                            <div className='px-3 py-2 w-full flex flex-col gap-3.5'>
-                                <div>
-                                 <SelectAsset/>
-                                </div>
-
-                                <div className='flex flex-row justify-between items-center'>
-                                    <p className='font-[450] text-[16px] text-white font-circular'>45,8799</p>
-                                    <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
-                                </div>
-                            </div>
                         </div>
+                        <p className='font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3'>Bal 67,989 USDC</p>
                     </div>
-                    <div className='flex flex-col gap-3 w-full sm:w-1/2'>
-                        <h1 className='font-[450] text-[16px] font-circular pl-2.5'>You Receive</h1>
-                        <div className='border border-transparent rounded-[10px] bg-[#030A13]'>
-                            <div className='px-3 py-2 w-full flex flex-col gap-3.5'>
-                                <div>
-                                   <SelectAsset/>
-                                </div>
-
-                                <div className='flex flex-row justify-between items-center'>
-                                    <p className='font-[450] text-[16px] text-white font-circular'>45,8799</p>
-                                    <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
-                                </div>
-                            </div>
+                </div>
+                
+                <div className='py-2.5 px-3 rounded-[50%] cursor-pointer hover:bg-[#269497]/90 mb-8 border border-transparent bg-[#269497]'>  
+             <Image src={repeat} width={14} height={17} alt="repeat" color='#3CCACE' className=''/>
+                </div>
+                <div className="flex flex-col gap-6 w-full border-none">
+                <div className="flex flex-col gap-1.5">
+                    <h1>From</h1>
+                    <p className="text-[#8298AF] text-[12px] font-[450]">source network</p>
+                </div>
+                <BuySelect
+                />
+                    <div className="pt-10 flex flex-col gap-2">
+                        <h1 className="text-[16px] font-[450] pl-2">You Receive</h1>
+                        <div className="bg-[#030A13] rounded-[10px] text-white px-3.5 py-2 flex flex-col gap-4.5">
+                    <SelectAsset isMain/>
+                    <div className="flex flex-row justify-between items-center">
+                        <h1 className='font-[450] text-[16px] text-white font-circular'>45,8799</h1>
+                        <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
+                    </div>
                         </div>
+                        <p className='font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3'>Bal 67,989 USDC</p>
                     </div>
                 </div>
-                <div>
-                    <p className='font-medium text-[14px] font-circular text-[#8298AF] pl-2.5'>Bal 67,989 USDC</p>
-                </div>
+               </div>
+        
                 <div className='py-3.5'>
                     <div className='flex flex-col sm:flex-row justify-between items-center gap-4'>
                             <div className='flex flex-col gap-2 px-2 py-2.5 rounded-[10px] w-full sm:w-[212.50px] border border-transparent bg-[#132032]'>
@@ -213,6 +206,69 @@ const Bridge = () => {
 }
 
 export default Bridge
+{/* <div className='flex flex-col gap-1 pr-32'>
+<h1 className='text-[16px] leading-[145%] font-[450] font-circular'>From</h1>
+<p className='text-[#8298AF] text-[12px] font-[450] '>Source Network</p>
+</div>
+</div>
+<div className='flex flex-row justify-between items-center'>
+<div>
+<BuySelect/>
+</div> 
+<div>
+<BuySelect/>
+</div> 
+</div>
+<div className='flex flex-row justify-center items-center cursor-pointer'>
+<div className='py-2.5 px-3 rounded-[50%] border border-transparent bg-[#269497]'>
+    <Image src={repeat || "/placeholder.svg"} width={14} height={17} alt="repeat" color='#3CCACE' className=''/>
+</div>
+</div>
+{/*  START OF THE SEND AND RECEIVE CARD */}
+{/* <div className='flex flex-col sm:flex-row justify-between gap-4'>
+
+</div>
+<div className='flex flex-col gap-3 w-full sm:w-1/2'>
+    <h1 className='font-[450] text-[16px] font-circular pl-2.5'>You Receive</h1>
+    <div className='border border-transparent rounded-[10px] bg-[#030A13]'>
+        <div className='px-3 py-2 w-full flex flex-col gap-3.5'>
+            <div>
+               <SelectAsset/>
+            </div>
+
+            <div className='flex flex-row justify-between items-center'>
+                <p className='font-[450] text-[16px] text-white font-circular'>45,8799</p>
+                <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div>
+<p className='font-medium text-[14px] font-circular text-[#8298AF] pl-2.5'>Bal 67,989 USDC</p>
+</div>  */}
+{/* <div className='flex flex-col md:flex-row md:space-x-3 gap-2.5 md:justify-between'>
+<div className='flex flex-col gap-2'>
+        <div className=" pl-2.5 flex flex-col gap-1">
+        <h1 className='text-[16px] leading-[145%] font-[450] font-circular'>From</h1>
+        <p className='text-[#8298AF] text-[12px] font-[450] '>Source Network</p>
+        </div>
+        <div className='flex flex-col gap-3 w-full sm:w-1/2'>
+        <h1 className='font-[450] text-[16px] font-circular pl-2.5'>You Send</h1>
+        <div className='border border-transparent rounded-[10px] bg-[#030A13]'>
+            <div className='px-3 py-2 w-full flex flex-col gap-3.5'>
+                <div>
+                 <SelectAsset/>
+                </div>
+
+                <div className='flex flex-row justify-between items-center'>
+                    <p className='font-[450] text-[16px] text-white font-circular'>45,8799</p>
+                    <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
+                </div>
+            </div>
+        </div>
+
+</div> */}
 
 // "use client";
 // // import { Repeat } from 'lucide-react'

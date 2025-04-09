@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import AssetChainBadge from "@/components/assetChainBadge";
+import { AssetProvider } from "@/context/AssetContext";
 
 
 const firaSans = Fira_Sans({
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${firaSans.variable} antialiased  flex flex-col`}
       >
+        <AssetProvider>
         <AssetChainBadge/>
         <Navbar/>
         <main className="flex-grow overflow-y-auto">
@@ -49,6 +51,7 @@ export default function RootLayout({
         <footer className="bg-[#0B131E] text-white">
         <Footer/>
         </footer>
+        </AssetProvider>
       </body>
     </html>
   );

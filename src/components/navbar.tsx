@@ -62,7 +62,7 @@ const menuVars = {
     }
   };
     return (
-        <div className='w-full bg-[#1A2739] border-b-[1px] z-[9999] border-b-[#1A2739]'>
+        <div className='w-full bg-[#1A2739] z-60   border-b-[1px]  border-b-[#1A2739]'>
             <div className='px-[27.38px] py-[27.43px] flex flex-row justify-between items-center'>
                 {/* Mobile menu button and logo */}
                 <div className="flex items-center space-x-4 md:hidden">

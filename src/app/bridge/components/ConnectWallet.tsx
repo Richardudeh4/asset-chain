@@ -84,7 +84,8 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
         
         {/* First modal - Connect Wallet */}
         {!isConnected && openDialog === "first" && (
-          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] border-none h-[546px] top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out">
+          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] border-none h-[546px] top-1/2 -translate-y-1/2 transition-all   
+           duration-500 ease-in-out">
             <div className="flex justify-center flex-col gap-2.5">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-[32px] font-[450] text-center text-[#FFFFFF]">Connect Wallet</DialogTitle>
