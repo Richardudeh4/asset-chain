@@ -13,7 +13,13 @@ import assetChain from "../../../public/assets/assetChain.svg";
 import greenCheck from "../../../public/assets/greenCheck.svg";
 import {ConnectWallet} from "./components/ConnectWallet";
 import bgText from "../../../public/assets/bgText.svg";
+import message from "../../../public/assets/message.svg";
+import localFont from "next/font/local";
 
+
+const circularStd = localFont({
+    src: "../../../public/fonts/CircularStd-Medium.woff2",
+})
 
 interface Asset {
     value: string;
@@ -30,8 +36,8 @@ const assets :Asset[] = [
   ]
 const Bridge = () => {
     const [isConnected, setIsConnected] = useState(false);
-  return (
-    <div className='w-full relative py-8 bg-[#0B131E] min-h-screen text-white'>
+  return(
+    <div className={`w-full relative py-8 bg-[#0B131E] min-h-screen text-white ${circularStd.className}`}>
       <div className="flex justify-center absolute top-1.5 [&>svg>path]:fill-[#0A111A] items-center">
             <Image src={bgText} alt="bg-text" className="[&>svg>path]:fill-[#0A111A]"/>
       </div>
@@ -69,13 +75,13 @@ const Bridge = () => {
                     </div>
                 </div>
                 
-                <div className='py-2.5 px-3 rounded-[50%] cursor-pointer hover:bg-[#269497]/90 mb-8 border border-transparent bg-[#269497]'>  
-             <Image src={repeat} width={14} height={17} alt="repeat" color='#3CCACE' className=''/>
+                <div className='py-2.5 px-3 rounded-[50%] cursor-pointer mt-2.5 md:mt-0 hover:bg-[#269497]/90 mb-8 border border-transparent bg-[#269497]'>  
+             <Image src={repeat} alt="repeat" color='#3CCACE' className='w-[18px] h-[18px] md:w-[27px] md:h-[27px]'/>
                 </div>
                 <div className="flex flex-col gap-6 w-full border-none">
                 <div className="flex flex-col gap-1.5">
-                    <h1>From</h1>
-                    <p className="text-[#8298AF] text-[12px] font-[450]">source network</p>
+                    <h1>To</h1>
+                    <p className="text-[#8298AF] text-[12px] font-[450]">Destination network</p>
                 </div>
                 <BuySelect
                 />
@@ -119,8 +125,11 @@ const Bridge = () => {
             <div className="flex flex-col gap-[3px] z-50">
                 <p className="text-[16px] font-[450] leading-[145%] font-circular text-white">Transaction History</p>
                 <p className="text-[#8298AF] text-[15px] ">View and claim bridged asset</p>
-                <Separator className="my-4 bg-[#1A2739]" />
-                <div className="px-1.5 py-2 flex flex-row justify-between items-center rounded-[54.11px] bg-[#030A13] overflow-x-auto w-full">
+                <Separator className="my-4 bg-[#1A2739]"/>
+                {
+                    isConnected ? (
+                        <>
+                        <div className="px-1.5 py-2 flex flex-row justify-between items-center rounded-[54.11px] bg-[#030A13] overflow-x-auto w-full">
                     {
                         transactionCategory.map((item, index) => (
                             <div key={index} className={`px-2 py-1 border border-transparent flex justify-center items-center ${index === 0 ? "bg-[#3CC9CD] text-[#000000] rounded-[66.18px] w-[84.64px]": ""}`}>
@@ -189,6 +198,18 @@ const Bridge = () => {
                         </Button>
                     </div>
                 </div>
+                        </>
+                    ) : (
+                        <>
+                       <div className="flex flex-col justify-center items-center">
+                            <div className="flex flex-col gap-6 md:justify-center md:mt-28 items-center">
+                                <Image src={message} alt="message" className="w-[120px] h-[120px] md:w-[149px] md:h-[149px]"/>
+                                <p className="font-[450] text-[14px] font-circular text-[#8298AF]">Connect wallet to see transaction here</p>
+                            </div>
+                       </div>
+                        </>
+                    )
+                }
             </div>
             </div>
         </div>

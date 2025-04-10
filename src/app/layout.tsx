@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Geist, Geist_Mono, Fira_Sans} from "next/font/google";
+import { Geist, Geist_Mono, Fira_Sans, Cherish} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
@@ -12,6 +12,11 @@ const firaSans = Fira_Sans({
   subsets: ['latin'], 
   weight: ['400', '500', '600', '700'],
   variable: '--font-fira-sans', 
+});
+const cherish = Cherish({
+  subsets: ['latin'], 
+  weight: ["400"],
+  variable: '--font-cherish-sans',
 });
 
 const geistSans = Geist({
@@ -40,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${firaSans.variable} antialiased font-circular flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${firaSans.variable} ${cherish.variable}  antialiased font-circular flex flex-col`}
       >
         <AssetProvider>
         <AssetChainBadge mobileText="Add Liquidity to wEth/USDT to earn 4,000p" desktopText="Join the Asset Chain Farming Point Program" />

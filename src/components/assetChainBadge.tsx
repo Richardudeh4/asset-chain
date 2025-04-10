@@ -1,6 +1,13 @@
 import Image from 'next/image'
 import React from 'react';
 import arrowLeft from "../../public/assets/arrowLeft.svg";
+import localFont from "next/font/local";
+
+
+
+const circularStd = localFont({
+    src: "../../public/fonts/CircularStd-Medium.woff2",
+})
 
 interface BannerText {
   mobileText: string;
@@ -9,7 +16,7 @@ interface BannerText {
 
 const AssetChainBadge = ({mobileText, desktopText}: BannerText) => {
   return (
-    <div className="flex justify-center w-full items-center h-auto py-2 px-4 bg-gradient-to-r from-[#3CC9CD] from-65% to-[#2042B8]">
+    <div className={`flex justify-center w-full items-center h-auto py-2 px-4 bg-gradient-to-r from-[#3CC9CD] from-65% to-[#2042B8] ${circularStd.className}`}>
       <div className="flex sm:flex-row  items-center justify-center  sm:space-x-5 space-x-2 sm:space-y-0 text-center">
         <h1 className="font-medium text-[14px] hidden sm:flex sm:text-[15px] font-circular leading-snug">
           {desktopText}
