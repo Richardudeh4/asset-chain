@@ -26,6 +26,25 @@ const Navbar = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 // aniamtion variable
+
+const mobileLinkVars = {
+    initial:{
+      y: "30vh",
+      transition:{
+        duration:0.5,
+        ease: [0.37, 0, 0.63, 1],
+      },
+    },
+    open:{
+      y:0,
+      transition:{
+        duration:0.7,
+        ease: [0, 0.55,0.45, 1]
+      },
+    },
+  };
+
+  
 const menuVars = {
     initial: {
       scaleY : 0,
@@ -143,8 +162,8 @@ const menuVars = {
                         className='flex flex-col space-y-4 mt-10'
                         >
                     {navbarLinks.map((link, index) => (
-                            <Link 
-                                href={link.href} 
+                            <motion.div 
+                                variants={mobileLinkVars}
                                 key={index}
                                 onClick={() => setIsMenuOpen(false)}
                                 className={`py-2 px-4 rounded-md ${
@@ -153,8 +172,10 @@ const menuVars = {
                                         : "text-[#FFFFFF] hover:bg-[#2a3a52]"
                                 }`}
                             >
-                                {link.label}
-                            </Link>
+                              <Link href={link.href}>
+                              {link.label}
+                              </Link> 
+                            </motion.div>
                         ))}
                         </motion.div>  
                     </div>

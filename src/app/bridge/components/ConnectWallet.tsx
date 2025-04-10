@@ -244,7 +244,7 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
         {/* Transfer complete component */}
         {openDialog === "transfer" && (
           <DialogContent className="w-[658px] bg-[#0B131E] flex-col rounded-[7.54px] border-none">
-            <div className="flex flex-col gap-8 py-10">
+            <div className="flex flex-col gap-8 pt-7 pb-4">
               <DialogHeader className="flex items-center flex-row space-x-0 text-white mt-5">
                 <h1 className="text-[16px] text-[#3CCACE] font-[450]">Bridge</h1>
                 <Progress className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]" value={100}/>
@@ -280,15 +280,17 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                     </div>
                   </div>
                 <div>
-
                 </div>
-                </div>
-                <div className="flex justify-center px-1.5">
-                  <Button className="bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
-                    View Transaction
-                  </Button>
                 </div>
               </div>
+              <div className="flex justify-between flex-row  px-1.5 mt-6">
+                  <Button className="bg-[#141A2F]  text-[#263545] cursor-pointer font-circular  text-[11.78px] !font-medium w-[215px] rounded-[22px] leading-[8.85px]">
+                   Claim now
+                  </Button>
+                  <Button className="w-[215px] rounded-[22px] !font-medium  bg-transparent cursor-pointer border border-[#42E8E0]">
+                    Claim Later
+                  </Button>
+                </div>
             </div>
           </DialogContent>
         )}
