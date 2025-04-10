@@ -1,6 +1,5 @@
 
-"use client"
-
+"use client";
 import { createContext, useContext, useState, ReactNode } from "react"
 
 const assets = [

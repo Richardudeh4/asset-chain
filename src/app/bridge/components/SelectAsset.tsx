@@ -1,5 +1,5 @@
-// components/SelectAsset.tsx
-"use client"
+
+"use client";
 
 import { useState } from "react"
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog"
