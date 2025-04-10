@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import Lottie from "lottie-react";
+// import Lottie from "lottie-react";
 import metaMask from "../../../../public/assets/metaMask.svg";
 import walletConnect from "../../../../public/assets/walletConnet.svg";
 import trust from "../../../../public/assets/trust.svg";
@@ -21,6 +21,17 @@ import { Progress } from "@/components/ui/progress";
 import loader from "../../../../public/assets/loader.json";
 import greenTick from "../../../../public/assets/greenTick.svg";
 import blockSpinner from "../../../../public/assets/blockSpinner.svg";
+import dynamic from 'next/dynamic';
+
+const Lottie = dynamic(
+  () => {
+    if (typeof window !== 'undefined') {
+      return import('lottie-react');
+    }
+    return Promise.resolve(() => null);
+  },
+  { ssr: false }
+);
 
 const connectWalletItems = [
     {name: "MetaMask", icon: metaMask},
