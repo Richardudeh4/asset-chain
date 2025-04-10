@@ -5,16 +5,24 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Circular Std';
+  src: url('/fonts/CircularStd/CircularStd-Medium.woff2') format('woff2'),
+       url('/fonts/CircularStd/CircularStd-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
 /* @font-face{
   font-family:CircularStd;
   src: url(../../public/fonts/circular-std.ttf) format('ttf');
   font-weight: 500;
   font-style: normal;
 } */
-navbar-text{
-  font-family:'CircularStd', sans-serif;
-}
 
+
+body {
+  font-family: 'Circular Std', sans-serif;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -12,7 +12,7 @@ module.exports = {
       extend: {
         fontFamily: {
           fira: ['Fira Sans', 'sans-serif'],
-          circular: ['Circular Std', 'sans-serif'],
+          circular: ['"Circular Std"', 'sans-serif'],
         },
       },
     },

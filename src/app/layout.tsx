@@ -40,10 +40,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${firaSans.variable} antialiased  flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${firaSans.variable} antialiased font-circular flex flex-col`}
       >
         <AssetProvider>
-        <AssetChainBadge/>
+        <AssetChainBadge mobileText="Add Liquidity to wEth/USDT to earn 4,000p" desktopText="Join the Asset Chain Farming Point Program" />
         <Navbar/>
         <main className="flex-grow overflow-y-auto">
         {children}

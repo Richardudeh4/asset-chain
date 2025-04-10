@@ -16,6 +16,7 @@ import polygon from "../../../public/assets/polygon.svg";
 import assetChain from "../../../public/assets/assetChain.svg";
 import greenCheck from "../../../public/assets/greenCheck.svg";
 import {ConnectWallet} from "./components/ConnectWallet";
+import bgText from "../../../public/assets/bgText.svg";
 
 
 interface Asset {
@@ -34,7 +35,7 @@ const assets :Asset[] = [
 const Bridge = () => {
     const [isConnected, setIsConnected] = useState(false);
   return (
-    <div className='w-full relative  py-8 bg-[#0B131E] min-h-screen text-white'>
+    <div className='w-full relative py-8 bg-[#0B131E] min-h-screen text-white'>
         {/* Background text */}
         {/* <div className='top-[25.05px] z-[1] overflow-hidden hidden md:block'>
             <div className='font-semibold tracking-[0%] flex flex-col'> 
@@ -42,7 +43,9 @@ const Bridge = () => {
                 <h1 className='text-[81.08px] md:text-[120px] lg:text-[154.29px] absolute mt-32 left-1.5 font-semibold text-gray-600 opacity-10'>Cross Chain Bridge</h1>
             </div>
         </div> */}
-      
+      <div className="flex justify-center absolute top-1.5 [&>svg>path]:fill-[#0A111A] items-center">
+            <Image src={bgText} alt="bg-text" className="[&>svg>path]:fill-[#0A111A]"/>
+      </div>
         <div className='flex flex-col space-y-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl mx-auto'>
             <div className='flex flex-col gap-3'>
             <h1 className='navbar-text font-[450] text-[40px] font-circular'>Bridge</h1>
