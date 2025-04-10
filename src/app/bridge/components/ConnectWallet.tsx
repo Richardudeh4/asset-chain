@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import Lottie from "lottie-react";
 import metaMask from "../../../../public/assets/metaMask.svg";
 import walletConnect from "../../../../public/assets/walletConnet.svg";
 import trust from "../../../../public/assets/trust.svg";
@@ -17,7 +18,7 @@ import polygon from "../../../../public/assets/polygon.svg"
 import assetChain from "../../../../public/assets/assetChain.svg";
 import spin from "../../../../public/assets/spin.svg";
 import { Progress } from "@/components/ui/progress";
-import loader from "../../../../public/assets/loader.svg";
+import loader from "../../../../public/assets/loader.json";
 import greenTick from "../../../../public/assets/greenTick.svg";
 import blockSpinner from "../../../../public/assets/blockSpinner.svg";
 
@@ -141,7 +142,17 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                     <h3>Done</h3>
                   </DialogHeader>
                   <div className="flex justify-center">
-                    <Image src={loader} className="" alt="spinLoader" width={214} height={214}/>
+                  <Lottie animationData={loader} loop={true}  autoPlay={true} 
+                   style={{
+                  width: 214, 
+                  height: 214,
+                  }}
+              className="text-blue-300"
+                  rendererSettings={{
+                    preserveAspectRatio: 'xMidYMid meet'
+                  }}
+                  />
+                    {/* <Image src={loader} className="" alt="spinLoader" width={214} height={214}/> */}
                   </div>
                   <div className="flex flex-col gap-4 justify-center text-center">
                     <h1 className="text-[#FCAD31] text-[16px] font-[450] font-circular">Awaiting approval</h1>
@@ -197,7 +208,18 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                   <h3>Done</h3>
                 </DialogHeader>
                 <div className="flex justify-center">
-                  <Image src={loader} className="" alt="spinLoader" width={214} height={214}/>
+                  <Lottie 
+                  animationData={loader}
+                  style={{
+                    width: 214, 
+                    height: 214,
+                    }}
+                     className="text-blue-300"
+                    rendererSettings={{
+                      preserveAspectRatio: 'xMidYMid meet'
+                    }}
+                   loop={true} />
+                  {/* <Image src={loader} className="" alt="spinLoader" width={214} height={214}/> */}
                 </div>
                 <div className="flex flex-col gap-4 justify-center text-center">
                   <h1 className="text-[#FCAD31] text-[16px] font-[450] font-circular">Awaiting Approval</h1>
