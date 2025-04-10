@@ -283,8 +283,8 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                 </div>
                 </div>
               </div>
-              <div className="flex justify-between flex-row  px-1.5 mt-6">
-                  <Button className="bg-[#141A2F]  text-[#263545] cursor-pointer font-circular  text-[11.78px] !font-medium w-[215px] rounded-[22px] leading-[8.85px]">
+              <div className="flex md:justify-between justify-center pl-10.5 flex-col gap-2.5 md:flex-row md:px-1.5 mt-6">
+                  <Button className="bg-[#141A2F] text-[#263545] cursor-pointer font-circular  text-[11.78px] !font-medium w-[215px] rounded-[22px] leading-[8.85px]">
                    Claim now
                   </Button>
                   <Button className="w-[215px] rounded-[22px] !font-medium  bg-transparent cursor-pointer border border-[#42E8E0]">
