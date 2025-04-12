@@ -15,7 +15,7 @@ import {ConnectWallet} from "./components/ConnectWallet";
 import bgText from "../../../public/assets/bgText.svg";
 import message from "../../../public/assets/message.svg";
 import localFont from "next/font/local";
-
+import assetArrow from "../../../public/assets/assetArrow.svg";
 
 const circularStd = localFont({
     src: "../../../public/fonts/CircularStd-Medium.woff2",
@@ -53,7 +53,8 @@ const Bridge = () => {
                 </Button>
             </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-[15px] md:gap-[15px]'>
-            <div className='py-4.5 px-5 col-span-[554.32px] border border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5'>
+            <div className='py-4.5 px-5 col-span-[554.32px] border relative border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5'>
+            <Image src={assetArrow} className="absolute top-2 -right-0 hidden md:flex" alt="BridgeArrow "/>
                <div className="flex md:flex-row flex-col md:justify-between items-center">
                 <div className="flex flex-col gap-6 w-full border-none ">
                 <div className="flex flex-col gap-1">
@@ -75,8 +76,8 @@ const Bridge = () => {
                     </div>
                 </div>
                 
-                <div className='py-2.5 px-3 rounded-[50%] cursor-pointer mt-2.5 md:mt-0 hover:bg-[#269497]/90 mb-8 border border-transparent bg-[#269497]'>  
-             <Image src={repeat} alt="repeat" color='#3CCACE' className='w-[18px] h-[18px] md:w-[27px] md:h-[27px]'/>
+                <div className='py-3 px-3  rounded-[50%] cursor-pointer hover:bg-[#269497]/90 mb-8 border border-transparent bg-[#269497]'>  
+             <Image src={repeat} width={22} height={22} alt="repeat" color='#3CCACE' className=''/>
                 </div>
                 <div className="flex flex-col gap-6 w-full border-none">
                 <div className="flex flex-col gap-1.5">

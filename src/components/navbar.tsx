@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
 import {AnimatePresence, motion} from 'framer-motion';
 import localFont from "next/font/local";
+import navArrow from "../../public/assets/navArrow.svg";
 
 
 
@@ -17,13 +18,12 @@ const circularStd = localFont({
 })
 
 const navbarLinks = [
-    {label: 'Farming', href:"/"},
-    {label: 'Swap', href:"/boost"},
-    {label: 'Liqudity', href:"/referral"},
-    {label: 'Leaderboard', href:"/leaderboard"},
-    {label: 'Bridge', href:"/bridge"},
-    {label: 'Explorer', href:"/swap"},
-    {label: 'Community', href:"/liquidity"},
+    {label: 'Bridge',href:"/"},
+    {label: 'Swap', href:"/swap"},
+    {label: 'Liqudity', href:"/liquidity"},
+    {label: 'Farming', href:"/farming"},
+    {label: 'Explorer', href:"/explorer"},
+  
 ]
 
 const Navbar = () => {
@@ -88,7 +88,7 @@ const menuVars = {
     }
   };
     return (
-        <div className={`w-full bg-[#1A2739] z-60   border-b-[1px]  border-b-[#1A2739] ${circularStd.className}`}>
+        <div className={`w-full bg-[#1A2739] z-60 border-b-[1px] border-b-[#1A2739] ${circularStd.className}`}>
             <div className='px-[27.38px] py-[27.43px] flex flex-row justify-between items-center'>
                 {/* Mobile menu button and logo */}
                 <div className="flex items-center space-x-4 md:hidden">
@@ -179,8 +179,11 @@ const menuVars = {
                                         : "text-[#FFFFFF] hover:bg-[#2a3a52]"
                                 }`}
                             >
-                              <Link href={link.href}>
-                              {link.label}
+                              <Link href={link.href} className='flex flex-row space-x-1.5 items-center'>
+                              <p className='text-[20.18px] font-medium'>{link.label}</p>
+                              {index === 3 || index === 4 ? (
+                                <Image src={navArrow} width={13} height={13} alt="purpleArrow"/>
+                              ): ""}
                               </Link> 
                             </motion.div>
                         ))}

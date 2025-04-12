@@ -4,14 +4,24 @@ import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import greyCircle from "../../../../public/assets/greyCircle.svg";
-import polygon from "../../../../public/assets/polygon.svg";
-import assetChain from "../../../../public/assets/assetChain.svg";
+import polygon from "../../../../public/assets/Polygon.png";
+import assetChain from "../../../../public/assets/Assetchain.png";
+import binance from "../../../../public/assets/Binance-smart-chain.png";
+import arbitrium from "../../../../public/assets/Arbitrium.png";
+import base from "../../../../public/assets/Base.png";
+import ethereum from "../../../../public/assets/Ethereum.png";
+import bitLayer from "../../../../public/assets/bitlayer.png";
 import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 
 const assets = [
   { value: "Polygon", icon: polygon },
   { value: "Asset Chain",icon :assetChain},
+  { value: "Binance Smart Chain",icon :binance},
+  { value: "Arbitrium",icon: arbitrium},
+  { value: "Base",icon: base},
+  { value: "Ethereum",icon: ethereum},
+  { value: "Bit Layer",icon: bitLayer},
 ]
 
 
@@ -31,7 +41,7 @@ export default function BuySelect() {
           {selectedItem ? 
           <>
           <div className="flex flex-row space-x-4 items-center -ml-4.5">
-          <Image src={selectedItem.icon} width={32} height={32} alt="greyCircle"/>
+          <Image src={selectedItem.icon} width={32} height={32} alt="greyCircle" className="rounded-[50%]"/>
           <h1>{selectedItem.value}</h1>
           <ChevronDown size={24} color="#88FFF3"/>
           </div>
@@ -66,7 +76,7 @@ export default function BuySelect() {
                 setOpen(false)
               }}
             >
-              <Image src={item.icon} width={32} height={32} alt="assetNetwork"/>
+              <Image src={item.icon} width={32} height={32} alt="assetNetwork" className="rounded-[50%]"/>
               {item.value}
             </Button>
           ))}

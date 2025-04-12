@@ -22,6 +22,7 @@ import loader from "../../../../public/assets/loader.json";
 import greenTick from "../../../../public/assets/greenTick.svg";
 import blockSpinner from "../../../../public/assets/blockSpinner.svg";
 import dynamic from 'next/dynamic';
+import assetLoad from "../../../../public/assets/assetLoad.gif";
 
 const Lottie = dynamic(
   () => {
@@ -153,7 +154,7 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                     <h3>Done</h3>
                   </DialogHeader>
                   <div className="flex justify-center">
-                  <Lottie animationData={loader} loop={true}  autoPlay={true} 
+                  {/* <Lottie animationData={loader} loop={true}  autoPlay={true} 
                    style={{
                   width: 214, 
                   height: 214,
@@ -162,7 +163,8 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                   rendererSettings={{
                     preserveAspectRatio: 'xMidYMid meet'
                   }}
-                  />
+                  /> */}
+                   <Image src={assetLoad} className="" alt="spinLoader" width={214} height={214}/>
                     {/* <Image src={loader} className="" alt="spinLoader" width={214} height={214}/> */}
                   </div>
                   <div className="flex flex-col gap-4 justify-center text-center">
@@ -219,7 +221,7 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                   <h3>Done</h3>
                 </DialogHeader>
                 <div className="flex justify-center">
-                  <Lottie 
+                  {/* <Lottie 
                   animationData={loader}
                   style={{
                     width: 214, 
@@ -229,8 +231,8 @@ export function ConnectWallet({onConnected, isConnected, bottonLabel} : {onConne
                     rendererSettings={{
                       preserveAspectRatio: 'xMidYMid meet'
                     }}
-                   loop={true} />
-                  {/* <Image src={loader} className="" alt="spinLoader" width={214} height={214}/> */}
+                   loop={true} /> */}
+                  <Image src={assetLoad} className="" alt="spinLoader" width={214} height={214}/>
                 </div>
                 <div className="flex flex-col gap-4 justify-center text-center">
                   <h1 className="text-[#FCAD31] text-[16px] font-[450] font-circular">Awaiting Approval</h1>

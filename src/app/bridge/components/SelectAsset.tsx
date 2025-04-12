@@ -12,9 +12,13 @@ import { useAsset } from "@/context/AssetContext"
 
 
 const assets = [
-  { title: "USDC", subTitle: "USD Coin", icon: require("../../../../public/assets/usdc.svg") },
-  { title: "USDT", subTitle: "Tether", icon: require("../../../../public/assets/tether.svg") },
-  { title: "XEND", subTitle: "Xend Finance", icon: require("../../../../public/assets/xend.svg") }
+  { title: "USDC", subTitle: "USD Coin", icon: require("../../../../public/assets/USDC.png") },
+  { title: "USDT", subTitle: "Tether", icon: require("../../../../public/assets/USDT.png") },
+  { title: "RWA", subTitle: "Rwa", icon: require("../../../../public/assets/RWA.png")},
+  { title: "WBTC", subTitle: "Wbtc", icon: require("../../../../public/assets/WBTC.png")},
+  { title: "WETH", subTitle: "Weth", icon: require("../../../../public/assets/WETH.png")},
+  { title: "BTC", subTitle: "Bitcoin", icon: require("../../../../public/assets/BTC.png")},
+  { title: "WNT", subTitle: "Wnt", icon: require("../../../../public/assets/WNT.png")},
 ]
 
 export default function SelectAsset({ isMain }: { isMain?: boolean }) {
@@ -35,7 +39,7 @@ export default function SelectAsset({ isMain }: { isMain?: boolean }) {
         >
           {selectedAsset ? (
             <div className="flex flex-row justify-between space-x-5 items-center">
-              <Image src={selectedAsset.icon} width={28} height={28} alt="assetIcon" />
+              <Image src={selectedAsset.icon} width={28} height={28} alt="assetIcon" className="rounded-[50%]" />
               <h1>{selectedAsset.title}</h1>
               {!isMain && <ChevronDown size={24} color="#88FFF3" />}
             </div>
@@ -68,7 +72,7 @@ export default function SelectAsset({ isMain }: { isMain?: boolean }) {
               }}
             >
               <div className="flex flex-row space-x-3.5 items-center">
-                <Image src={item.icon} width={32} height={32} alt="assetNetwork" />
+                <Image src={item.icon} width={32} height={32} alt="assetNetwork" className="rounded-[50%]"/>
                 <div className="flex flex-col gap-0">
                   <p className="text-left text-[14px] font-[450] text-white">{item.title}</p>
                   <p className="text-[11px] font-[450] text-[#8298AF]">{item.subTitle}</p>
