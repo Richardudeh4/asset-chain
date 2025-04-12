@@ -10,7 +10,7 @@ import { X } from 'lucide-react';
 import {AnimatePresence, motion} from 'framer-motion';
 import localFont from "next/font/local";
 import navArrow from "../../public/assets/navArrow.svg";
-
+import asset from "../../public/assets/asset.svg";
 
 
 const circularStd = localFont({
@@ -147,19 +147,29 @@ const menuVars = {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                 className="md:hidden bg-[#1A2739] w-full fixed left-0 top-0 origin-top h-screen p-10">
+                 className="md:hidden bg-[#070E17] w-full fixed left-0 top-0 origin-top h-screen p-10">
                     <div className="flex flex-col h-full space-y-4">
                     <div className="flex flex-row justify-between items-center">
-                                   {/* logo */}
-                    <div className='cursor-pointer'>
+                      {/* logo */}
+                    {/* <div className='cursor-pointer'>
                     <Link href="/">
                         <Image src={assetChainLogo} alt="assetChainLogo" height={22} width={126} className=''/>
                     </Link>
-                     </div>
+                     </div> */}
                      {/* Navbar close */}
-                        <div className='cursor-pointer'>
-                                <X width={39} height={39} onClick={toggleMenu} color='white'/>
-                            </div>
+                     <div className='flex flex-row items-center space-x-2.5'>
+                     <div className='cursor-pointer p-2 border border-[#1A2739]  rounded-[6.09px]'>
+                      <X width={29} height={29} onClick={toggleMenu} color='white'/>
+                      </div>
+                      <div className='cursor-pointer'>
+                    <Link href="/">
+                        <Image src={asset} alt="assetChainLogo" height={32} width={47} className=''/>
+                    </Link>
+                     </div>
+                     </div>
+                     <Button className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
+                        Connect Wallet
+                    </Button>
                         </div>
                         <motion.div 
                         variants={containerVars}

@@ -16,6 +16,8 @@ import bgText from "../../../public/assets/bgText.svg";
 import message from "../../../public/assets/message.svg";
 import localFont from "next/font/local";
 import assetArrow from "../../../public/assets/assetArrow.svg";
+import { Input } from "@/components/ui/input";
+import {InputAmount} from "./components/InputAmount";
 
 const circularStd = localFont({
     src: "../../../public/fonts/CircularStd-Medium.woff2",
@@ -35,7 +37,17 @@ const assets :Asset[] = [
     { value: "Asset Chain",icon :assetChain },
   ]
 const Bridge = () => {
+    const [value, setValue] = useState("")
     const [isConnected, setIsConnected] = useState(false);
+    const [inputValue, setInputValue] = useState("")
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value
+      if (newValue === "" || /^\d*$/.test(newValue)) {
+        setValue(newValue)
+      }
+    }
+   
   return(
     <div className={`w-full relative py-8 bg-[#0B131E] min-h-screen text-white ${circularStd.className}`}>
       <div className="flex justify-center absolute top-1.5 [&>svg>path]:fill-[#0A111A] items-center">
@@ -68,15 +80,20 @@ const Bridge = () => {
                         <div className="bg-[#030A13] rounded-[10px] text-white px-3.5 py-2 flex flex-col gap-4.5">
                     <SelectAsset/>
                     <div className="flex flex-row justify-between items-center">
-                        <h1 className='font-[450] text-[16px] text-white font-circular'>45,8799</h1>
+                       <InputAmount value={inputValue}  onChange={(e) => setInputValue(e.target.value)}/>
+                        {/* <h1 className='font-[450] text-[16px] text-white font-circular'>45,8799</h1> */}
                         <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
                     </div>
                         </div>
+                        {
+                     isConnected && (
                         <p className='font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3'>Bal 67,989 USDC</p>
+                     )
+                     }
                     </div>
                 </div>
                 
-                <div className='py-3 px-3  rounded-[50%] cursor-pointer hover:bg-[#269497]/90 mb-8 border border-transparent bg-[#269497]'>  
+                <div className='py-3 px-3  rounded-[50%] cursor-pointer hover:bg-[#269497]/90 md:mt-0 mt-4  border border-transparent bg-[#269497]'>  
              <Image src={repeat} width={22} height={22} alt="repeat" color='#3CCACE' className=''/>
                 </div>
                 <div className="flex flex-col gap-6 w-full border-none">
@@ -91,11 +108,16 @@ const Bridge = () => {
                         <div className="bg-[#030A13] rounded-[10px] text-white px-3.5 py-2 flex flex-col gap-4.5">
                     <SelectAsset isMain/>
                     <div className="flex flex-row justify-between items-center">
-                        <h1 className='font-[450] text-[16px] text-white font-circular'>45,8799</h1>
+                    <InputAmount readOnly value={inputValue} />
+                        {/* <h1 className='font-[450] text-[16px] text-white font-circular'>45,8799</h1> */}
                         <p className='font-[500] text-[16px] text-[#8298AF] font-circular'>~$67,67</p>
                     </div>
                         </div>
+                    {
+                     isConnected && (
                         <p className='font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3'>Bal 67,989 USDC</p>
+                     )
+                    }
                     </div>
                 </div>
                </div>
