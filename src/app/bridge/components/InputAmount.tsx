@@ -1,10 +1,11 @@
 
 "use client"
 
-import { Input,InputProps} from "@/components/ui/input";
+import  { Input} from "@/components/ui/input";
+import { InputHTMLAttributes } from "react"
 import { useState } from "react"
 
-interface DecimalInputProps extends InputProps {
+interface DecimalInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readOnly?: boolean
   maxDecimals?: number
 }
@@ -31,7 +32,7 @@ export function InputAmount({
       ? new RegExp(`^\\d*\\.?\\d{0,${maxDecimals}}$`)
       : /^\d*\.?\d*$/
 
-      
+
       if (
         /^\d+$/.test(newValue) || // Whole numbers
         (newValue.includes('.') && decimalRegex.test(newValue)) // Decimal numbers
