@@ -6,11 +6,15 @@ import hamBurger from '../../public/assets/hamBurger.svg';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { usePathname } from 'next/navigation';
-import { X } from 'lucide-react';
+import { ChevronDownCircleIcon, X } from 'lucide-react';
 import {AnimatePresence, motion} from 'framer-motion';
 import localFont from "next/font/local";
 import navArrow from "../../public/assets/navArrow.svg";
 import asset from "../../public/assets/asset.svg";
+import { ConnectWallet } from '@/app/bridge/components/ConnectWallet';
+import { ConnectWalletHeader } from '@/app/bridge/components/ConnectWalletHeader';
+import arrowExpand from "../../public/assets/arrowExpand.svg";
+import blue from "../../public/assets/blue.svg";
 
 
 const circularStd = localFont({
@@ -28,6 +32,7 @@ const navbarLinks = [
 
 const Navbar = () => {
     const pathName = usePathname();
+    const [isConnected, setIsConnected] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -133,9 +138,21 @@ const menuVars = {
 
                 {/* Connect Wallet Button */}
                 <div className=''>
-                    <Button className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
+                            <ConnectWalletHeader
+                             onConnected={() => setIsConnected(true)} 
+                             isConnected={isConnected}
+                             bottonLabel={isConnected ? (
+                             <div className='flex flex-row space-x-1.5 justify-between items-center'>
+                                <Image src={blue} width={22} height={19} alt=""/>
+                                <p className='text-[#FFFFFF] text-[12.51px] font-semibold'>0xtG...45Fgh0</p>
+                                <Image src={arrowExpand} width={16} height={16} alt="arrowExpand"/>
+                               
+                             </div>
+                             ): ("Connect Wallet")}
+                              />
+                    {/* <Button onClick={() => setIsConnected(!isConnected)} className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
                         Connect Wallet
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
 

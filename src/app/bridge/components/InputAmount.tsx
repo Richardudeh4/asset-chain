@@ -39,13 +39,6 @@ export function InputAmount({
       ) {
         onChange?.(e)
       }
-    // if (
-    //   newValue === "" || 
-    //   /^\d*$/.test(newValue) || // Whole numbers
-    //   (newValue.includes('.') && decimalRegex.test(newValue)) // Decimal numbers
-    // ) {
-    //   setValue(newValue)
-    // }
   }
 
   return (
@@ -56,7 +49,7 @@ export function InputAmount({
       value={value}
       onChange={handleChange}
       readOnly={readOnly}
-      className={`w-[142.82px] rounded-[54.11px] placeholder-slate-300 ${readOnly ? "cursor-default opacity-80" : ""}`}
+      className={`w-[142.82px] rounded-[54.11px] !outline-none !border-none !active:border-none  placeholder-slate-300 ${readOnly ? "cursor-default opacity-80" : ""}`}
       {...props}
     />
   )
