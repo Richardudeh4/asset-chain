@@ -1,5 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { ReactNode } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -40,7 +41,7 @@ const connectWalletItems = [
     {name: "Trust", icon: trust},
 ]
 
-export function ConnectWalletHeader({onConnected, isConnected, bottonLabel} : {onConnected: () => void, isConnected: boolean, bottonLabel: string | HTMLDivElement}) {
+export function ConnectWalletHeader({onConnected, isConnected, bottonLabel} : {onConnected: () => void, isConnected: boolean, bottonLabel: ReactNode}) {
   const [openDialog, setOpenDialog] = useState<"first" | "second" | "bridge" | "transfer" | null>(null);  
   const [showBridgeLoader, setShowBridgeLoader] = useState(true);
   const [transferProgress, setTransferProgress] = useState(15);
