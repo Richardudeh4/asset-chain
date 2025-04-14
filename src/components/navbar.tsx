@@ -1,229 +1,281 @@
 "use client";
-import Image from 'next/image'
-import React, { useState } from 'react'
-import assetChainLogo from '../../public/assets/assetChainLogo.svg';
-import hamBurger from '../../public/assets/hamBurger.svg';
-import Link from 'next/link';
-import { Button } from './ui/button';
-import { usePathname } from 'next/navigation';
-import { ChevronDownCircleIcon, X } from 'lucide-react';
-import {AnimatePresence, motion} from 'framer-motion';
+import Image from "next/image";
+import React, { useState } from "react";
+import assetChainLogo from "../../public/assets/assetChainLogo.svg";
+import hamBurger from "../../public/assets/hamBurger.svg";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { usePathname } from "next/navigation";
+import { X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import localFont from "next/font/local";
 import navArrow from "../../public/assets/navArrow.svg";
 import asset from "../../public/assets/asset.svg";
-import { ConnectWallet } from '@/app/bridge/components/ConnectWallet';
-import { ConnectWalletHeader } from '@/app/bridge/components/ConnectWalletHeader';
+import { ConnectWalletHeader } from "@/app/bridge/components/ConnectWalletHeader";
 import arrowExpand from "../../public/assets/arrowExpand.svg";
 import blue from "../../public/assets/blue.svg";
+import { useWallet } from "@/context/web3";
 
+
+import metaMask from "../../public/assets/metaMask.svg";
+import walletConnect from "../../public/assets/walletConnet.svg";
+import trust from "../../public/assets/trust.svg";
 
 const circularStd = localFont({
-    src: "../../public/fonts/CircularStd-Medium.woff2",
-})
+  src: "../../public/fonts/CircularStd-Medium.woff2",
+});
 
 const navbarLinks = [
-    {label: 'Bridge',href:"/"},
-    {label: 'Swap', href:"/swap"},
-    {label: 'Liqudity', href:"/liquidity"},
-    {label: 'Farming', href:"/farming"},
-    {label: 'Explorer', href:"/explorer"},
-  
-]
+  { label: "Bridge", href: "/" },
+  { label: "Swap", href: "/swap" },
+  { label: "Liqudity", href: "/liquidity" },
+  { label: "Farming", href: "/farming" },
+  { label: "Explorer", href: "/explorer" },
+];
 
-const Navbar = () => {
-    const pathName = usePathname();
-    const [isConnected, setIsConnected] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
 // aniamtion variable
 
 const mobileLinkVars = {
-    initial:{
-      y: "30vh",
-      transition:{
-        duration:0.5,
-        ease: [0.37, 0, 0.63, 1],
-      },
+  initial: {
+    y: "30vh",
+    transition: {
+      duration: 0.5,
+      ease: [0.37, 0, 0.63, 1],
     },
-    open:{
-      y:0,
-      transition:{
-        duration:0.7,
-        ease: [0, 0.55,0.45, 1]
-      },
+  },
+  open: {
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0, 0.55, 0.45, 1],
     },
-  };
+  },
+};
 
-  
 const menuVars = {
-    initial: {
-      scaleY : 0,
+  initial: {
+    scaleY: 0,
+  },
+  animate: {
+    scaleY: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.12, 0, 0.39, 0],
     },
-    animate: {
-      scaleY : 1,
-      transition:{
-        duration:0.5,
-        ease: [0.12,0,0.39,0],
-      },
+  },
+  exit: {
+    scaleY: 0,
+    transition: {
+      duration: 0.5,
+      delay: 0.5,
+      ease: [0.12, 0, 0.39, 1],
     },
-    exit:{
-      scaleY: 0,
-      transition:{
-        duration:0.5,
-        delay:0.5,
-        ease: [0.12,0,0.39,1],
-      },
-    }
+  },
+};
+const containerVars = {
+  initial: {
+    transition: {
+      staggerChildren: 0.09,
+      staggerDirection: -1,
+    },
+  },
+  open: {
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.09,
+      staggerDirection: 1,
+    },
+  },
+};
+
+const connectWalletItems = [
+  { name: "MetaMask", icon: metaMask, key: "metamask" },
+  { name: "Wallet Connect", icon: walletConnect, key: "walletconnect" },
+  { name: "Trust Wallet", icon: trust, key: "trust" },
+];
+
+const Navbar = () => {
+  const pathName = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
-  const containerVars = {
-    initial:{
-      transition:{
-        staggerChildren:0.09,
-        staggerDirection: -1,
-      },
-    },
-    open:{
-      transition:{
-        delayChildren:0.3,
-        staggerChildren: 0.09,
-        staggerDirection: 1,
-      }
-    }
-  };
-    return (
-        <div className={`w-full bg-[#1A2739] z-60 border-b-[1px] border-b-[#1A2739] ${circularStd.className}`}>
-            <div className='px-[27.38px] py-[27.43px] flex flex-row justify-between items-center'>
-                {/* Mobile menu button and logo */}
-                <div className="flex items-center space-x-4 md:hidden">
-                    {
-                        isMenuOpen ? (
-                        <div>
-                            <div className='cursor-pointer'>
-                                <X width={39} height={39} onClick={toggleMenu} color='white'/>
-                            </div>
-                        </div>
-                        ): (
-                         <div className="cursor-pointer" onClick={toggleMenu}>
-                            <Image src={hamBurger} width={39} height={39} alt="hamburger"/>
-                        </div>
-                        )
-                    }
-                   
-                    
-                </div>
 
-                {/* Desktop logo */}
-                <div className='cursor-pointer hidden md:flex'>
-                    <Link href="/">
-                        <Image src={assetChainLogo} alt="assetChainLogo" height={22} width={126} className=''/>
-                    </Link>
-                </div>
+  const {isConnected, address, walletType} = useWallet()
 
-                {/* Desktop Navlinks */}
-                <div className='flex-row items-center space-x-7 hidden md:flex'>
-                    {navbarLinks.map((link, index) => (
-                        <Link href={link.href} key={index}>
-                            <p className={`text-[16px] font-semibold navbar-text ${
-                                pathName === link.href 
-                                    ? "text-[#3CC9CD] relative after:content-[''] after:absolute after:left-0 after:bottom-[-30px] after:w-full after:h-[3px] after:bg-[#00FFF0]" 
-                                    : "text-[#FFFFFF]"
-                            }`}>
-                                {link.label} 
-                            </p>
-                        </Link>
-                    ))}
-                </div>
+  const truncatedAddress = address
+    ? `${address.slice(0, 6)}...${address.slice(-4)}`
+    : "";
+  const connectedWallet = connectWalletItems.find( w => w.key === walletType)
+  
+  return (
+    <div
+      className={`w-full bg-[#1A2739] z-60 border-b-[1px] border-b-[#1A2739] ${circularStd.className}`}
+    >
+      <div className="px-[27.38px] py-[27.43px] flex flex-row justify-between items-center">
+        {/* Mobile menu button and logo */}
+        <div className="flex items-center space-x-4 md:hidden">
+          {isMenuOpen ? (
+            <div>
+              <div className="cursor-pointer">
+                <X width={39} height={39} onClick={toggleMenu} color="white" />
+              </div>
+            </div>
+          ) : (
+            <div className="cursor-pointer" onClick={toggleMenu}>
+              <Image src={hamBurger} width={39} height={39} alt="hamburger" />
+            </div>
+          )}
+        </div>
 
-                {/* Connect Wallet Button */}
-                <div className=''>
-                            <ConnectWalletHeader
-                             onConnected={() => setIsConnected(true)} 
-                             isConnected={isConnected}
-                             bottonLabel={isConnected ? (
-                             <div className='flex flex-row space-x-1.5 justify-between items-center'>
-                                <Image src={blue} width={22} height={19} alt=""/>
-                                <p className='text-[#FFFFFF] text-[12.51px] font-semibold'>0xtG...45Fgh0</p>
-                                <Image src={arrowExpand} width={16} height={16} alt="arrowExpand"/>
-                               
-                             </div>
-                             ): ("Connect Wallet")}
-                              />
-                    {/* <Button onClick={() => setIsConnected(!isConnected)} className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
+        {/* Desktop logo */}
+        <div className="cursor-pointer hidden md:flex">
+          <Link href="/">
+            <Image
+              src={assetChainLogo}
+              alt="assetChainLogo"
+              height={22}
+              width={126}
+              className=""
+            />
+          </Link>
+        </div>
+
+        {/* Desktop Navlinks */}
+        <div className="flex-row items-center space-x-7 hidden md:flex">
+          {navbarLinks.map((link, index) => (
+            <Link href={link.href} key={index}>
+              <p
+                className={`text-[16px] font-semibold navbar-text ${
+                  pathName === link.href
+                    ? "text-[#3CC9CD] relative after:content-[''] after:absolute after:left-0 after:bottom-[-30px] after:w-full after:h-[3px] after:bg-[#00FFF0]"
+                    : "text-[#FFFFFF]"
+                }`}
+              >
+                {link.label}
+              </p>
+            </Link>
+          ))}
+        </div>
+
+        {/* Connect Wallet Button */}
+        <div className="">
+          <ConnectWalletHeader
+            bottonLabel={
+              isConnected ? (
+                <div className="flex flex-row space-x-1.5 justify-between items-center">
+                  <Image src={connectedWallet ? connectedWallet.icon : blue} width={22} height={19} alt="" />
+                  <p className="text-[#FFFFFF] text-[12.51px] font-semibold">
+                    {truncatedAddress}
+                  </p>
+                  <Image
+                    src={arrowExpand}
+                    width={16}
+                    height={16}
+                    alt="arrowExpand"
+                  />
+                </div>
+              ) : (
+                "Connect Wallet"
+              )
+            }
+          />
+          {/* <Button onClick={() => setIsConnected(!isConnected)} className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
                         Connect Wallet
                     </Button> */}
-                </div>
-            </div>
+        </div>
+      </div>
 
-            {/* Mobile Dropdown Menu */}
-            <AnimatePresence>
-            {isMenuOpen && (
-                <motion.div
-                variants={menuVars}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                 className="md:hidden bg-[#070E17] w-full fixed left-0 top-0 origin-top h-screen p-10">
-                    <div className="flex flex-col h-full space-y-4">
-                    <div className="flex flex-row justify-between items-center">
-                      {/* logo */}
-                    {/* <div className='cursor-pointer'>
+      {/* Mobile Dropdown Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            variants={menuVars}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="md:hidden bg-[#070E17] w-full fixed left-0 top-0 origin-top h-screen p-10"
+          >
+            <div className="flex flex-col h-full space-y-4">
+              <div className="flex flex-row justify-between items-center">
+                {/* logo */}
+                {/* <div className='cursor-pointer'>
                     <Link href="/">
                         <Image src={assetChainLogo} alt="assetChainLogo" height={22} width={126} className=''/>
                     </Link>
                      </div> */}
-                     {/* Navbar close */}
-                     <div className='flex flex-row items-center space-x-2.5'>
-                     <div className='cursor-pointer p-2 border border-[#1A2739]  rounded-[6.09px]'>
-                      <X width={29} height={29} onClick={toggleMenu} color='white'/>
-                      </div>
-                      <div className='cursor-pointer'>
+                {/* Navbar close */}
+                <div className="flex flex-row items-center space-x-2.5">
+                  <div className="cursor-pointer p-2 border border-[#1A2739]  rounded-[6.09px]">
+                    <X
+                      width={29}
+                      height={29}
+                      onClick={toggleMenu}
+                      color="white"
+                    />
+                  </div>
+                  <div className="cursor-pointer">
                     <Link href="/">
-                        <Image src={asset} alt="assetChainLogo" height={32} width={47} className=''/>
+                      <Image
+                        src={asset}
+                        alt="assetChainLogo"
+                        height={32}
+                        width={47}
+                        className=""
+                      />
                     </Link>
-                     </div>
-                     </div>
-                     <Button className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
-                        Connect Wallet
-                    </Button>
-                        </div>
-                        <motion.div 
-                        variants={containerVars}
-                        initial ="initial"
-                        exit="initial"
-                        animate="open"
-                        className='flex flex-col space-y-4 mt-10'
-                        >
-                    {navbarLinks.map((link, index) => (
-                            <motion.div 
-                                variants={mobileLinkVars}
-                                key={index}
-                                onClick={() => setIsMenuOpen(false)}
-                                className={`py-2 px-4 rounded-md ${
-                                    pathName === link.href 
-                                        ? "text-[#3CC9CD] bg-[#2a3a52]" 
-                                        : "text-[#FFFFFF] hover:bg-[#2a3a52]"
-                                }`}
-                            >
-                              <Link href={link.href} className='flex flex-row space-x-1.5 items-center'>
-                              <p className='text-[20.18px] font-medium'>{link.label}</p>
-                              {index === 3 || index === 4 ? (
-                                <Image src={navArrow} width={13} height={13} alt="purpleArrow"/>
-                              ): ""}
-                              </Link> 
-                            </motion.div>
-                        ))}
-                        </motion.div>  
-                    </div>
-                </motion.div>
-            )}
-            </AnimatePresence>
-        </div>
-    )
-}
+                  </div>
+                </div>
+                <Button className="bg-[#2042B8] w-[133.01px] rounded-[25.26px]">
+                  Connect Wallet
+                </Button>
+              </div>
+              <motion.div
+                variants={containerVars}
+                initial="initial"
+                exit="initial"
+                animate="open"
+                className="flex flex-col space-y-4 mt-10"
+              >
+                {navbarLinks.map((link, index) => (
+                  <motion.div
+                    variants={mobileLinkVars}
+                    key={index}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`py-2 px-4 rounded-md ${
+                      pathName === link.href
+                        ? "text-[#3CC9CD] bg-[#2a3a52]"
+                        : "text-[#FFFFFF] hover:bg-[#2a3a52]"
+                    }`}
+                  >
+                    <Link
+                      href={link.href}
+                      className="flex flex-row space-x-1.5 items-center"
+                    >
+                      <p className="text-[20.18px] font-medium">{link.label}</p>
+                      {index === 3 || index === 4 ? (
+                        <Image
+                          src={navArrow}
+                          width={13}
+                          height={13}
+                          alt="purpleArrow"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
-export default Navbar
+export default Navbar;
 
 // "use client";
 // import Image from 'next/image'
@@ -275,13 +327,13 @@ export default Navbar
 //                     navbarLinks.map((link, index) => (
 //                         <Link href={link.href} key={index} className={`${pathName === link.href} ? "text-[#3CC9CD]" : "" hidden md:flex`}>
 //                                 <p className={`text-[16px] font-semibold navbar-text ${pathName === link.href ? "text-[#3CC9CD] relative  after:content-[''] after:absolute after:left-0 after:bottom-[-30px] after:w-full after:h-[3px] after:bg-[#00FFF0]": "text-[#FFFFFF]"}`}>
-//                                 {link.label} 
+//                                 {link.label}
 //                             </p>
-                               
+
 //                         </Link>
 //                     ))
 //                 }
-            
+
 //             </div>
 
 //             <div className=''>
