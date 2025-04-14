@@ -8,27 +8,38 @@ import { Button } from "@/components/ui/button"
 import greyCircle from "../../../../public/assets/greyCircle.svg"
 import Image from "next/image"
 import { ChevronDown } from "lucide-react"
-import { useAsset } from "@/context/AssetContext"
+import { Token } from "@/lib/types";
+import { assets } from "@/lib/constants";
+import { useToken } from "@/context/token";
 
 
-const assets = [
-  { title: "USDC", subTitle: "USD Coin", icon: require("../../../../public/assets/USDC.png") },
-  { title: "USDT", subTitle: "Tether", icon: require("../../../../public/assets/USDT.png") },
-  { title: "RWA", subTitle: "Rwa", icon: require("../../../../public/assets/RWA.png")},
-  { title: "WBTC", subTitle: "Wbtc", icon: require("../../../../public/assets/WBTC.png")},
-  { title: "WETH", subTitle: "Weth", icon: require("../../../../public/assets/WETH.png")},
-  { title: "BTC", subTitle: "Bitcoin", icon: require("../../../../public/assets/BTC.png")},
-  { title: "WNT", subTitle: "Wnt", icon: require("../../../../public/assets/WNT.png")},
-]
-
-export default function SelectAsset({ isMain }: { isMain?: boolean }) {
-  const { selectedAsset, setSelectedAsset } = useAsset()
+export default function SelectAsset({ isMain, tokens }: { isMain?: boolean, tokens: Token[] }) {
   const [search, setSearch] = useState("")
   const [open, setOpen] = useState(false)
 
-  const filteredItems = assets.filter(item =>
+   const {selectedToken, setSelectedToken} = useToken()
+
+  const supportedTokensWithAssets = tokens.map(token => {
+    const asset = assets.find(a => a.title === token.value);
+    
+    return {
+      title: token.value,
+      subTitle: asset ? asset.subTitle : token.label,
+      icon: asset ? asset.icon : require("../../../../public/assets/USDT.png")
+    };
+  });
+
+  function _setToken(value: string) {
+    const token = tokens.find((t) => t.value === value);
+    setSelectedToken(token ? token : null);
+    setOpen(false)
+  }
+
+  const filteredItems =  supportedTokensWithAssets.filter(item =>
     item.title.toLowerCase().includes(search.toLowerCase())
   )
+
+  const selectedAsset = selectedToken ? assets.find(asset => asset.title === selectedToken.value) : undefined;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -40,7 +51,7 @@ export default function SelectAsset({ isMain }: { isMain?: boolean }) {
           {selectedAsset ? (
             <div className="flex flex-row justify-between space-x-5 items-center">
               <Image src={selectedAsset.icon} width={28} height={28} alt="assetIcon" className="rounded-[50%]" />
-              <h1>{selectedAsset.title}</h1>
+              <h1 className="font-[450] text-[16px]">{selectedAsset.title}</h1>
               {!isMain && <ChevronDown size={24} color="#88FFF3" />}
             </div>
           ) : (
@@ -66,10 +77,7 @@ export default function SelectAsset({ isMain }: { isMain?: boolean }) {
               key={item.title}
               variant="ghost"
               className="justify-start hover:!bg-[#132032] py-2"
-              onClick={() => {
-                setSelectedAsset(item)
-                setOpen(false)
-              }}
+              onClick={() => _setToken(item.title)}
             >
               <div className="flex flex-row space-x-3.5 items-center">
                 <Image src={item.icon} width={32} height={32} alt="assetNetwork" className="rounded-[50%]"/>

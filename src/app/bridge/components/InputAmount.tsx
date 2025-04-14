@@ -3,7 +3,6 @@
 
 import  { Input} from "@/components/ui/input";
 import { InputHTMLAttributes } from "react"
-import { useState } from "react"
 
 interface DecimalInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readOnly?: boolean
@@ -49,7 +48,7 @@ export function InputAmount({
       value={value}
       onChange={handleChange}
       readOnly={readOnly}
-      className={`w-[142.82px] rounded-[54.11px] !outline-none !border-none !active:border-none  placeholder-slate-300 ${readOnly ? "cursor-default opacity-80" : ""}`}
+      className={`w-[142.82px] rounded-[54.11px] !outline-none text-[16px] font-[450] !border-none !active:border-none  placeholder-slate-300 ${readOnly ? "cursor-default opacity-80" : ""}`}
       {...props}
     />
   )

@@ -1,8 +1,17 @@
+import localFont from 'next/font/local';
 import React from 'react'
+
+
+
+const circularStd = localFont({
+  src: "../../public/fonts/CircularStd-Medium.woff2",
+});
+
+
 
 const Footer = () => {
   return (
-    <div className="py-7 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div className={`py-7 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 ${circularStd.className}`}>
       <div className="flex flex-wrap justify-center md:justify-start space-x-3 text-[#8298AF] text-[14px] font-medium font-circular">
         <p>Support</p>
         <p>Explorer</p>
