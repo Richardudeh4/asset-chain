@@ -32,6 +32,7 @@ export const DEFAULT_NATIVE_TOKEN_CONTRACT =
 export const chains = chainIds.map((c) => ({
   label: getChainName(c),
   chainId: c,
+  
 }));
 
 export const CONFIRMATIONS = {
