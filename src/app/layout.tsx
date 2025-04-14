@@ -1,22 +1,24 @@
 import type { Metadata } from "next";
 
-import { Geist, Geist_Mono, Fira_Sans, Cherish} from "next/font/google";
+import { Geist, Geist_Mono, Fira_Sans, Cherish } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import AssetChainBadge from "@/components/assetChainBadge";
-import { AssetProvider } from "@/context/AssetContext";
-
+import { FactoryProvider } from "@/context/factory";
+import { WalletProvider } from "@/context/web3";
+import { TokenProvider } from "@/context/token";
+import { BridgeProvider } from "@/context/bridge";
 
 const firaSans = Fira_Sans({
-  subsets: ['latin'], 
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-fira-sans', 
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-fira-sans",
 });
 const cherish = Cherish({
-  subsets: ['latin'], 
+  subsets: ["latin"],
   weight: ["400"],
-  variable: '--font-cherish-sans',
+  variable: "--font-cherish-sans",
 });
 
 const geistSans = Geist({
@@ -47,16 +49,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${firaSans.variable} ${cherish.variable}  antialiased font-circular flex flex-col`}
       >
-        <AssetProvider>
-        <AssetChainBadge mobileText="Add Liquidity to wEth/USDT to earn 4,000p" desktopText="Join the Asset Chain Farming Point Program" />
-        <Navbar/>
-        <main className="flex-grow overflow-y-auto">
-        {children}
-        </main>
-        <footer className="bg-[#0B131E] text-white">
-        <Footer/>
-        </footer>
-        </AssetProvider>
+        <FactoryProvider>
+          <WalletProvider>
+            <TokenProvider>
+              <BridgeProvider>
+                <AssetChainBadge
+                  mobileText="Add Liquidity to wEth/USDT to earn 4,000p"
+                  desktopText="Join the Asset Chain Farming Point Program"
+                />
+                <Navbar />
+                <main className="flex-grow overflow-y-auto">{children}</main>
+                <footer className="bg-[#0B131E] text-white">
+                  <Footer />
+                </footer>
+              </BridgeProvider>
+            </TokenProvider>
+          </WalletProvider>
+        </FactoryProvider>
       </body>
     </html>
   );
