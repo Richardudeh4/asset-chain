@@ -14,6 +14,7 @@ import walletConnect from "../../../../public/assets/walletConnet.svg";
 import trust from "../../../../public/assets/trust.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import polygon from "../../../../public/assets/polygon.svg";
 import assetChain from "../../../../public/assets/assetChain.svg";
 import spin from "../../../../public/assets/spin.svg";
@@ -23,6 +24,9 @@ import greenTick from "../../../../public/assets/greenTick.svg";
 import blockSpinner from "../../../../public/assets/blockSpinner.svg";
 // import dynamic from "next/dynamic";
 import assetLoad from "../../../../public/assets/assetLoad.gif";
+=======
+import spin from "../../../../public/assets/spin.svg";
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 import { useWallet } from "@/context/web3";
 import { WalletType } from "@/lib/wallet";
 
@@ -42,6 +46,7 @@ const connectWalletItems = [
   { name: "Trust Wallet", icon: trust, key: "trust" },
 ];
 
+<<<<<<< HEAD
 export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
   const [openDialog, setOpenDialog] = useState<
     "first" | "second" | "bridge" | "transfer" | null
@@ -54,17 +59,37 @@ export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
   );
 
   const { isConnected, connect } = useWallet();
+=======
+export function ConnectWallet() {
+  const [open, setOpen] = useState(false);
+  const [step, setStep] = useState(1);
+  const [connectingWallet, setConnectingWallet] = useState(
+    connectWalletItems[0]
+  );
+
+  const { connect } = useWallet();
+  // console.log(isConnected, openDialog, 'sksksk')
 
   useEffect(() => {
-    if (openDialog === "bridge") {
-      setShowBridgeLoader(true);
-      const loaderTimer = setTimeout(() => {
-        setShowBridgeLoader(false);
-      }, 5000);
-      return () => clearTimeout(loaderTimer);
+    if (step === 2) {
+      connectWallet();
     }
-  }, [openDialog]);
+  }, [step]);
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 
+  async function connectWallet() {
+    try {
+      await connect(connectingWallet.key as WalletType);
+      setOpen(false);
+      setStep(1);
+    } catch (error) {
+      console.error(error);
+      setOpen(false);
+      setStep(1);
+    }
+  }
+
+<<<<<<< HEAD
   const handleButtonClick = () => {
     if (isConnected) {
       setOpenDialog("bridge");
@@ -84,6 +109,16 @@ export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
       setOpenDialog("transfer"); // Show the next component
     }, 4000);
   };
+=======
+  async function setWallet(wallet: string) {
+    console.log(wallet, "wallet");
+    setConnectingWallet(
+      connectWalletItems.find((item) => item.key === wallet) ||
+        connectWalletItems[0]
+    );
+    setStep(2);
+  }
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 
   async function setWallet(wallet: string) {
     try {
@@ -104,15 +139,26 @@ export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
       <Dialog>
         <DialogTrigger asChild>
           <Button
+<<<<<<< HEAD
             onClick={handleButtonClick}
             className="w-[215px] bg-[#2042B8] font-medium text-[11.78px] cursor-pointer rounded-[25.26px]"
           >
             {bottonLabel}
+=======
+            onClick={() => setOpen(true)}
+            className="w-[215px] bg-[#2042B8] cursor-pointer rounded-[25.26px]"
+          >
+            Connect wallet
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
           </Button>
         </DialogTrigger>
 
         {/* First modal - Connect Wallet */}
+<<<<<<< HEAD
         {!isConnected && openDialog === "first" && (
+=======
+        {open && step === 1 && (
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
           <DialogContent
             className="sm:max-w-[414px] bg-[#0B131E] border-none h-[546px] top-1/2 -translate-y-1/2 transition-all   
            duration-500 ease-in-out"
@@ -134,7 +180,11 @@ export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
                   >
                     <div
                       className="flex items-center justify-between flex-row hover:text-[#269497]"
+<<<<<<< HEAD
                       onClick={()=> setWallet(item.key)}
+=======
+                      onClick={() => setWallet(item.key)}
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
                     >
                       <h1 className="text-[16px] font-[450] text-[#FFFFFF] hover:text-[#269497]">
                         {item.name}
@@ -159,12 +209,16 @@ export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
         )}
 
         {/* Second modal - MetaMask Connection */}
-        {!isConnected && openDialog === "second" && (
+        {open && step === 2 && (
           <DialogContent className="sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[546px] translate-y-0 top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out">
             <div className="flex px-10 py-1.5 flex-col justify-between">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-[32px] font-[450] text-center text-[#FFFFFF] pt-5">
+<<<<<<< HEAD
                   MetaMask
+=======
+                  {connectingWallet.name}
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
                 </DialogTitle>
               </DialogHeader>
               <div className="flex justify-center items-center relative">
@@ -186,6 +240,7 @@ export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
               <div className="flex flex-col text-center">
                 <h1 className="text-[18px] font-[450] text-white pb-6">
                   Requesting Connection
+<<<<<<< HEAD
                 </h1>
                 <p className="text-[18px] font-[450] text-[#8298AF]">
                   Open the MetaMask Browser extension to connect your wallet.
@@ -465,6 +520,13 @@ export function ConnectWallet({ bottonLabel }: { bottonLabel: string }) {
                   Claim Later
                 </Button>
               </div>
+=======
+                </h1>
+                <p className="text-[18px] font-[450] text-[#8298AF]">
+                  Open the MetaMask Browser extension to connect your wallet.
+                </p>
+              </div>
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
             </div>
           </DialogContent>
         )}

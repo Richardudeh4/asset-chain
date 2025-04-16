@@ -11,7 +11,7 @@ interface DecimalInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export function InputAmount({
   readOnly = false,
-  maxDecimals = 2,
+  maxDecimals = 10,
   value,
   onChange,
   ...props

@@ -12,7 +12,16 @@ import { anyBridgeAssist } from "../contracts/useContract";
 import { BridgeAssistGenericUpgradeable } from "../contracts/types/BridgeAssist";
 import { ChainId } from "@/lib/types";
 import { extractFulfillTransaction } from "@/lib/helpers";
+<<<<<<< HEAD
 import { chains, CONFIRMATIONS, DEFAULT_NATIVE_TOKEN_CONTRACT, defaultChainId } from "@/lib/constants";
+=======
+import {
+  chains,
+  CONFIRMATIONS,
+  DEFAULT_NATIVE_TOKEN_CONTRACT,
+  defaultChainId,
+} from "@/lib/constants";
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 import { getChainRpc } from "@/lib/node";
 import { retrieveSignatures } from "@/api/sign";
 
@@ -392,13 +401,23 @@ export const BridgeProvider: React.FC<{ children: React.ReactNode }> = ({
     return {
       isFulfilled: Number(fulfilledAt) > 0,
       txBlock: tx.block as bigint,
+<<<<<<< HEAD
       confirmations: CONFIRMATIONS[tx.fromChain.replace("evm.", "") as ChainId] as number,
+=======
+      confirmations: CONFIRMATIONS[
+        tx.fromChain.replace("evm.", "") as ChainId
+      ] as number,
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
     };
   }
 
   async function send(amount: bigint, from: ChainId, to: ChainId) {
     try {
+<<<<<<< HEAD
       console.log('djdjdjj')
+=======
+      console.log("djdjdjj");
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
       if (!selectedToken) return null;
       if (!signer) return null;
       if (!address) return null;
@@ -428,7 +447,13 @@ export const BridgeProvider: React.FC<{ children: React.ReactNode }> = ({
           signer
         );
         setBridgeAwaitingTransaction(true);
+<<<<<<< HEAD
         const tx = await contract.send(amount, address, `evm.${to}`, {value: amount});
+=======
+        const tx = await contract.send(amount, address, `evm.${to}`, {
+          value: amount,
+        });
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 
         await tx.wait(1);
         setBridgeAwaitingTransaction(false);
@@ -506,7 +531,12 @@ export const BridgeProvider: React.FC<{ children: React.ReactNode }> = ({
         toBridgeAssist.bridgeAssist,
         transaction.fromChain as ChainId,
         transaction.fromUser,
+<<<<<<< HEAD
         index
+=======
+        index,
+        symbol
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
       );
       let _signatures = [];
       if (!signature) throw new Error("Signature Error: Something went wrong");

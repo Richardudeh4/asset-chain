@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+/* eslint-disable @typescript-eslint/no-require-imports */
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 import { isProd } from "@/config/env-var";
 import { getChainName } from "./node";
 import { ChainId, ConnectionMap, Token } from "./types";

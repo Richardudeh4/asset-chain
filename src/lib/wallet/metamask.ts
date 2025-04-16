@@ -28,7 +28,11 @@ export class Metamask extends WalletHandler {
     // Handle multiple providers case (like Coinbase + MetaMask)
     if (window.ethereum.providers?.length) {
       this.nativeProvider = window.ethereum.providers.find(
+<<<<<<< HEAD
         (provider) => (provider as any).isMetaMask
+=======
+        (provider: any) => (provider as any).isMetaMask
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
       );
     } else {
       this.nativeProvider = window.ethereum;
@@ -44,6 +48,10 @@ export class Metamask extends WalletHandler {
 
     this.nativeProvider.on("accountsChanged", this.changeWalletHandler);
     this.nativeProvider.on("chainChanged", this.changeChainHandler);
+<<<<<<< HEAD
+=======
+    this.nativeProvider.on("disconnect", this.disconnect);
+>>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
   }
 
   private removeEventListeners() {
