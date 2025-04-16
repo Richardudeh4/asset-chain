@@ -301,107 +301,114 @@ export function TransactionList() {
                 </div>
               ))}
             </div>
-            {filteredTransactions.map((t, index) => {
-              const fromChain = getChain(
-                t.transaction.fromChain.replace("evm.", "") as ChainId
-              );
-              const toChain = getChain(
-                t.transaction.toChain.replace("evm.", "") as ChainId
-              );
-              const amount = getAmount(
-                t.transaction.amount,
-                decimals,
-                t.transaction.fromChain,
-                t.transaction.toChain,
-                t.symbol,
-                bridgesFees
-              );
-              const block = blocksToClaim(t, currentBlocks);
-              const dateTime = convertTimestampDate(t.transaction.timestamp);
-              return (
-                <div
-                  key={index}
-                  className="px-3 bg-[#070E17] border border-[#1A2739] py-3 flex flex-col gap-5 rounded-[5px]"
-                >
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                    <div className="flex flex-row space-x-2.5">
-                      <div className="flex flex-row -space-x-5 items-center">
-                        <Image
-                          src={fromChain.svg || "/placeholder.svg"}
-                          alt={fromChain.label}
-                          width={42}
-                          height={42}
-                          className="z-20 rounded-[50%]"
-                        />
-                        <Image
-                          src={toChain.svg || "/placeholder.svg"}
-                          alt={toChain.label}
-                          width={42}
-                          height={42}
-                          className="z-40 rounded-[50%]"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-0.5">
-                        <h1 className="text-[#8298AF] font-[450] text-[14px]">
-                          Bridged asset
-                        </h1>
-                        <h1 className="text-[#FFFFFF] text-[16px] font-[450]">
-                          {amount} {t.symbol}
-                        </h1>
-                      </div>
-                    </div>
-                    <h1 className="text-[#8298AF] text-[14px] font-[450]">
-                      {dateTime}
-                    </h1>
-                  </div>
-                  <div className="flex flex-row justify-between items-center">
-                    <div className="flex flex-col gap-1.5">
-                      <h1 className="text-[#8298AF] text-[14px] font-[450]">
-                        Block Verfication
-                      </h1>
-                      <div className="flex flex-row space-x-1 items-center">
-                        {!t.fulfilled && (
-                          <h1 className="text-[16px] font-[450] font-circular">
-                            {[block.message]}
+            <div className="scrollbar-thin scrollbar-thumb-[#1A2739] scrollbar-track-[#0B131E] scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full overflow-y-auto max-h-[500px] mt-4">
+              {filteredTransactions.map((t, index) => {
+                const fromChain = getChain(
+                  t.transaction.fromChain.replace("evm.", "") as ChainId
+                );
+                const toChain = getChain(
+                  t.transaction.toChain.replace("evm.", "") as ChainId
+                );
+                const amount = getAmount(
+                  t.transaction.amount,
+                  decimals,
+                  t.transaction.fromChain,
+                  t.transaction.toChain,
+                  t.symbol,
+                  bridgesFees
+                );
+                const block = blocksToClaim(t, currentBlocks);
+                const dateTime = convertTimestampDate(t.transaction.timestamp);
+                return (
+                  <div
+                    key={index}
+                    className="px-3 bg-[#070E17] border border-[#1A2739] py-3 flex flex-col gap-5 rounded-[5px]"
+                  >
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                      <div className="flex flex-row space-x-2.5">
+                        <div className="flex flex-row -space-x-5 items-center">
+                          <Image
+                            src={fromChain.svg || "/placeholder.svg"}
+                            alt={fromChain.label}
+                            width={42}
+                            height={42}
+                            className="z-20 rounded-[50%]"
+                          />
+                          <Image
+                            src={toChain.svg || "/placeholder.svg"}
+                            alt={toChain.label}
+                            width={42}
+                            height={42}
+                            className="z-40 rounded-[50%]"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-0.5">
+                          <h1 className="text-[#8298AF] font-[450] text-[14px]">
+                            Bridged asset
                           </h1>
-                        )}
-                        <Image
-                          src={greenCheck || "/placeholder.svg"}
-                          alt="greenCheck"
-                          width={16}
-                          height={16}
-                        />
-                        <p className="text-[16px] pl-1 font-[450] text-[#00F482] font-circular">
-                          {t.fulfilled
-                            ? "Claimed"
-                            : block.isConfirmed
-                            ? "Confirmed"
-                            : "Pending..."}
-                        </p>
+                          <h1 className="text-[#FFFFFF] text-[16px] font-[450]">
+                            {amount} {t.symbol}
+                          </h1>
+                        </div>
                       </div>
+                      <h1 className="text-[#8298AF] text-[14px] font-[450]">
+                        {dateTime}
+                      </h1>
                     </div>
-                    <ClaimDialog
-                      amount={amount}
-                      chainSwitch={chainSwitch}
-                      loading={bridgeAwaitingTransaction || loadingTransactions}
-                      onAction={onAction}
-                      open={open}
-                      transaction={t}
-                      claimTx={claimTx}
-                      error={dialogError}
-                      blocks={currentBlocks}
-                      setOpen={(o) => {
-                        setOpen(o);
-                        setTransaction(t);
-                        setSelectedTransactionChain(
-                          t.transaction.fromChain.replace("evm.", "") as ChainId
-                        );
-                      }}
-                    />
+                    <div className="flex flex-row justify-between items-center">
+                      <div className="flex flex-col gap-1.5">
+                        <h1 className="text-[#8298AF] text-[14px] font-[450]">
+                          Block Verfication
+                        </h1>
+                        <div className="flex flex-row space-x-1 items-center">
+                          {!t.fulfilled && (
+                            <h1 className="text-[16px] font-[450] font-circular">
+                              {[block.message]}
+                            </h1>
+                          )}
+                          <Image
+                            src={greenCheck || "/placeholder.svg"}
+                            alt="greenCheck"
+                            width={16}
+                            height={16}
+                          />
+                          <p className="text-[16px] pl-1 font-[450] text-[#00F482] font-circular">
+                            {t.fulfilled
+                              ? "Claimed"
+                              : block.isConfirmed
+                              ? "Confirmed"
+                              : "Pending..."}
+                          </p>
+                        </div>
+                      </div>
+                      <ClaimDialog
+                        amount={amount}
+                        chainSwitch={chainSwitch}
+                        loading={
+                          bridgeAwaitingTransaction || loadingTransactions
+                        }
+                        onAction={onAction}
+                        open={open}
+                        transaction={t}
+                        claimTx={claimTx}
+                        error={dialogError}
+                        blocks={currentBlocks}
+                        setOpen={(o) => {
+                          setOpen(o);
+                          setTransaction(t);
+                          setSelectedTransactionChain(
+                            t.transaction.fromChain.replace(
+                              "evm.",
+                              ""
+                            ) as ChainId
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </>
         );
       }
