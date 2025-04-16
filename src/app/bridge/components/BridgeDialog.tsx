@@ -51,6 +51,12 @@ export function BridgeDialog(props: Props) {
   const { decimals } = useToken();
   const { bridgeAwaitingTransaction, bridgesFees } = useBridge();
 
+  function onOpenChange(o : boolean){
+    if (!o) {
+      props.onAction(BridgeAction.CLOSE);
+    }
+  }
+
   function returnIcon(loading: boolean) {
     if (loading) {
       return (
@@ -425,7 +431,7 @@ export function BridgeDialog(props: Props) {
   }
   return (
     <>
-      <Dialog>
+      <Dialog onOpenChange={onOpenChange}>
         <DialogTrigger asChild>
           <Button
             onClick={() => {

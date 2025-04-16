@@ -45,6 +45,14 @@ export function ClaimDialog(props: Props) {
     ? `${props.amount} ${props.transaction.symbol} is ready to be claimed on ${toChain.label} ${toChain.label} network`
     : `Your transaction is being processed. Please wait the blocks to be confirmed`;
 
+  
+  function onOpenChange(o : boolean){
+    if (!o) {
+      props.setOpen(false);
+      props.onAction(BridgeAction.CLOSE);
+    }
+  }
+
   function returnIcon(loading: boolean) {
     if (loading) {
       return (
@@ -81,8 +89,7 @@ export function ClaimDialog(props: Props) {
             <span className="text-[#3CCACE]">
               {props.amount} {props.transaction.symbol}
             </span>{" "}
-            on {" "}
-            {toChain.label} Network
+            on {toChain.label} Network
           </h2>
         </div>
       </>
@@ -159,7 +166,9 @@ export function ClaimDialog(props: Props) {
     return renderContent();
   }
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={onOpenChange}
+    >
       <DialogTrigger asChild>
         <Button
           onClick={() => {
