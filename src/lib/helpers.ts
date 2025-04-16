@@ -1,6 +1,6 @@
 import { AbiCoder, keccak256 } from "ethers";
 import { chainsTokensConnection } from "./constants";
-import { baseUrl } from "@/config/env-var";
+import { baseUrl, isProd, oldBaseUrl } from "@/config/env-var";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function extractError(error: any) {
@@ -10,8 +10,7 @@ export function extractError(error: any) {
   if (error.shortMessage) title = error.shortMessage;
   if (error.info && error.info.error && error.info.error.message)
     body = error.info.error.message;
-  if (error.data && error.data.message)
-    body = error.data.message;
+  if (error.data && error.data.message) body = error.data.message;
 
   title = title ? title : error.message;
   body = body ? body : error.message;
@@ -75,13 +74,14 @@ export function findTokenByChains(
 }
 
 export async function _request<B, R>(
+  symbol: string,
   _url: string,
   method?: string,
   body?: B,
   searchParams?: any
 ) {
   try {
-    const url = new URL(`${baseUrl}${_url}`);
+    const url = new URL(`${getUrl(symbol)}${_url}`);
     if (searchParams) {
       Object.keys(searchParams).forEach((k) => {
         url.searchParams.set(k, searchParams[k]);
@@ -104,4 +104,27 @@ export async function _request<B, R>(
     console.log(error);
     throw error;
   }
+}
+
+export function convertTimestampDate(timestamp: bigint) {
+  const date = new Date(Number(timestamp) * 1000);
+
+  // Format in DD-MM-YYYY HH:MM AM/PM (local time)
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12; // Convert to 12-hour format
+
+  const formattedDateLocal = `${day}-${month}-${year} ${hours}:${minutes} ${ampm}`;
+
+  return formattedDateLocal;
+}
+
+function getUrl(symbol: string) {
+  if (isProd) return baseUrl;
+  if (symbol === "RWA") return oldBaseUrl
+  return baseUrl;
 }

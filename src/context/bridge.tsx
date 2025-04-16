@@ -12,7 +12,12 @@ import { anyBridgeAssist } from "../contracts/useContract";
 import { BridgeAssistGenericUpgradeable } from "../contracts/types/BridgeAssist";
 import { ChainId } from "@/lib/types";
 import { extractFulfillTransaction } from "@/lib/helpers";
-import { chains, CONFIRMATIONS, DEFAULT_NATIVE_TOKEN_CONTRACT, defaultChainId } from "@/lib/constants";
+import {
+  chains,
+  CONFIRMATIONS,
+  DEFAULT_NATIVE_TOKEN_CONTRACT,
+  defaultChainId,
+} from "@/lib/constants";
 import { getChainRpc } from "@/lib/node";
 import { retrieveSignatures } from "@/api/sign";
 
@@ -392,13 +397,15 @@ export const BridgeProvider: React.FC<{ children: React.ReactNode }> = ({
     return {
       isFulfilled: Number(fulfilledAt) > 0,
       txBlock: tx.block as bigint,
-      confirmations: CONFIRMATIONS[tx.fromChain.replace("evm.", "") as ChainId] as number,
+      confirmations: CONFIRMATIONS[
+        tx.fromChain.replace("evm.", "") as ChainId
+      ] as number,
     };
   }
 
   async function send(amount: bigint, from: ChainId, to: ChainId) {
     try {
-      console.log('djdjdjj')
+      console.log("djdjdjj");
       if (!selectedToken) return null;
       if (!signer) return null;
       if (!address) return null;
@@ -428,7 +435,9 @@ export const BridgeProvider: React.FC<{ children: React.ReactNode }> = ({
           signer
         );
         setBridgeAwaitingTransaction(true);
-        const tx = await contract.send(amount, address, `evm.${to}`, {value: amount});
+        const tx = await contract.send(amount, address, `evm.${to}`, {
+          value: amount,
+        });
 
         await tx.wait(1);
         setBridgeAwaitingTransaction(false);
@@ -506,7 +515,8 @@ export const BridgeProvider: React.FC<{ children: React.ReactNode }> = ({
         toBridgeAssist.bridgeAssist,
         transaction.fromChain as ChainId,
         transaction.fromUser,
-        index
+        index,
+        symbol
       );
       let _signatures = [];
       if (!signature) throw new Error("Signature Error: Something went wrong");

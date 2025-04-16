@@ -32,7 +32,7 @@ export type Token = {
 
 export type ISigner = JsonRpcProvider | null;
 
-export type FulfillInfo = { txBlock: number; confirmations: number }
+export type FulfillInfo = { txBlock: number; confirmations: number };
 
 export type Connection<Key, Value> = {
   chains: [Key, Key];
@@ -41,9 +41,25 @@ export type Connection<Key, Value> = {
 
 export type ConnectionMap<Key, Value> = Connection<Key, Value>[];
 
-export type SignatureData = string[] | string
+export type SignatureData = string[] | string;
 
 export type SignatureResponse = {
-  signature: SignatureData
-}
+  signature: SignatureData;
+};
 
+export type BridgeData = {
+  amount: string;
+  fromChain: ChainId;
+  toChain: ChainId;
+  token: string;
+  tokenIsNative: boolean;
+  fromUser: string;
+};
+
+export enum BridgeAction {
+  APPROVE = "approve",
+  TRANSFER = "transfer",
+  CLAIM = "claim",
+  CLOSE = "close",
+  SWITCH_CHAIN = 'switch-chain'
+}

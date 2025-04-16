@@ -295,6 +295,8 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({
         bridgeAssist.bridgeAssist
       );
 
+      console.log(allowance, amount, 'user')
+
       if (allowance >= amount) return true;
 
       return false;
