@@ -15,7 +15,7 @@ import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 import { Chain, ChainId } from "@/lib/types";
 
-function getChain(chainId: ChainId){
+export function getChain(chainId: ChainId){
   switch (chainId) {
     case "200810":
       return {

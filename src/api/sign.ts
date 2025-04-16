@@ -7,7 +7,8 @@ export async function retrieveSignatures(
   toBridgeAssistAddress: string,
   fromChain: ChainId,
   fromUser: string,
-  index: number
+  index: number,
+  symbol: string
 ) {
   const queryParams = {
     fromBridgeAddress,
@@ -16,7 +17,7 @@ export async function retrieveSignatures(
     fromUser,
     index,
   };
-  const res  = await _request<undefined, SignatureResponse >("/sign", "GET", undefined, queryParams);
+  const res  = await _request<undefined, SignatureResponse >(symbol, "/sign", "GET", undefined, queryParams);
 
   return res.signature
 }

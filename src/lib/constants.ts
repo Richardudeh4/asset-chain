@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { isProd } from "@/config/env-var";
 import { getChainName } from "./node";
 import { ChainId, ConnectionMap, Token } from "./types";
