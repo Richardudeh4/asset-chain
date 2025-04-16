@@ -14,25 +14,11 @@ import walletConnect from "../../../../public/assets/walletConnet.svg";
 import trust from "../../../../public/assets/trust.svg";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
-<<<<<<< HEAD
-import polygon from "../../../../public/assets/polygon.svg";
-import assetChain from "../../../../public/assets/assetChain.svg";
-import spin from "../../../../public/assets/spin.svg";
-import { Progress } from "@/components/ui/progress";
-import greenTick from "../../../../public/assets/greenTick.svg";
-import blockSpinner from "../../../../public/assets/blockSpinner.svg";
-// import dynamic from 'next/dynamic';
-import assetLoad from "../../../../public/assets/assetLoad.gif";
-import { useWallet } from "@/context/web3";
-import { WalletType } from "@/lib/wallet";
-
-=======
 import spin from "../../../../public/assets/spin.svg";
 
 import { useWallet } from "@/context/web3";
 import { WalletType } from "@/lib/wallet";
 
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 // const Lottie = dynamic(
 //   () => {
 //     if (typeof window !== 'undefined') {
@@ -50,26 +36,6 @@ const connectWalletItems = [
 ];
 
 export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
-<<<<<<< HEAD
-  const [openDialog, setOpenDialog] = useState<
-    "first" | "second" | "bridge" | "transfer" | null
-  >(null);
-  const [showBridgeLoader, setShowBridgeLoader] = useState(true);
-  const [transferProgress, setTransferProgress] = useState(15);
-  const [isTransferring, setIsTransferring] = useState(false);
-  const [connectingWallet, setConnectingWallet] = useState(connectWalletItems[0]);
-
-  const { isConnected, connect } = useWallet();
-
-  // useEffect(() => {
-  //   if (openDialog === "second") {
-  //     const timer = setTimeout(() => {
-  //       setOpenDialog(null);
-  //     }, 3000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [openDialog]);
-=======
   const [connectingWallet, setConnectingWallet] = useState(connectWalletItems[0]);
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
@@ -81,7 +47,6 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
       connectWallet();
     }
   }, [step]);
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
 
   async function setWallet(wallet: string) {
     try {
@@ -105,19 +70,6 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
     }
   }
 
-<<<<<<< HEAD
-  const handleTransferToAssetChain = () => {
-    // Start transfer process
-    setIsTransferring(true);
-    setTransferProgress(100); // Set progress to 100%
-
-    // Simulate transfer loading for 4 seconds
-    setTimeout(() => {
-      setIsTransferring(false);
-      setOpenDialog("transfer"); // Show the next component
-    }, 4000);
-  };
-=======
   async function handleButtonClick(){
     try {
       if (isConnected){
@@ -128,20 +80,6 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
       console.error(error)
     }
     
-  }
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
-
-  async function setWallet(wallet: string) {
-    try {
-      setConnectingWallet(
-        connectWalletItems.find((item) => item.key === wallet) || connectWalletItems[0]
-      );
-      setOpenDialog("second")
-      await connect(wallet as WalletType);
-      setOpenDialog(null);
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   return (
@@ -158,12 +96,7 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
           </Button>
         </DialogTrigger>
 
-<<<<<<< HEAD
-        {/* First modal - Connect Wallet */}
-        {!isConnected && openDialog === "first" && (
-=======
         {open && step === 1 && (
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
           <DialogContent
             className="sm:max-w-[414px] bg-[#0B131E] border-none h-[546px] top-1/2 -translate-y-1/2 transition-all   
            duration-500 ease-in-out"
@@ -185,11 +118,7 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
                   >
                     <div
                       className="flex items-center justify-between flex-row hover:text-[#269497]"
-<<<<<<< HEAD
-                      onClick={()=> setWallet(item.key)}
-=======
                       onClick={() => setWallet(item.key)}
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
                     >
                       <h1 className="text-[16px] font-[450] text-[#FFFFFF] hover:text-[#269497]">
                         {item.name}
@@ -219,11 +148,7 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
             <div className="flex px-10 py-1.5 flex-col justify-between">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-[32px] font-[450] text-center text-[#FFFFFF] pt-5">
-<<<<<<< HEAD
-                  MetaMask
-=======
                   {connectingWallet.name}
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
                 </DialogTitle>
               </DialogHeader>
               <div className="flex justify-center items-center relative">
@@ -245,293 +170,11 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
               <div className="flex flex-col text-center">
                 <h1 className="text-[18px] font-[450] text-white pb-6">
                   Requesting Connection
-<<<<<<< HEAD
                 </h1>
                 <p className="text-[18px] font-[450] text-[#8298AF]">
                   Open the MetaMask Browser extension to connect your wallet.
                 </p>
               </div>
-            </div>
-          </DialogContent>
-        )}
-
-        {/* Bridge modal */}
-        {isConnected && openDialog === "bridge" && (
-          <DialogContent className="w-[658px] bg-[#0B131E] flex-col rounded-[7.54px] border-none">
-            {showBridgeLoader ? (
-              <div className="py-10">
-                <div className="flex flex-col gap-8 justify-center">
-                  <DialogHeader className="flex items-center flex-row space-x-0 text-white mt-3">
-                    <h1 className="text-[16px] text-[#3CCACE] font-[450]">
-                      Bridge
-                    </h1>
-                    <Progress
-                      className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
-                      value={15}
-                    />
-                    <h2
-                      className={
-                        transferProgress === 100 ? "text-[#3CCACE]" : ""
-                      }
-                    >
-                      Transfer
-                    </h2>
-                    <Progress className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]" />
-                    <h3>Done</h3>
-                  </DialogHeader>
-                  <div className="flex justify-center">
-                    {/* <Lottie animationData={loader} loop={true}  autoPlay={true} 
-                   style={{
-                  width: 214, 
-                  height: 214,
-                  }}
-              className="text-blue-300"
-                  rendererSettings={{
-                    preserveAspectRatio: 'xMidYMid meet'
-                  }}
-                  /> */}
-                    <Image
-                      src={assetLoad}
-                      className=""
-                      alt="spinLoader"
-                      width={214}
-                      height={214}
-                    />
-                    {/* <Image src={loader} className="" alt="spinLoader" width={214} height={214}/> */}
-                  </div>
-                  <div className="flex flex-col gap-4 justify-center text-center">
-                    <h1 className="text-[#FCAD31] text-[16px] font-[450] font-circular">
-                      Awaiting approval
-                    </h1>
-                    <h2 className="font-bold text-[16px] font-circular text-white">
-                      Getting{" "}
-                      <span className="text-[#3CCACE]">345,356 USDC</span> from
-                      Base Network
-                    </h2>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-8">
-                <DialogHeader className="flex items-center flex-row space-x-0 text-white mt-5">
-                  <h1 className="text-[16px] text-[#3CCACE] font-[450]">
-                    Bridge
-                  </h1>
-                  <Progress
-                    className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
-                    value={100}
-                  />
-                  <h2
-                    className={transferProgress === 100 ? "text-[#3CCACE]" : ""}
-                  >
-                    Transfer
-                  </h2>
-                  <Progress
-                    className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
-                    value={transferProgress}
-                  />
-                  <h3>Done</h3>
-                </DialogHeader>
-                <div className="flex justify-center">
-                  <Image
-                    src={greenTick}
-                    className=""
-                    width={94}
-                    height={94}
-                    alt="green tick"
-                  />
-                </div>
-                <div className="flex flex-col justify-center gap-4">
-                  <h1 className="text-[16px] font-[450] text-center font-circular text-[#00F482]">
-                    Successful
-                  </h1>
-                  <h1 className="text-[16px] font-circular font-bold text-center text-white">
-                    <span className="text-[#3CCACE]">345,356 USDC</span> has
-                    been retrieved from Base Network
-                  </h1>
-                  <div className="flex justify-center px-1.5">
-                    <Button className="bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
-                      Transaction Hash
-                    </Button>
-                  </div>
-                  <div className="mt-3.5 flex justify-center">
-                    <Button
-                      className="bg-[#2042B8] rounded-[25.26px] text-white"
-                      onClick={handleTransferToAssetChain}
-                      disabled={isTransferring}
-                    >
-                      {isTransferring
-                        ? "Transferring..."
-                        : "Transfer to Asset Chain"}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </DialogContent>
-        )}
-
-        {/* Transfer loading state */}
-        {isTransferring && (
-          <DialogContent className="w-[658px] bg-[#0B131E] flex-col rounded-[7.54px] border-none">
-            <div className="py-10">
-              <div className="flex flex-col gap-8 justify-center">
-                <DialogHeader className="flex items-center flex-row space-x-0 text-white mt-3">
-                  <h1 className="text-[16px] text-[#3CCACE] font-[450]">
-                    Bridge
-                  </h1>
-                  <Progress
-                    className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
-                    value={100}
-                  />
-                  <h2 className="text-[#3CCACE]">Transfer</h2>
-                  <Progress
-                    className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
-                    value={100}
-                  />
-                  <h3>Done</h3>
-                </DialogHeader>
-                <div className="flex justify-center">
-                  {/* <Lottie 
-                  animationData={loader}
-                  style={{
-                    width: 214, 
-                    height: 214,
-                    }}
-                     className="text-blue-300"
-                    rendererSettings={{
-                      preserveAspectRatio: 'xMidYMid meet'
-                    }}
-                   loop={true} /> */}
-                  <Image
-                    src={assetLoad}
-                    className=""
-                    alt="spinLoader"
-                    width={214}
-                    height={214}
-                  />
-                </div>
-                <div className="flex flex-col gap-4 justify-center text-center">
-                  <h1 className="text-[#FCAD31] text-[16px] font-[450] font-circular">
-                    Awaiting Approval
-                  </h1>
-                  <h2 className="font-bold text-[16px] font-circular text-white">
-                    Transferring
-                    <span className="text-[#3CCACE]">345,356 USDC</span> to
-                    Asset Chain Network
-                  </h2>
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-        )}
-
-        {/* Transfer complete component */}
-        {openDialog === "transfer" && (
-          <DialogContent className="w-[658px] bg-[#0B131E] flex-col rounded-[7.54px] border-none">
-            <div className="flex flex-col gap-8 pt-7 pb-4">
-              <DialogHeader className="flex items-center flex-row space-x-0 text-white mt-5">
-                <h1 className="text-[16px] text-[#3CCACE] font-[450]">
-                  Bridge
-                </h1>
-                <Progress
-                  className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
-                  value={100}
-                />
-                <h2 className="text-[#3CCACE]">Transfer</h2>
-                <Progress
-                  className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
-                  value={100}
-                />
-                <h3 className="text-[#3CCACE]">Done</h3>
-              </DialogHeader>
-              <div className="flex justify-center">
-                <Image
-                  src={greenTick}
-                  width={94}
-                  height={94}
-                  alt="green tick"
-                />
-              </div>
-              <div className="flex flex-col justify-center gap-4 text-center">
-                <h1 className="text-[16px] font-[450] font-circular text-[#00F482]">
-                  Done!
-                </h1>
-                <h1 className="text-[16px] font-circular font-[450] text-white">
-                  Your bridging process is complete. You can now claim your
-                  assets to your wallet on the Asset Chain network.
-                </h1>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row space-x-1.5 items-center">
-                    <div className="flex flex-row -space-x-5">
-                      <Image
-                        src={polygon}
-                        alt="polygon"
-                        width={42}
-                        height={42}
-                        className="z-20"
-                      />
-                      <Image
-                        src={assetChain}
-                        alt="assetChain"
-                        width={42}
-                        height={42}
-                        className="z-40"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <h1 className="text-[#8298AF] text-[14px] font-[450]">
-                        Bridged Asset
-                      </h1>
-                      <h1 className="text-[16px] font-[450] text-white">
-                        340,345, USDC
-                      </h1>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <h1 className="text-[#8298AF] text-[14px] -pl-2.5 font-[450]">
-                      Block Verification
-                    </h1>
-                    <div className="flex flex-row space-x-1.5">
-                      <h1 className="text-[16px] font-[450] text-white">
-                        [ 20% ]
-                      </h1>
-                      <Image
-                        src={blockSpinner}
-                        width={15}
-                        height={15}
-                        className="animate-spin"
-                        alt="blockspinner"
-                      />
-                      <p className="italic text-[#FCAD31] font-[450] text-[16px]">
-                        Pending..
-                      </p>
-                    </div>
-                  </div>
-                  <div></div>
-                </div>
-              </div>
-              <div className="flex md:justify-between justify-center pl-10.5 flex-col gap-2.5 md:flex-row md:px-1.5 mt-6">
-                <Button
-                  onClick={() => setOpenDialog(null)}
-                  className="bg-[#141A2F] text-[#263545] cursor-pointer font-circular  text-[11.78px] !font-medium w-[215px] rounded-[22px] leading-[8.85px]"
-                >
-                  Claim now
-                </Button>
-                <Button
-                  onClick={() => setOpenDialog(null)}
-                  className="w-[215px] rounded-[22px] !font-medium  bg-transparent cursor-pointer border border-[#42E8E0]"
-                >
-                  Claim Later
-                </Button>
-              </div>
-=======
-                </h1>
-                <p className="text-[18px] font-[450] text-[#8298AF]">
-                  Open the MetaMask Browser extension to connect your wallet.
-                </p>
-              </div>
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
             </div>
           </DialogContent>
         )}

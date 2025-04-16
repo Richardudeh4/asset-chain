@@ -51,7 +51,7 @@ export default function SelectAsset({ isMain, tokens }: { isMain?: boolean, toke
           {selectedAsset ? (
             <div className="flex flex-row justify-between space-x-5 items-center">
               <Image src={selectedAsset.icon} width={28} height={28} alt="assetIcon" className="rounded-[50%]" />
-              <h1 className="font-[450] text-[16px]">{selectedAsset.title}</h1>
+              <h1>{selectedAsset.title}</h1>
               {!isMain && <ChevronDown size={24} color="#88FFF3" />}
             </div>
           ) : (

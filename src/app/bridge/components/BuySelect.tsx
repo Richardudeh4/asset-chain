@@ -15,11 +15,7 @@ import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 import { Chain, ChainId } from "@/lib/types";
 
-<<<<<<< HEAD
-function getChain(chainId: ChainId){
-=======
 export function getChain(chainId: ChainId){
->>>>>>> 85f09553a3855b289747c06aa470977f8f2c0014
   switch (chainId) {
     case "200810":
       return {
