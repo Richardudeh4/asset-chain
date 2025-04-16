@@ -13,8 +13,6 @@ import Image from "next/image";
 import greenTick from "../../../../public/assets/greenTick.svg";
 import assetLoad from "../../../../public/assets/assetLoad.gif";
 import blockSpinner from "../../../../public/assets/blockSpinner.svg";
-import polygon from "../../../../public/assets/polygon.svg";
-import assetChain from "../../../../public/assets/assetChain.svg";
 import greenCheck from "../../../../public/assets/greenCheck.svg";
 
 import { getChain } from "./BuySelect";
@@ -24,6 +22,8 @@ import { SignedTransaction, useBridge } from "@/context/bridge";
 import { useToken } from "@/context/token";
 import { blocksToClaim, getAmount } from "./TransactionList";
 import { useWallet } from "@/context/web3";
+import Link from "next/link";
+import { getChainScanner } from "@/lib/node";
 
 type Props = {
   bridgeData: BridgeData;
@@ -51,7 +51,7 @@ export function BridgeDialog(props: Props) {
   const { decimals } = useToken();
   const { bridgeAwaitingTransaction, bridgesFees } = useBridge();
 
-  function onOpenChange(o : boolean){
+  function onOpenChange(o: boolean) {
     if (!o) {
       props.onAction(BridgeAction.CLOSE);
     }
@@ -117,9 +117,16 @@ export function BridgeDialog(props: Props) {
                 </h1>
                 {props.approvalTx && (
                   <div className="flex justify-center px-1.5">
-                    <Button className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
-                      View approve transaction
-                    </Button>
+                    <Link
+                      href={`${getChainScanner(fromChain.chainId)}tx/${
+                        props.approvalTx.hash
+                      }`}
+                      target="_blank"
+                    >
+                      <Button className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
+                        View approve transaction
+                      </Button>
+                    </Link>
                   </div>
                 )}
               </>
@@ -175,9 +182,16 @@ export function BridgeDialog(props: Props) {
                   {fromChain.label} Network
                 </h1>
                 <div className="flex justify-center px-1.5">
-                  <Button className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
-                    View transaction
-                  </Button>
+                  <Link
+                    href={`${getChainScanner(fromChain.chainId)}tx/${
+                      props.approvalTx.hash
+                    }`}
+                    target="_blank"
+                  >
+                    <Button className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
+                      View approve transaction
+                    </Button>
+                  </Link>
                 </div>
               </>
             )}
@@ -195,6 +209,26 @@ export function BridgeDialog(props: Props) {
           </div>
         );
       else if (props.error) return <div>error</div>;
+      else
+        return (
+          <div className="flex flex-col justify-center gap-4">
+            <h1 className="text-[16px] font-[450] text-center font-circular text-white">
+              Need to Approved {props.bridgeData.amount} {props.bridgeData.token} on {fromChain.label}
+            </h1>
+            
+            <div className="mt-3.5 flex justify-center">
+              <Button
+                className="cursor-pointer bg-[#2042B8] rounded-[25.26px] text-white"
+                onClick={() => props.onAction(BridgeAction.APPROVE)}
+                disabled={props.loading}
+              >
+                {props.loading
+                  ? "Transferring..."
+                  : `Approve to ${toChain.label}`}
+              </Button>
+            </div>
+          </div>
+        );
     }
   }
 
@@ -234,18 +268,18 @@ export function BridgeDialog(props: Props) {
               <div className="flex flex-row space-x-1.5 items-center">
                 <div className="flex flex-row -space-x-5">
                   <Image
-                    src={polygon}
-                    alt="polygon"
+                    src={fromChain.svg}
+                    alt={fromChain.label}
                     width={42}
                     height={42}
-                    className="z-20"
+                    className="z-20 rounded-[50%]"
                   />
                   <Image
-                    src={assetChain}
-                    alt="assetChain"
+                    src={toChain.svg}
+                    alt={toChain.label}
                     width={42}
                     height={42}
-                    className="z-40"
+                    className="z-40 rounded-[50%]"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -390,12 +424,14 @@ export function BridgeDialog(props: Props) {
             </h1>
             <h1 className="text-[16px] font-circular font-[450] text-white">
               {`Your claiming process was successful. your funds is now in your wallet on 
-            ${getChain(
-              props.transaction.transaction.toChain.replace(
-                "evm.",
-                ""
-              ) as ChainId
-            ).label} network.`}
+            ${
+              getChain(
+                props.transaction.transaction.toChain.replace(
+                  "evm.",
+                  ""
+                ) as ChainId
+              ).label
+            } network.`}
             </h1>
           </div>
           <div className="flex justify-center mt-6">
@@ -431,7 +467,7 @@ export function BridgeDialog(props: Props) {
   }
   return (
     <>
-      <Dialog onOpenChange={onOpenChange}>
+      <Dialog>
         <DialogTrigger asChild>
           <Button
             onClick={() => {
@@ -455,9 +491,9 @@ export function BridgeDialog(props: Props) {
                 <Progress
                   className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
                   value={
-                    props.hasApprove || props.hasTransferred || props.hasClaimed
+                    props.hasApprove || props.hasTransferred || props.hasClaimed || props.approvalTx
                       ? 100
-                      : 0
+                      : 15
                   }
                 />
                 <h2 className={props.hasApprove ? "text-[#3CCACE]" : ""}>

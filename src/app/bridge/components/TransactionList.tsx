@@ -1,8 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 
-import polygon from "../../../../public/assets/polygon.svg";
-import assetChain from "../../../../public/assets/assetChain.svg";
 import greenCheck from "../../../../public/assets/greenCheck.svg";
 import message from "../../../../public/assets/message.svg";
 import assetLoad from "../../../../public/assets/assetLoad.gif";
@@ -327,20 +325,20 @@ export function TransactionList() {
                 >
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <div className="flex flex-row space-x-2.5">
-                      <div className="flex flex-row -space-x-5">
+                      <div className="flex flex-row -space-x-5 items-center">
                         <Image
-                          src={polygon || "/placeholder.svg"}
+                          src={fromChain.svg || "/placeholder.svg"}
                           alt={fromChain.label}
                           width={42}
                           height={42}
-                          className="z-20"
+                          className="z-20 rounded-[50%]"
                         />
                         <Image
-                          src={assetChain || "/placeholder.svg"}
+                          src={toChain.svg || "/placeholder.svg"}
                           alt={toChain.label}
                           width={42}
                           height={42}
-                          className="z-40"
+                          className="z-40 rounded-[50%]"
                         />
                       </div>
                       <div className="flex flex-col gap-0.5">

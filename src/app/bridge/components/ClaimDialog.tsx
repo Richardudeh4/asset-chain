@@ -167,7 +167,7 @@ export function ClaimDialog(props: Props) {
   }
   return (
     <Dialog
-      onOpenChange={onOpenChange}
+      // onOpenChange={onOpenChange}
     >
       <DialogTrigger asChild>
         <Button

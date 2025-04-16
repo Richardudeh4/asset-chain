@@ -250,7 +250,7 @@ export const chainsTokensConnection: ConnectionMap<string, string> = isProd
       },
       {
         chains: ["42161", "42420"],
-        tokens: ["USDT", "WNT", "WETH", "RWA"],
+        tokens: ["USDT", "WNT", "WETH"],
       },
       {
         chains: ["200901", "42420"],

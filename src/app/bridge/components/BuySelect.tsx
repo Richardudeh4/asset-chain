@@ -11,6 +11,14 @@ import arbitrium from "../../../../public/assets/Arbitrium.png";
 import base from "../../../../public/assets/Base.png";
 import ethereum from "../../../../public/assets/Ethereum.png";
 import bitLayer from "../../../../public/assets/bitlayer.png";
+
+import polygonSvg from "../../../../public/assets/polygon.svg";
+import assetChainSvg from "../../../../public/assets/assetChain.svg";
+import binanceSvg from "../../../../public/assets/binance-smart-chain.svg";
+import arbitriumSvg from "../../../../public/assets/arbitrium.svg";
+import baseSvg from "../../../../public/assets/base.svg";
+import ethereumSvg from "../../../../public/assets/ethereum.svg";
+import bitLayerSvg from "../../../../public/assets/bitlayer.svg";
 import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 import { Chain, ChainId } from "@/lib/types";
@@ -21,86 +29,120 @@ export function getChain(chainId: ChainId){
       return {
         label: "Bitlayer",
         icon: bitLayer,
+        chainId,
+        svg: bitLayerSvg
       }
     case '1':
       return {
         label: "Ethereum",
         icon: ethereum,
+        chainId,
+        svg: ethereumSvg
       }
     case '200901':
       return {
         label: "Bitlayer",
         icon: bitLayer,
+        chainId,
+        svg: bitLayerSvg
       }
     case '137':
       return {
         label: "Polygon",
         icon: polygon,
+        chainId,
+        svg: polygonSvg
       }
     case '42161':
       return {
         label: "Arbitrium",
         icon: arbitrium,
+        chainId,
+        svg: arbitriumSvg
       }
     case '56':
       return {
         label: "Binance Smart Chain",
         icon: binance,
+        chainId,
+        svg: binanceSvg
       }
     case '8453':
       return {
         label: "Base",
         icon: base,
+        chainId,
+        svg: baseSvg
       }
     case '42420':
       return {
         label: "Asset Chain",
         icon: assetChain,
+        chainId,
+        svg: assetChainSvg
       }
     case '42421':
       return {
         label: "Asset Chain",
         icon: assetChain,
+        chainId,
+        svg: assetChainSvg
       }
     case '84532':
       return {
         label: "Base",
         icon: base,
+        chainId,
+        svg: baseSvg
       }
     case '421614':
       return {
         label: "Arbitrium",
         icon: arbitrium,
+        chainId,
+        svg: arbitriumSvg
       }
     case '80001':
       return {
         label: "Polygon",
         icon: polygon,
+        chainId,
+        svg: polygonSvg
       }
     case '80002':
       return {
         label: "Polygon",
         icon: polygon,
+        chainId,
+        svg: polygonSvg
       }
     case '11155111':
       return {
         label: "Ethereum",
         icon: ethereum,
+        chainId,
+        svg: ethereumSvg
       }
     case '421611':
       return {
         label: "Arbitrium",
         icon: arbitrium,
+        chainId,
+        svg: arbitriumSvg
       }
     case '97':
       return {
         label: "Binance Smart Chain",
         icon: binance,
+        chainId,
+        svg: binanceSvg
       }
     default:
       return {
         label: "Asset chain",
         icon: assetChain,
+        chainId,
+        svg: assetChainSvg
       }
   }
 }
