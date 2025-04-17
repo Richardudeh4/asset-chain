@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 
@@ -209,7 +210,7 @@ export function TransactionList() {
       setChainSwitch({ ...chainSwitch, switchChain: false, switching: true });
       await switchChain(chainSwitch.to);
       setChainSwitch({ ...chainSwitch, switchChain: false, switching: false });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       setChainSwitch({ ...chainSwitch, switchChain: false, switching: false });
       setDialogError({
