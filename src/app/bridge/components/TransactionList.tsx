@@ -293,12 +293,12 @@ export function TransactionList() {
       if (filteredTransactions.length > 0) {
         return (
           <>
-            <div className="px-1.5 py-2 flex flex-row justify-between items-center rounded-[54.11px] bg-[#030A13] overflow-x-auto w-full">
+            <div className="px-1.5 py-2 flex flex-row justify-between items-center text-center rounded-[54.11px] bg-[#030A13] overflow-x-auto w-full">
               {transactionCategory.map((item) => (
                 <div
                   onClick={() => setSelectedCategory(item)}
                   key={item.key}
-                  className={`px-2 py-1 border border-transparent flex justify-center items-center cursor-pointer ${
+                  className={`px-2 py-1 border border-transparent !text-center flex justify-center items-center cursor-pointer ${
                     selectedCategory.key === item.key
                       ? "bg-[#3CC9CD] text-[#000000] rounded-[66.18px] w-[84.64px]"
                       : ""

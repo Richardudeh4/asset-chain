@@ -175,17 +175,17 @@ export default function BuySelect({supportedChains, selectedChain, label, onChan
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-[#030A13] h-[48px] hover:bg-[#030A13]/10 border  active:border-[#2F87A5] active:shadow-[10px] active:shadow-[#2F87A5]/10 hover:text-white text-white rounded-[54.11px]">
+        <Button variant="outline" className="bg-[#030A13] h-[48px] hover:bg-[#030A13]/10 border active:border-[#2F87A5] outline-offset-2 outline-sky-500 !outline-72 active:shadow-[10px] active:shadow-[#2F87A5]/10 hover:text-white text-white rounded-[54.11px]">
           {selectedChain ? 
           <>
-          <div className="flex flex-row space-x-4 items-center -ml-4.5">
+          <div className="flex justify-between items-center w-full px-4 flex-row">
           <Image src={_selectedChain.icon} width={32} height={32} alt="greyCircle" className="rounded-[50%]"/>
           <h1>{_selectedChain.label}</h1>
           <ChevronDown size={24} color="#88FFF3"/>
           </div>
           </>: 
           (
-          <div className="flex flex-row space-x-4 items-center">
+          <div className="flex justify-between  w-full px-4  items-center flex-row">
             <Image src={greyCircle} width={32} height={32} alt="greyCircle"/>
            <h1>Select network</h1>
            <ChevronDown size={24} color="#8298AF"/>
@@ -208,7 +208,7 @@ export default function BuySelect({supportedChains, selectedChain, label, onChan
             <Button
               key={item.chainId}
               variant="ghost"
-              className="justify-start hover:!bg-[#8298AF]"
+              className="justify-start hover:!bg-[#142438] !text-white"
               onClick={() => {
                 onChange(item.chainId)
                 setOpen(false)
