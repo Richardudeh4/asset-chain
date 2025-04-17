@@ -61,5 +61,6 @@ export enum BridgeAction {
   TRANSFER = "transfer",
   CLAIM = "claim",
   CLOSE = "close",
-  SWITCH_CHAIN = 'switch-chain'
+  SWITCH_CHAIN = 'switch-chain',
+  TRY_AGAIN = 'try-again'
 }

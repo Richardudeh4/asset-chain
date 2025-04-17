@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SignedTransaction } from "@/context/bridge";
 import { BridgeAction, ChainId } from "@/lib/types";
 import { ContractTransactionResponse } from "ethers";
@@ -14,9 +13,13 @@ import Image from "next/image";
 
 import greenTick from "../../../../public/assets/greenTick.svg";
 import assetLoad from "../../../../public/assets/assetLoad.gif";
+import errorIcon from "../../../../public/assets/error.svg";
+
 import { getChain } from "./BuySelect";
 import { ChainBlock } from "@/context/web3";
 import { blocksToClaim } from "./TransactionList";
+import Link from "next/link";
+import { getChainScanner } from "@/lib/node";
 
 type Props = {
   transaction: SignedTransaction;
@@ -42,15 +45,73 @@ export function ClaimDialog(props: Props) {
   const message = props.transaction.fulfilled
     ? `Congratulations. you have successfuly claimed ${props.amount} on ${toChain.label} network`
     : block.isConfirmed
-    ? `${props.amount} ${props.transaction.symbol} is ready to be claimed on ${toChain.label} ${toChain.label} network`
+    ? `${props.amount} ${props.transaction.symbol} is ready to be claimed on ${toChain.label} network`
     : `Your transaction is being processed. Please wait the blocks to be confirmed`;
 
-  
-  function onOpenChange(o : boolean){
-    if (!o) {
-      props.setOpen(false);
-      props.onAction(BridgeAction.CLOSE);
-    }
+  // function onOpenChange(o: boolean) {
+  //   if (!o) {
+  //     props.setOpen(false);
+  //     props.onAction(BridgeAction.CLOSE);
+  //   }
+  // }
+  function returnErrorContent() {
+    return (
+      <>
+        <div className="flex justify-center">
+          <Image
+            src={errorIcon}
+            className=""
+            width={94}
+            height={94}
+            alt="error icon"
+          />
+        </div>
+        <div className="flex flex-col justify-center gap-4 text-center">
+          <h1 className="text-[16px] font-[450] font-circular text-[red]">
+            {props.error?.title}
+          </h1>
+          <h1 className="text-[16px] font-circular font-[450] text-white">
+            {props.error?.body}
+          </h1>
+        </div>
+        <div className="mt-3.5 flex justify-center">
+          <Button
+            className="bg-[#2042B8] rounded-[25.26px] text-white cursor-pointer"
+            onClick={() => props.onAction(BridgeAction.TRY_AGAIN)}
+          >
+            Try Again
+          </Button>
+        </div>
+      </>
+    );
+  }
+
+  function renderClaimOrViewHasBtn() {
+    if (props.transaction.fulfilled && props.claimTx) {
+      return (
+        <Link
+          href={`${getChainScanner(
+            props.transaction.transaction.toChain.replace("evm.", "") as ChainId
+          )}tx/${props.claimTx.hash}`}
+          target="_blank"
+        >
+          <Button className="cursor-pointer italic rounded-[22px] text-[11.78px] font-[450]">
+            View transaction
+          </Button>
+        </Link>
+      );
+    } else
+      return (
+        <Button
+          onClick={() => props.onAction(BridgeAction.CLAIM)}
+          disabled={disabled}
+          className={` ${disabled ? "bg-[#141A2F]" : "bg-[#2042B8]"}  ${
+            disabled ? "text-[#263545]" : ""
+          } cursor-pointer font-circular  text-[11.78px] !font-medium w-[215px] rounded-[22px] leading-[8.85px]`}
+        >
+          {`Claim now`}
+        </Button>
+      );
   }
 
   function returnIcon(loading: boolean) {
@@ -103,15 +164,7 @@ export function ClaimDialog(props: Props) {
           {message}
         </h2>
         <div className="flex md:justify-between justify-center pl-10.5 flex-col gap-2.5 md:flex-row md:px-1.5 mt-6">
-          <Button
-            onClick={() => props.onAction(BridgeAction.CLAIM)}
-            disabled={disabled}
-            className={` ${disabled ? "bg-[#141A2F]" : "bg-[#2042B8]"}  ${
-              disabled ? "text-[#263545]" : ""
-            } cursor-pointer font-circular  text-[11.78px] !font-medium w-[215px] rounded-[22px] leading-[8.85px]`}
-          >
-            {props.transaction.fulfilled ? `Claimed` : `Claim now`}
-          </Button>
+          {renderClaimOrViewHasBtn()}
           <Button
             onClick={() => {
               props.onAction(BridgeAction.CLOSE);
@@ -162,12 +215,14 @@ export function ClaimDialog(props: Props) {
       );
     }
     if (props.loading) return renderLoading();
-    if (props.error) return <h1>{props.error.body}</h1>;
+    if (props.error){
+      return returnErrorContent();
+    }
     return renderContent();
   }
   return (
     <Dialog
-      // onOpenChange={onOpenChange}
+    // onOpenChange={onOpenChange}
     >
       <DialogTrigger asChild>
         <Button

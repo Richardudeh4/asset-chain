@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import repeat from "../../../public/assets/repeat.svg";
@@ -16,7 +18,7 @@ import { InputAmount } from "./components/InputAmount";
 import { TransactionList } from "./components/TransactionList";
 import { BridgeAction, ChainId, Token } from "@/lib/types";
 import { useToken } from "@/context/token";
-import { findTokenByChains } from "@/lib/helpers";
+import { extractError, findTokenByChains } from "@/lib/helpers";
 import { chains, defaultChainId } from "@/lib/constants";
 import { useWallet } from "@/context/web3";
 import { ContractTransactionResponse, formatUnits, parseUnits } from "ethers";
@@ -29,7 +31,7 @@ import useDebounce from "@/hooks/use-debounce";
 import { BridgeDialog } from "./components/BridgeDialog";
 
 const circularStd = localFont({
-  src: '../../../public/fonts/CircularStd-Medium.woff2',
+  src: "../../../public/fonts/CircularStd-Medium.woff2",
 });
 
 const defaultFromChain = chains.filter(
@@ -77,13 +79,16 @@ function errorMessage(
   amount: string,
   limit: number,
   balance: number,
-  symbol: string
+  symbol: string,
+  contractBalance: number,
+  fromChain: ChainId,
 ) {
   if (!amount) return "Invalid Amount";
   const _amount = Number(amount);
   if (Number.isNaN(_amount)) return "Invalid Amount";
   if (limit <= _amount) return `Amount must be lower then ${limit} ${symbol}`;
   if (_amount > balance) return `Insufficient balance`;
+  if (fromChain === defaultChainId && _amount > contractBalance) return `Insufficient liquidity`;
   return "";
 }
 
@@ -100,7 +105,7 @@ function isNative(fromChain: ChainId, symbol: string) {
 const Bridge = () => {
   //   const [value, setValue] = useState("");
   const [amount, setAmount] = useState("");
-  const [destinationAmount, setDestinationAmount] = useState("0");
+  const [destinationAmount, setDestinationAmount] = useState("");
   const [tokens, setTokens] = useState<Token[]>([]);
   const [fromChain, setFromChain] = useState<ChainId>(defaultFromChain.chainId);
   const [destinationChain, setDestinationChain] = useState<ChainId>(
@@ -185,6 +190,9 @@ const Bridge = () => {
 
   function setChain(type: "from" | "to", chainId: ChainId) {
     // if (!selectedToken) return;
+    if (symbol === "RWA" && type === "from" && chainId === defaultChainId)
+      return;
+    if (symbol === "RWA" && type === "to" && chainId !== defaultChainId) return;
     const chain = chains.find((s) => s.chainId === chainId);
     if (!chain) return;
     if (type === "from") {
@@ -229,7 +237,9 @@ const Bridge = () => {
       value,
       limit,
       userBalance,
-      selectedToken ? selectedToken.value : "RWA"
+      symbol,
+      contractBalance,
+      fromChain
     );
 
     setError(error);
@@ -249,9 +259,10 @@ const Bridge = () => {
     setDestinationAmount((_amount - fees.totalFee).toString());
   }
 
-  function toggle(){
-    setFromChain(destinationChain)
-    setDestinationChain(fromChain)
+  function toggle() {
+    if (symbol === "RWA" && fromChain !== defaultChainId) return;
+    setFromChain(destinationChain);
+    setDestinationChain(fromChain);
   }
 
   async function checkAllownce() {
@@ -287,10 +298,13 @@ const Bridge = () => {
         setClaimTx(undefined);
         setHasClaimed(false);
         setClaiming(false);
-        setAmount('')
+        setAmount("");
         break;
       case BridgeAction.CLAIM:
         claim(dialogTransaction);
+        break;
+      case BridgeAction.TRY_AGAIN:
+        setDialogError(undefined);
         break;
     }
   }
@@ -323,6 +337,11 @@ const Bridge = () => {
       checkAllownce();
     } catch (error) {
       console.log(error);
+      const err = extractError(error)
+      setDialogError({
+        title: "Error",
+        body: err.body,
+      });
     }
   }
 
@@ -349,6 +368,11 @@ const Bridge = () => {
       getBalances([fromChain]);
     } catch (error) {
       console.log(error);
+      const err = extractError(error);
+      setDialogError({
+        title: "Error",
+        body: err.body,
+      });
     }
   }
 
@@ -377,7 +401,13 @@ const Bridge = () => {
       getBalances([to]);
     } catch (error) {
       console.log(error);
+      const err = extractError(error);
       setClaiming(false);
+
+      setDialogError({
+        title: "Error",
+        body: err.body,
+      });
     }
   }
 
@@ -385,15 +415,22 @@ const Bridge = () => {
   const balance = balances[fromChain]
     ? balances[fromChain].find((b) => b.symbol === symbol)
     : null;
+  const toBalance = balances[destinationChain]
+    ? balances[destinationChain].find((b) => b.symbol === symbol)
+    : null;
   const decimal = decimals[fromChain]
     ? decimals[fromChain].find((b) => b.symbol === symbol)
     : null;
+  const toDecimal = decimals[destinationChain]
+    ? decimals[destinationChain].find((b) => b.symbol === symbol)
+    : null;
   const tokenDecimal = decimal ? decimal.decimal : BigInt(18);
+  const toTokenDecimal = toDecimal ? toDecimal.decimal : BigInt(18);
   const userBalance = balance
     ? Number(formatUnits(balance.user, tokenDecimal))
     : 0;
-  const contractBalance = balance
-    ? Number(formatUnits(balance.bridgeAssist, tokenDecimal))
+  const contractBalance = toBalance
+    ? Number(formatUnits(toBalance.bridgeAssist, toTokenDecimal))
     : 0;
 
   const limit =
@@ -423,6 +460,21 @@ const Bridge = () => {
     limit > _amount;
 
   const tokenIsNative = isNative(fromChain, symbol);
+
+  function returnInfo() {
+    if (!isConnected) return null;
+    if (fromChain === defaultChainId)
+      return (
+        <p className="font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3">
+          Total liquidity {contractBalance.toFixed(6)}... {symbol}
+        </p>
+      );
+    return (
+      <p className="font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3">
+        Limit/transaction {symbol === "RWA" ? 100 : limit} {symbol}
+      </p>
+    );
+  }
 
   return (
     <div
@@ -544,12 +596,7 @@ const Bridge = () => {
                       </p> */}
                     </div>
                   </div>
-                  {isConnected && (
-                    <p className="font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3">
-                      fee {fees.totalFee}{" "}
-                      {selectedToken ? selectedToken.value : "---"}
-                    </p>
-                  )}
+                  {returnInfo()}
                 </div>
               </div>
             </div>
@@ -575,7 +622,9 @@ const Bridge = () => {
                     disabled={
                       !isValidInput ||
                       awaitingTransaction ||
-                      bridgeAwaitingTransaction
+                      bridgeAwaitingTransaction ||
+                      (fromChain === defaultChainId &&
+                        _amount > contractBalance)
                     }
                     loading={
                       awaitingTransaction ||

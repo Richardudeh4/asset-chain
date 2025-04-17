@@ -111,9 +111,12 @@ export class Walletconnect extends WalletHandler {
       await this.updateProviderState();
       return true;
     } catch (error: any) {
-      if (parseInt((error).code) == 4902)
-        return await this.addChain(chainId);
-      return false
+      console.log(error);
+      return await this.addChain(chainId);
+      // if (parseInt((error).code) == 4902)
+      //   return await this.addChain(chainId);
+      // throw error;
+      // return false
     }
     
   }
@@ -140,7 +143,7 @@ export class Walletconnect extends WalletHandler {
       return true;
     } catch (addError) {
       console.log(addError);
-      return false;
+      throw addError;
     }
   }
 

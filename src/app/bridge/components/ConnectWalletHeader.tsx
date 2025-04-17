@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,9 +16,11 @@ import trust from "../../../../public/assets/trust.svg";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
 import spin from "../../../../public/assets/spin.svg";
+import errorIcon from "../../../../public/assets/error.svg";
 
 import { useWallet } from "@/context/web3";
 import { WalletType } from "@/lib/wallet";
+import { extractError } from "@/lib/helpers";
 
 // const Lottie = dynamic(
 //   () => {
@@ -35,10 +38,17 @@ const connectWalletItems = [
   { name: "Trust Wallet", icon: trust, key: "trust" },
 ];
 
-export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
-  const [connectingWallet, setConnectingWallet] = useState(connectWalletItems[0]);
+export function ConnectWalletHeader({
+  bottonLabel,
+}: {
+  bottonLabel: ReactNode;
+}) {
+  const [connectingWallet, setConnectingWallet] = useState(
+    connectWalletItems[0]
+  );
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
+  const [error, setError] = useState<any>(null);
 
   const { isConnected, connect, disconnect } = useWallet();
 
@@ -49,37 +59,38 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
   }, [step]);
 
   async function setWallet(wallet: string) {
-    try {
-      setConnectingWallet(
-        connectWalletItems.find((item) => item.key === wallet) || connectWalletItems[0]
-      );
-      setStep(2);
-    } catch (error) {
-      console.log(error);
-    }
+    setConnectingWallet(
+      connectWalletItems.find((item) => item.key === wallet) ||
+        connectWalletItems[0]
+    );
+    setStep(2);
   }
   async function connectWallet() {
     try {
+      setError(null)
       await connect(connectingWallet.key as WalletType);
       setOpen(false);
       setStep(1);
     } catch (error) {
       console.error(error);
-      setOpen(false);
-      setStep(1);
+      const err = extractError(error);
+      setError({
+        title: 'Something went wrong',
+        body: err.body,
+      });
+      // setOpen(false);
+      setStep(3);
     }
   }
 
-  async function handleButtonClick(){
+  async function handleButtonClick() {
     try {
-      if (isConnected){
-        await disconnect()
-      }
-      else setOpen(true)
+      if (isConnected) {
+        await disconnect();
+      } else setOpen(true);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-    
   }
 
   return (
@@ -174,6 +185,38 @@ export function ConnectWalletHeader({bottonLabel} : {bottonLabel: ReactNode}) {
                 <p className="text-[18px] font-[450] text-[#8298AF]">
                   Open the MetaMask Browser extension to connect your wallet.
                 </p>
+              </div>
+            </div>
+          </DialogContent>
+        )}
+        {open && step === 3 && !isConnected && error && (
+          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[500px] translate-y-0 top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out">
+            <div className="px-10 py-1.5">
+              <DialogHeader className="text-center">
+                <DialogTitle className="text-[25px] font-[450] text-center text-[#FFFFFF] pt-5">
+                  {error.title}
+                </DialogTitle>
+                <DialogDescription className="text-[18px] text-center text-[#8298AF] font-[450]">
+                  {error.body}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex justify-center my-10">
+                <Image
+                  src={errorIcon}
+                  className=""
+                  width={94}
+                  height={94}
+                  alt="error icon"
+                />
+              </div>
+
+              <div className="mt-10 flex justify-center">
+                <Button
+                  className="bg-[#2042B8] rounded-[25.26px] text-white cursor-pointer"
+                  onClick={() => setStep(1)}
+                >
+                  Try Again
+                </Button>
               </div>
             </div>
           </DialogContent>

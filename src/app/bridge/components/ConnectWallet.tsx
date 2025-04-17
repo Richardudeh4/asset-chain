@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,11 +13,13 @@ import {
 import metaMask from "../../../../public/assets/metaMask.svg";
 import walletConnect from "../../../../public/assets/walletConnet.svg";
 import trust from "../../../../public/assets/trust.svg";
+import errorIcon from "../../../../public/assets/error.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import spin from "../../../../public/assets/spin.svg";
 import { useWallet } from "@/context/web3";
 import { WalletType } from "@/lib/wallet";
+import { extractError } from "@/lib/helpers";
 
 // const Lottie = dynamic(
 //   () => {
@@ -40,8 +43,9 @@ export function ConnectWallet() {
   const [connectingWallet, setConnectingWallet] = useState(
     connectWalletItems[0]
   );
+  const [error, setError] = useState<any>(null);
 
-  const { connect } = useWallet();
+  const { connect, isConnected } = useWallet();
   // console.log(isConnected, openDialog, 'sksksk')
 
   useEffect(() => {
@@ -51,16 +55,22 @@ export function ConnectWallet() {
   }, [step]);
 
   async function connectWallet() {
-    try {
-      await connect(connectingWallet.key as WalletType);
-      setOpen(false);
-      setStep(1);
-    } catch (error) {
-      console.error(error);
-      setOpen(false);
-      setStep(1);
+      try {
+        setError(null)
+        await connect(connectingWallet.key as WalletType);
+        setOpen(false);
+        setStep(1);
+      } catch (error) {
+        console.error(error);
+        const err = extractError(error);
+        setError({
+          title: 'Something went wrong',
+          body: err.body,
+        });
+        // setOpen(false);
+        setStep(3);
+      }
     }
-  }
 
   async function setWallet(wallet: string) {
     console.log(wallet, "wallet");
@@ -162,6 +172,38 @@ export function ConnectWallet() {
                 <p className="text-[18px] font-[450] text-[#8298AF]">
                   Open the MetaMask Browser extension to connect your wallet.
                 </p>
+              </div>
+            </div>
+          </DialogContent>
+        )}
+        {open && step === 3 && !isConnected && error && (
+          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[500px] translate-y-0 top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out">
+            <div className="px-10 py-1.5">
+              <DialogHeader className="text-center">
+                <DialogTitle className="text-[25px] font-[450] text-center text-[#FFFFFF] pt-5">
+                  {error.title}
+                </DialogTitle>
+                <DialogDescription className="text-[18px] text-center text-[#8298AF] font-[450]">
+                  {error.body}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex justify-center my-10">
+                <Image
+                  src={errorIcon}
+                  className=""
+                  width={94}
+                  height={94}
+                  alt="error icon"
+                />
+              </div>
+
+              <div className="mt-10 flex justify-center">
+                <Button
+                  className="bg-[#2042B8] rounded-[25.26px] text-white cursor-pointer"
+                  onClick={() => setStep(1)}
+                >
+                  Try Again
+                </Button>
               </div>
             </div>
           </DialogContent>

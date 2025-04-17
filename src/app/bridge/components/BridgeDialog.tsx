@@ -14,6 +14,7 @@ import greenTick from "../../../../public/assets/greenTick.svg";
 import assetLoad from "../../../../public/assets/assetLoad.gif";
 import blockSpinner from "../../../../public/assets/blockSpinner.svg";
 import greenCheck from "../../../../public/assets/greenCheck.svg";
+import errorIcon from "../../../../public/assets/error.svg";
 
 import { getChain } from "./BuySelect";
 import { ContractTransactionResponse } from "ethers";
@@ -51,11 +52,11 @@ export function BridgeDialog(props: Props) {
   const { decimals } = useToken();
   const { bridgeAwaitingTransaction, bridgesFees } = useBridge();
 
-  function onOpenChange(o: boolean) {
-    if (!o) {
-      props.onAction(BridgeAction.CLOSE);
-    }
-  }
+  // function onOpenChange(o: boolean) {
+  //   if (!o) {
+  //     props.onAction(BridgeAction.CLOSE);
+  //   }
+  // }
 
   function returnIcon(loading: boolean) {
     if (loading) {
@@ -81,6 +82,38 @@ export function BridgeDialog(props: Props) {
     }
   }
 
+  function returnErrorContent() {
+    return (
+      <>
+        <div className="flex justify-center">
+          <Image
+            src={errorIcon}
+            className=""
+            width={94}
+            height={94}
+            alt="error icon"
+          />
+        </div>
+        <div className="flex flex-col justify-center gap-4 text-center">
+          <h1 className="text-[16px] font-[450] font-circular text-[#00F482]">
+            {props.error?.title}
+          </h1>
+          <h1 className="text-[16px] font-circular font-[450] text-white">
+            {props.error?.body}
+          </h1>
+        </div>
+        <div className="mt-3.5 flex justify-center">
+          <Button
+            className="bg-[#2042B8] rounded-[25.26px] text-white cursor-pointer"
+            onClick={() => props.onAction(BridgeAction.TRY_AGAIN)}
+          >
+            Try Again
+          </Button>
+        </div>
+      </>
+    );
+  }
+
   function returnOnReadyToTransferContent(loading: boolean) {
     if (loading) {
       return (
@@ -93,14 +126,12 @@ export function BridgeDialog(props: Props) {
             <span className="text-[#3CCACE]">
               {props.bridgeData.amount} {props.bridgeData.token}
             </span>{" "}
-            from
-            {fromChain.label} Network
+            from {fromChain.label} Network
           </h2>
         </div>
       );
     } else {
       if (props.hasTransferred) return returnOnReadyToClaimContent();
-      else if (props.error) return <div>error</div>;
       else
         return (
           <div className="flex flex-col justify-center gap-4">
@@ -139,7 +170,7 @@ export function BridgeDialog(props: Props) {
               >
                 {props.loading
                   ? "Transferring..."
-                  : `Transfer to ${toChain.label}`}
+                  : `Transfer from ${fromChain.label}`}
               </Button>
             </div>
           </div>
@@ -159,8 +190,7 @@ export function BridgeDialog(props: Props) {
             <span className="text-[#3CCACE]">
               {props.bridgeData.amount} {props.bridgeData.token}
             </span>{" "}
-            on
-            {fromChain.label} Network
+            on {fromChain.label} Network
           </h2>
         </div>
       );
@@ -178,8 +208,7 @@ export function BridgeDialog(props: Props) {
                   <span className="text-[#3CCACE]">
                     {props.bridgeData.amount} {props.bridgeData.token}
                   </span>{" "}
-                  on
-                  {fromChain.label} Network
+                  on {fromChain.label} Network
                 </h1>
                 <div className="flex justify-center px-1.5">
                   <Link
@@ -203,19 +232,19 @@ export function BridgeDialog(props: Props) {
               >
                 {props.loading
                   ? "Transferring..."
-                  : `Transfer to ${toChain.label}`}
+                  : `Transfer from ${fromChain.label}`}
               </Button>
             </div>
           </div>
         );
-      else if (props.error) return <div>error</div>;
       else
         return (
           <div className="flex flex-col justify-center gap-4">
             <h1 className="text-[16px] font-[450] text-center font-circular text-white">
-              Need to Approved {props.bridgeData.amount} {props.bridgeData.token} on {fromChain.label}
+              Need to Approved {props.bridgeData.amount}{" "}
+              {props.bridgeData.token} on {fromChain.label}
             </h1>
-            
+
             <div className="mt-3.5 flex justify-center">
               <Button
                 className="cursor-pointer bg-[#2042B8] rounded-[25.26px] text-white"
@@ -223,8 +252,8 @@ export function BridgeDialog(props: Props) {
                 disabled={props.loading}
               >
                 {props.loading
-                  ? "Transferring..."
-                  : `Approve to ${toChain.label}`}
+                  ? "Approving..."
+                  : `Approve on ${fromChain.label}`}
               </Button>
             </div>
           </div>
@@ -263,6 +292,20 @@ export function BridgeDialog(props: Props) {
             {`Your bridging process is complete. You can now claim your assets
               to your wallet on the ${toChain.label} network.`}
           </h1>
+          {props.transferTx && (
+            <div className="flex justify-center px-1.5">
+              <Link
+                href={`${getChainScanner(fromChain.chainId)}tx/${
+                  props.transferTx.hash
+                }`}
+                target="_blank"
+              >
+                <Button className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
+                  View transfer transaction
+                </Button>
+              </Link>
+            </div>
+          )}
           {props.transaction && (
             <div className="flex flex-row justify-between">
               <div className="flex flex-row space-x-1.5 items-center">
@@ -348,6 +391,9 @@ export function BridgeDialog(props: Props) {
   }
 
   function render() {
+    if (props.error){
+      return returnErrorContent();
+    }
     if (props.chainSwitch.switchChain) {
       return (
         <div className="flex flex-col gap-4 justify-center text-center">
@@ -434,7 +480,24 @@ export function BridgeDialog(props: Props) {
             } network.`}
             </h1>
           </div>
-          <div className="flex justify-center mt-6">
+          <div className="flex md:justify-between justify-center pl-10.5 flex-col gap-2.5 md:flex-row md:px-1.5 mt-6">
+            <Link
+              href={`${getChainScanner(
+                props.transaction.transaction.toChain.replace(
+                  "evm.",
+                  ""
+                ) as ChainId
+              )}tx/${props.claimTx ? props.claimTx.hash : ""}`}
+              target="_blank"
+            >
+              <Button
+                disabled={!props.claimTx}
+                className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]"
+              >
+                View transaction
+              </Button>
+            </Link>
+
             <Button
               onClick={() => {
                 setOpen(false);
@@ -491,7 +554,10 @@ export function BridgeDialog(props: Props) {
                 <Progress
                   className="bg-[#262E2D] [&>div]:bg-[#3CCACE] h-[3px]"
                   value={
-                    props.hasApprove || props.hasTransferred || props.hasClaimed || props.approvalTx
+                    props.hasApprove ||
+                    props.hasTransferred ||
+                    props.hasClaimed ||
+                    props.approvalTx
                       ? 100
                       : 15
                   }

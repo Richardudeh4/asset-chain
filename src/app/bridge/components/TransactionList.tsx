@@ -17,7 +17,7 @@ import { getChain } from "./BuySelect";
 import { BridgeAction, ChainId } from "@/lib/types";
 import { ContractTransactionResponse, formatUnits } from "ethers";
 import { isProd } from "@/config/env-var";
-import { convertTimestampDate } from "@/lib/helpers";
+import { convertTimestampDate, extractError } from "@/lib/helpers";
 import { ClaimDialog } from "./ClaimDialog";
 import { defaultChainId } from "@/lib/constants";
 
@@ -198,6 +198,9 @@ export function TransactionList() {
       case BridgeAction.CLAIM:
         claim(transaction);
         break;
+      case BridgeAction.TRY_AGAIN:
+        setDialogError(undefined);
+        break;
     }
   }
 
@@ -209,6 +212,10 @@ export function TransactionList() {
     } catch (error) {
       console.log(error);
       setChainSwitch({ ...chainSwitch, switchChain: false, switching: false });
+      setDialogError({
+        title: "Error",
+        body: error.message,
+      });
     }
   }
 
@@ -237,6 +244,11 @@ export function TransactionList() {
       getBalances([to]);
     } catch (error) {
       console.log(error);
+      const err = extractError(error);
+      setDialogError({
+        title: "Error",
+        body: err.body,
+      });
     }
   }
 
