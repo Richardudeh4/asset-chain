@@ -148,7 +148,7 @@ export function getChain(chainId: ChainId){
 }
 
 
-type Props =  {supportedChains: Chain[], selectedChain: ChainId, label: string, onChange: ( chain: ChainId) => void}
+type Props =  {supportedChains: Chain[], selectedChain: ChainId | null, label: string, onChange: ( chain: ChainId) => void}
 
 export default function BuySelect({supportedChains, selectedChain, label, onChange}: Props) {
   const [search, setSearch] = useState("")
@@ -170,13 +170,13 @@ export default function BuySelect({supportedChains, selectedChain, label, onChan
     item.title.toLowerCase().includes(search.toLowerCase())
   )
 
-  const _selectedChain = getChain(selectedChain);
+  const _selectedChain = selectedChain ? getChain(selectedChain) : null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="bg-[#030A13] h-[48px] hover:bg-[#030A13]/10 border  active:border-[#2F87A5] active:shadow-[10px] active:shadow-[#2F87A5]/10 hover:text-white text-white rounded-[54.11px]">
-          {selectedChain ? 
+          {_selectedChain ? 
           <>
           <div className="flex flex-row space-x-4 items-center -ml-4.5">
           <Image src={_selectedChain.icon} width={32} height={32} alt="greyCircle" className="rounded-[50%]"/>

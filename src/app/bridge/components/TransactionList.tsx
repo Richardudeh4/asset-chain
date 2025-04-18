@@ -134,7 +134,8 @@ export function TransactionList() {
     ContractTransactionResponse | undefined
   >(undefined);
 
-  const { isConnected, currentBlocks, switchChain, chainId } = useWallet();
+  const { isConnected, currentBlocks, switchChain, chainId, address } =
+    useWallet();
   const {
     loadingTransactions,
     signedTransactions,
@@ -174,6 +175,12 @@ export function TransactionList() {
     _updateTransaction();
   }, [open, selectedTransactionChain, transaction]);
 
+  // useEffect(() => {
+  //   if (claimNow) {
+  //     claim(transaction);
+  //   }
+  // }, [claimNow]);
+
   function _updateTransaction() {
     if (!open || !selectedTransactionChain || !transaction) {
       return;
@@ -183,6 +190,7 @@ export function TransactionList() {
     const updatedTransaction =
       _transactions.signedTransactions[transaction.index];
     setTransaction(updatedTransaction);
+    setOpen(true);
   }
   async function onAction(action: BridgeAction) {
     if (!transaction) return;
@@ -201,6 +209,8 @@ export function TransactionList() {
         break;
       case BridgeAction.TRY_AGAIN:
         setDialogError(undefined);
+        setTransaction(undefined);
+        setOpen(false);
         break;
     }
   }
@@ -210,6 +220,7 @@ export function TransactionList() {
       setChainSwitch({ ...chainSwitch, switchChain: false, switching: true });
       await switchChain(chainSwitch.to);
       setChainSwitch({ ...chainSwitch, switchChain: false, switching: false });
+      claim(transaction);
     } catch (error: any) {
       console.log(error);
       setChainSwitch({ ...chainSwitch, switchChain: false, switching: false });
@@ -406,6 +417,7 @@ export function TransactionList() {
                         claimTx={claimTx}
                         error={dialogError}
                         blocks={currentBlocks}
+                        address={address!}
                         setOpen={(o) => {
                           setOpen(o);
                           setTransaction(t);
@@ -415,6 +427,8 @@ export function TransactionList() {
                               ""
                             ) as ChainId
                           );
+                          claim(t);
+                          // }
                         }}
                       />
                     </div>
