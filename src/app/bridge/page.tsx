@@ -12,7 +12,6 @@ import SelectAsset from "./components/SelectAsset";
 import { ConnectWallet } from "./components/ConnectWallet";
 import bgText from "../../../public/assets/bgText.svg";
 import localFont from "next/font/local";
-import assetArrow from "../../../public/assets/assetArrow.svg";
 // import { Input } from "@/components/ui/input";
 import { InputAmount } from "./components/InputAmount";
 import { TransactionList } from "./components/TransactionList";
@@ -33,6 +32,10 @@ import { BridgeDialog } from "./components/BridgeDialog";
 const circularStd = localFont({
   src: "../../../public/fonts/CircularStd-Medium.woff2",
 });
+
+const circularBook = localFont({
+  src: "../../../public/fonts/CircularStd-Book.ttf",
+})
 
 const defaultFromChain = chains.filter(
   (c) => c.chainId.toString() !== defaultChainId.toString()
@@ -493,7 +496,7 @@ const Bridge = () => {
       </div>
       <div className="flex flex-col space-y-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
         <div className="flex flex-col gap-3 z-[50]">
-          <h1 className="navbar-text font-[450] text-[40px] font-circular">
+          <h1 className={`${circularBook.className} font-[450] text-[40px] font-circular`}>
             Bridge
           </h1>
           <p className="text-[#8298AF] text-[16px] font-[450] leading-[120%] font-circular">
@@ -519,17 +522,13 @@ const Bridge = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[15px] md:gap-[15px]">
           <div className="py-4.5 px-5 col-span-[554.32px] border relative border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5">
-            <Image
-              src={assetArrow}
-              className="absolute top-2 -right-0 hidden md:flex"
-              alt="BridgeArrow "
-            />
+       
             <div className="flex md:flex-row flex-col md:justify-between items-center">
               <div className="flex flex-col gap-6 w-full border-none ">
                 <div className="flex flex-col gap-1">
                   <h1>From</h1>
                   <p className="text-[#8298AF] text-[12px] font-[450]">
-                    source network
+                    Source network
                   </p>
                 </div>
                 <BuySelect

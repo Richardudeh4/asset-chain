@@ -49,13 +49,13 @@ export default function SelectAsset({ isMain, tokens }: { isMain?: boolean, toke
           className="bg-[#132032] px-1 w-[142.82px] h-[48px] hover:bg-[#030A13]/10 hover:text-white text-white rounded-[54.11px]"
         >
           {selectedAsset ? (
-            <div className="flex flex-row justify-between space-x-5 items-center">
+            <div className="flex justify-between items-center w-full px-4 flex-row">
               <Image src={selectedAsset.icon} width={28} height={28} alt="assetIcon" className="rounded-[50%]" />
               <h1>{selectedAsset.title}</h1>
               {!isMain && <ChevronDown size={24} color="#88FFF3" />}
             </div>
           ) : (
-            <div className="flex flex-row justify-between space-x-18 items-center">
+            <div className="flex justify-between items-center w-full px-4 flex-row">
               <Image src={greyCircle} width={28} height={28} alt="greyCircle" />
               <ChevronDown size={24} color="#8298AF" />
             </div>
@@ -76,7 +76,7 @@ export default function SelectAsset({ isMain, tokens }: { isMain?: boolean, toke
             <Button
               key={item.title}
               variant="ghost"
-              className="justify-start hover:!bg-[#132032] py-2"
+              className="justify-start hover:!bg-[#142438] !text-white py-3"
               onClick={() => _setToken(item.title)}
             >
               <div className="flex flex-row space-x-3.5 items-center">

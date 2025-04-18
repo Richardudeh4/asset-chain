@@ -58,7 +58,7 @@ export function ClaimDialog(props: Props) {
   function returnErrorContent() {
     return (
       <>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <Image
             src={errorIcon}
             className=""
