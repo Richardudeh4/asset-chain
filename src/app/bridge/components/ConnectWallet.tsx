@@ -68,7 +68,7 @@ export function ConnectWallet() {
           body: err.body,
         });
         // setOpen(false);
-        setStep(3);
+        setStep(3)
       }
     }
 

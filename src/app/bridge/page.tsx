@@ -12,7 +12,6 @@ import SelectAsset from "./components/SelectAsset";
 import { ConnectWallet } from "./components/ConnectWallet";
 import bgText from "../../../public/assets/bgText.svg";
 import localFont from "next/font/local";
-import assetArrow from "../../../public/assets/assetArrow.svg";
 // import { Input } from "@/components/ui/input";
 import { InputAmount } from "./components/InputAmount";
 import { TransactionList } from "./components/TransactionList";
@@ -48,8 +47,8 @@ const defaultToChain = chains.filter(
 
 function getfees(
   inputAmount: string,
-  fromChain: ChainId,
-  toChain: ChainId,
+  fromChain: ChainId | null,
+  toChain: ChainId | null,
   fees: ChainTokenBridgeFees,
   token: string | undefined,
   decimal: bigint
@@ -112,9 +111,9 @@ const Bridge = () => {
   const [amount, setAmount] = useState("");
   const [destinationAmount, setDestinationAmount] = useState("");
   const [tokens, setTokens] = useState<Token[]>([]);
-  const [fromChain, setFromChain] = useState<ChainId>(defaultFromChain.chainId);
-  const [destinationChain, setDestinationChain] = useState<ChainId>(
-    defaultToChain.chainId
+  const [fromChain, setFromChain] = useState<ChainId | null >(null);
+  const [destinationChain, setDestinationChain] = useState<ChainId | null>(
+    null
   );
   const [error, setError] = useState("");
   const [dialogError, setDialogError] = useState<any>(undefined);
@@ -180,6 +179,7 @@ const Bridge = () => {
   }, [loadingTransactions, signedTransactions, hasTransferred]);
 
   function _setDialogTransaction() {
+    if (!fromChain) return;
     if (!hasTransferred) {
       setDialogTransaction(undefined);
       return;
@@ -221,7 +221,7 @@ const Bridge = () => {
 
   async function setToken() {
     // if (!selectedToken || !supportedChains) return;
-    // if (!supportedChains[selectedToken.symbol]) return;
+    if (!fromChain || !destinationChain) return;
     const _tokens = findTokenByChains(fromChain, destinationChain);
     if (!_tokens) {
       setTokens([]);
@@ -237,6 +237,7 @@ const Bridge = () => {
 
   function handleAmountChange(value: string) {
     // const _value = Number(value);
+    if (!fromChain) return;
 
     const error = errorMessage(
       value,
@@ -253,12 +254,12 @@ const Bridge = () => {
 
   function willReceive() {
     if (!amount) {
-      setDestinationAmount("0");
+      setDestinationAmount("");
       return;
     }
     const _amount = Number(amount);
     if (Number.isNaN(_amount)) {
-      setDestinationAmount("0");
+      setDestinationAmount("");
       return;
     }
     setDestinationAmount((_amount - fees.totalFee).toString());
@@ -356,6 +357,7 @@ const Bridge = () => {
       if (!amount) return;
       if (!selectedToken) return;
       if (!chainId) return;
+      if (!destinationChain) return;
       if (chainId !== fromChain) {
         setChainSwitch({ ...chainSwitch, switchChain: true, to: fromChain });
         return;
@@ -385,6 +387,7 @@ const Bridge = () => {
     try {
       if (!transaction) return;
       if (!chainId) return;
+      if (!fromChain) return;
       const to = transaction.transaction.toChain.replace("evm.", "") as ChainId;
       if (chainId !== to) {
         setChainSwitch({ ...chainSwitch, switchChain: true, to });
@@ -417,16 +420,16 @@ const Bridge = () => {
   }
 
   const symbol = selectedToken ? selectedToken.value : "---";
-  const balance = balances[fromChain]
+  const balance = fromChain && balances[fromChain]
     ? balances[fromChain].find((b) => b.symbol === symbol)
     : null;
-  const toBalance = balances[destinationChain]
+  const toBalance = destinationChain && balances[destinationChain]
     ? balances[destinationChain].find((b) => b.symbol === symbol)
     : null;
-  const decimal = decimals[fromChain]
+  const decimal = fromChain && decimals[fromChain]
     ? decimals[fromChain].find((b) => b.symbol === symbol)
     : null;
-  const toDecimal = decimals[destinationChain]
+  const toDecimal = destinationChain && decimals[destinationChain]
     ? decimals[destinationChain].find((b) => b.symbol === symbol)
     : null;
   const tokenDecimal = decimal ? decimal.decimal : BigInt(18);
@@ -439,7 +442,7 @@ const Bridge = () => {
     : 0;
 
   const limit =
-    selectedToken &&
+    selectedToken && fromChain &&
     bridgesFees[fromChain] &&
     bridgesFees[fromChain][selectedToken.value]
       ? +formatUnits(
@@ -455,7 +458,7 @@ const Bridge = () => {
     bridgesFees,
     selectedToken?.value,
     tokenDecimal
-  );
+  )
 
   const _amount = Number(amount);
   const isValidInput =
@@ -464,7 +467,7 @@ const Bridge = () => {
     _amount <= userBalance &&
     limit > _amount;
 
-  const tokenIsNative = isNative(fromChain, symbol);
+  const tokenIsNative = fromChain ? isNative(fromChain, symbol) : false;
 
   function returnInfo() {
     if (!isConnected) return null;
@@ -635,9 +638,9 @@ const Bridge = () => {
                     onAction={bridge}
                     bridgeData={{
                       amount: _amount.toString(),
-                      fromChain,
+                      fromChain: fromChain ? fromChain : defaultFromChain.chainId,
                       fromUser: "",
-                      toChain: destinationChain,
+                      toChain: destinationChain ? destinationChain : defaultToChain.chainId,
                       token: symbol,
                       tokenIsNative,
                     }}

@@ -52,6 +52,11 @@ export function BridgeDialog(props: Props) {
   const { decimals } = useToken();
   const { bridgeAwaitingTransaction, bridgesFees } = useBridge();
 
+  const address = props.transaction
+    ? props.transaction.transaction.fromUser
+    : "";
+  const truncatedAddress = `${address.slice(0, 6)}...${address.slice(-8)}`;
+
   // function onOpenChange(o: boolean) {
   //   if (!o) {
   //     props.onAction(BridgeAction.CLOSE);
@@ -218,7 +223,7 @@ export function BridgeDialog(props: Props) {
                     target="_blank"
                   >
                     <Button className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
-                      View approve transaction
+                      Transaction hash
                     </Button>
                   </Link>
                 </div>
@@ -301,7 +306,7 @@ export function BridgeDialog(props: Props) {
                 target="_blank"
               >
                 <Button className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]">
-                  View transfer transaction
+                  Transaction hash
                 </Button>
               </Link>
             </div>
@@ -391,7 +396,7 @@ export function BridgeDialog(props: Props) {
   }
 
   function render() {
-    if (props.error){
+    if (props.error) {
       return returnErrorContent();
     }
     if (props.chainSwitch.switchChain) {
@@ -461,24 +466,28 @@ export function BridgeDialog(props: Props) {
         </>
       );
     } else if (props.hasClaimed && props.transaction) {
+      const amount = getAmount(
+        props.transaction.transaction.amount,
+        decimals,
+        props.transaction.transaction.fromChain,
+        props.transaction.transaction.toChain,
+        props.transaction.transaction.symbol,
+        bridgesFees
+      );
       return (
         <>
           <div className="flex justify-center">{returnIcon(false)}</div>
           <div className="flex flex-col justify-center gap-4 text-center">
             <h1 className="text-[16px] font-[450] font-circular text-[#00F482]">
-              Done!
+              Successful
             </h1>
-            <h1 className="text-[16px] font-circular font-[450] text-white">
-              {`Your claiming process was successful. your funds is now in your wallet on 
-            ${
-              getChain(
-                props.transaction.transaction.toChain.replace(
-                  "evm.",
-                  ""
-                ) as ChainId
-              ).label
-            } network.`}
-            </h1>
+            <h2 className="font-bold text-[16px] font-circular text-white">
+              You have claimed a total of {""}
+              <span className="text-[#3CCACE]">
+                {amount} {props.transaction.symbol}
+              </span>{" "}
+              <span className="italic">{truncatedAddress}</span>
+            </h2>
           </div>
           <div className="flex md:justify-between justify-center pl-10.5 flex-col gap-2.5 md:flex-row md:px-1.5 mt-6">
             <Link
@@ -494,7 +503,7 @@ export function BridgeDialog(props: Props) {
                 disabled={!props.claimTx}
                 className="cursor-pointer bg-[#070D16] text-[#5CFFF3] italic rounded-[22px] text-[14px] font-[450]"
               >
-                View transaction
+                Transaction hash
               </Button>
             </Link>
 
@@ -530,7 +539,11 @@ export function BridgeDialog(props: Props) {
   }
   return (
     <>
-      <Dialog>
+      <Dialog
+        onOpenChange={(o) => {
+          if (!o && !open) props.onAction(BridgeAction.CLOSE);
+        }}
+      >
         <DialogTrigger asChild>
           <Button
             onClick={() => {

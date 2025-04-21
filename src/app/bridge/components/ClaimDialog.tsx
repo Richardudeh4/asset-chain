@@ -4,6 +4,7 @@ import { ContractTransactionResponse } from "ethers";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -32,6 +33,7 @@ type Props = {
   blocks: ChainBlock;
   open: boolean;
   setOpen: (open: boolean) => void;
+  address: string;
 };
 export function ClaimDialog(props: Props) {
   // const fromChain = getChain(props.transaction.transaction.fromChain.replace("evm.", "") as ChainId)
@@ -40,13 +42,12 @@ export function ClaimDialog(props: Props) {
   );
   const block = blocksToClaim(props.transaction, props.blocks);
 
+  const address = props.transaction.transaction.fromUser;
+
+  const truncatedAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
+
   const disabled =
     props.transaction.fulfilled || !block.isConfirmed || props.loading;
-  const message = props.transaction.fulfilled
-    ? `Congratulations. you have successfuly claimed ${props.amount} on ${toChain.label} network`
-    : block.isConfirmed
-    ? `${props.amount} ${props.transaction.symbol} is ready to be claimed on ${toChain.label} network`
-    : `Your transaction is being processed. Please wait the blocks to be confirmed`;
 
   // function onOpenChange(o: boolean) {
   //   if (!o) {
@@ -57,7 +58,7 @@ export function ClaimDialog(props: Props) {
   function returnErrorContent() {
     return (
       <>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <Image
             src={errorIcon}
             className=""
@@ -96,7 +97,7 @@ export function ClaimDialog(props: Props) {
           target="_blank"
         >
           <Button className="cursor-pointer italic rounded-[22px] text-[11.78px] font-[450]">
-            View transaction
+            Transaction hash
           </Button>
         </Link>
       );
@@ -159,21 +160,19 @@ export function ClaimDialog(props: Props) {
   function renderContent() {
     return (
       <>
-        <div className="flex justify-center">{returnIcon(false)}</div>
-        <h2 className="text-center font-bold text-[16px] font-circular text-white">
-          {message}
+        <div className="flex justify-center my-10">{returnIcon(false)}</div>
+        <h1 className="text-[16px] font-[450] font-circular text-[#00F482] text-center">
+          Successful
+        </h1>
+        <h2 className="font-bold text-[16px] font-circular text-white">
+          You have claimed a total of {""}
+          <span className="text-[#3CCACE]">
+            {props.amount} {props.transaction.symbol}
+          </span>{" "}
+          <span className="italic">{truncatedAddress}</span>
         </h2>
-        <div className="flex md:justify-between justify-center pl-10.5 flex-col gap-2.5 md:flex-row md:px-1.5 mt-6">
-          {renderClaimOrViewHasBtn()}
-          <Button
-            onClick={() => {
-              props.onAction(BridgeAction.CLOSE);
-            }}
-            className="w-[215px] rounded-[22px] !font-medium  bg-transparent cursor-pointer border border-[#42E8E0]"
-          >
-            {props.transaction.fulfilled ? "Close" : "Claim Later"}
-          </Button>
-        </div>
+
+        <div className="flex justify-center">{renderClaimOrViewHasBtn()}</div>
       </>
     );
   }
@@ -215,14 +214,17 @@ export function ClaimDialog(props: Props) {
       );
     }
     if (props.loading) return renderLoading();
-    if (props.error){
+    if (props.error) {
       return returnErrorContent();
     }
     return renderContent();
   }
   return (
     <Dialog
-    // onOpenChange={onOpenChange}
+      // onOpenChange={onOpenChange}
+      onOpenChange={(o) => {
+        if (!o) props.onAction(BridgeAction.CLOSE);
+      }}
     >
       <DialogTrigger asChild>
         <Button
@@ -245,9 +247,12 @@ export function ClaimDialog(props: Props) {
            duration-500 ease-in-out"
         >
           <DialogHeader className="text-center">
-            <DialogTitle className="text-[32px] font-[450] text-center text-[#FFFFFF]">
+            <DialogTitle className="text-[20px] font-[450] text-center text-[#FFFFFF]">
               Claim
             </DialogTitle>
+            <DialogDescription className="text-[15px] text-center text-[#8298AF] font-[450]">
+              Claim your bridged asset to your wallet
+            </DialogDescription>
           </DialogHeader>
           {render()}
         </DialogContent>
