@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import assetChainLogo from "../../public/assets/assetChainLogo.svg";
 import hamBurger from "../../public/assets/hamBurger.svg";
 import Link from "next/link";
@@ -15,8 +15,7 @@ import { ConnectWalletHeader } from "@/app/bridge/components/ConnectWalletHeader
 import arrowExpand from "../../public/assets/arrowExpand.svg";
 import blue from "../../public/assets/blue.svg";
 import { useWallet } from "@/context/web3";
-
-
+import menuWidget from "../../public/assets/menuWidget.svg";
 import metaMask from "../../public/assets/metaMask.svg";
 import walletConnect from "../../public/assets/walletConnet.svg";
 import trust from "../../public/assets/trust.svg";
@@ -27,10 +26,13 @@ const circularStd = localFont({
 
 const navbarLinks = [
   { label: "Bridge", href: "/" },
-  { label: "Swap", href: "/swap" },
-  { label: "Liqudity", href: "/liquidity" },
-  { label: "Farming", href: "/farming" },
-  { label: "Explorer", href: "/explorer" },
+  { label: "Liqudity Mining", href: "/LiquidityMining" },
+  { label: "Swap", href: "/Swap" },
+  { label: "Explorer", href: "/Explorer" },
+  {label: "Give Feedback", href: "GiveFeedback"},
+  {label: "Support", href: "Support"},
+  {label: "FAQs", href: "Faqs"},
+
 ];
 
 // aniamtion variable
@@ -97,9 +99,30 @@ const connectWalletItems = [
 const Navbar = () => {
   const pathName = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openDesktopMenu, setOpenDesktopMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Close the popover when a click is made outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenDesktopMenu(false);
+      }
+    };
+
+    if (openDesktopMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openDesktopMenu]);
 
   const {isConnected, address, walletType} = useWallet()
 
@@ -129,7 +152,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop logo */}
-        <div className="cursor-pointer hidden md:flex">
+        <div className="cursor-pointer md:flex-row md:items-center md:space-x-2.5 hidden md:flex">
           <Link href="/">
             <Image
               src={assetChainLogo}
@@ -139,24 +162,55 @@ const Navbar = () => {
               className=""
             />
           </Link>
-        </div>
+          <div className="border border-[#283B53] h-[32.93px]"/>
+          <div className="flex flex-row cursor-pointer space-x-3 items-center" 
+          onClick={() => setOpenDesktopMenu(!openDesktopMenu)}
+          ref={menuRef}
 
-        {/* Desktop Navlinks */}
-        <div className="flex-row items-center space-x-7 hidden md:flex">
+          >
+            <Image src={menuWidget} width={24} height={24} alt="menuWidget"/>
+            <h1 className="text-[16px] font-[500] text-[#FFFFFF]">Menu</h1>
+          </div>
+        </div>
+        {openDesktopMenu && (
+        <div 
+          className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50"
+          onClick={() => setOpenDesktopMenu(false)}
+        />
+      )}
+      {openDesktopMenu && (
+        <div 
+          className="absolute left-42 mt-[498px] w-[243px] bg-[#070E17] rounded-[10px] shadow-lg z-50"
+          ref={menuRef}
+        >
+          <div className="py-8 px-8 flex flex-col space-y-8">
           {navbarLinks.map((link, index) => (
-            <Link href={link.href} key={index}>
+            <Link href={link.href} key={index} className="flex flex-row space-x-4 items-center">
               <p
-                className={`text-[16px] font-semibold navbar-text ${
+                className={`text-[16.09px] font-medium navbar-text ${
                   pathName === link.href
-                    ? "text-[#3CC9CD] relative after:content-[''] after:absolute after:left-0 after:bottom-[-30px] after:w-full after:h-[3px] after:bg-[#00FFF0]"
-                    : "text-[#FFFFFF]"
+                    ? "text-[#3CC9CD]"
+                    : "text-[#FFFFFF] hover:text-[#3CC9CD] hover:transition-all hover:duration-400 hover:ease-in"
                 }`}
               >
                 {link.label}
               </p>
+              {
+               (index >= 1 && index <= 3) && (
+                  <Image
+                  src={navArrow}
+                  width={12}
+                  height={12}
+                  alt="navArrow"
+                  />
+                )
+              }
             </Link>
           ))}
+          </div>
         </div>
+      )}
+
 
         {/* Connect Wallet Button */}
         <div className="">

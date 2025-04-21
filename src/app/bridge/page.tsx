@@ -29,6 +29,7 @@ import {
 } from "@/context/bridge";
 import useDebounce from "@/hooks/use-debounce";
 import { BridgeDialog } from "./components/BridgeDialog";
+import {Faqs} from "./components/Faqs";
 
 const circularStd = localFont({
   src: "../../../public/fonts/CircularStd-Medium.woff2",
@@ -491,7 +492,7 @@ const Bridge = () => {
           className="[&>svg>path]:fill-[#0A111A]"
         />
       </div>
-      <div className="flex flex-col space-y-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl mx-auto">
+      <div className="flex flex-col space-y-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-6xl mx-auto">
         <div className="flex flex-col gap-3 z-[50]">
           <h1 className={`${circularBook.className} font-[450] text-[40px] font-circular`}>
             Bridge
@@ -664,6 +665,10 @@ const Bridge = () => {
           </div>
           <TransactionList />
         </div>
+       <div className="pt-6 flex flex-col gap-6">
+            <h1 className="pl-2.5 text-[24px] font-[450]">Frequently Asked Question</h1>
+            <Faqs/>
+       </div>
       </div>
     </div>
   );
