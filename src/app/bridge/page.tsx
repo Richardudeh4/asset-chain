@@ -526,7 +526,7 @@ const Bridge = () => {
        
             <div className="flex md:flex-row flex-col md:justify-between items-center">
               <div className="flex flex-col gap-6 w-full border-none ">
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1.5">
                   <h1>From</h1>
                   <p className="text-[#8298AF] text-[12px] font-[450]">
                     Source network

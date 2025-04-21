@@ -198,15 +198,18 @@ export default function BuySelect({
                   className="rounded-[50%]"
                 />
                 <h1>{_selectedChain.label}</h1>
-                <ChevronDown size={24} color="#88FFF3" />
+                <ChevronDown size={24} color="#88FFF3"/>
               </div>
             </>
           ) : (
-            <div className="flex justify-between  w-full px-4  items-center flex-row">
+            <>
+             <div className="flex justify-between w-full px-2 items-center">
               <Image src={greyCircle} width={32} height={32} alt="greyCircle" />
               <h1>Select network</h1>
-              <ChevronDown size={24} color="#8298AF" />
+              <ChevronDown size={24} color="#8298AF"/>
             </div>
+            </>
+           
           )}
         </Button>
       </DialogTrigger>
@@ -243,7 +246,7 @@ export default function BuySelect({
             </Button>
           ))}
           {filteredItems.length === 0 && (
-            <p className="text-sm text-muted-foreground">No items found.</p>
+            <p className="text-sm text-muted-foreground">No Network found.</p>
           )}
         </div>
       </DialogContent>

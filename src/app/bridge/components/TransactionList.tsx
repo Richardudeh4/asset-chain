@@ -304,7 +304,8 @@ export function TransactionList() {
       if (filteredTransactions.length > 0) {
         return (
           <>
-<div className="py-2 flex flex-row justify-between items-center rounded-[54.11px] bg-[#030A13] w-[313.px]">
+
+{/* <div className="py-2 flex flex-row justify-between items-center rounded-[54.11px] bg-[#030A13] w-[313.px]">
       {transactionCategory.map((item) => (
         <div
           onClick={() => setSelectedCategory(item)}
@@ -322,8 +323,8 @@ export function TransactionList() {
           </p>
         </div>
       ))}
-    </div>
-            {/* <div className="px-1.5 py-2 flex flex-row justify-between items-center text-center rounded-[54.11px] bg-[#030A13] overflow-x-auto w-full">
+    </div> */}
+            <div className="px-1.5 py-2 flex flex-row justify-between items-center text-center rounded-[54.11px] bg-[#030A13] overflow-x-auto w-full">
               {transactionCategory.map((item) => (
                 <div
                   onClick={() => setSelectedCategory(item)}
@@ -337,13 +338,13 @@ export function TransactionList() {
                   <p
                     className={`text-[#8298AF] ${
                       selectedCategory.key === item.key ? "text-black " : ""
-                    } text-[14px] font-[450] leading-[145%] font-circular`}
+                    } text-[14px] font-[450]`}
                   >
                     {item.name}
                   </p>
                 </div>
               ))}
-            </div> */}
+            </div>
             <div className="scrollbar-thin scrollbar-thumb-[#1A2739] scrollbar-track-[#0B131E] scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-track-rounded-full overflow-y-auto max-h-[500px] mt-4">
               {filteredTransactions.map((t, index) => {
                 const fromChain = getChain(

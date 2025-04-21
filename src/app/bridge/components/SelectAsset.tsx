@@ -89,7 +89,7 @@ export default function SelectAsset({ isMain, tokens }: { isMain?: boolean, toke
             </Button>
           ))}
           {filteredItems.length === 0 && (
-            <p className="text-sm text-muted-foreground">No items found.</p>
+            <p className="text-sm text-muted-foreground">No Asset found.</p>
           )}
         </div>
       </DialogContent>
