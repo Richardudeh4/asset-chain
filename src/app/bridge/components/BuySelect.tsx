@@ -189,7 +189,7 @@ export default function BuySelect({
         >
           {_selectedChain ? (
             <>
-              <div className="flex justify-between items-center w-full px-4 flex-row">
+              <div className="flex justify-between items-center w-full px-1 flex-row">
                 <Image
                   src={_selectedChain.icon}
                   width={32}
@@ -203,7 +203,7 @@ export default function BuySelect({
             </>
           ) : (
             <>
-             <div className="flex justify-between w-full px-2 items-center">
+             <div className="flex justify-between w-full px-1 items-center">
               <Image src={greyCircle} width={32} height={32} alt="greyCircle" />
               <h1>Select network</h1>
               <ChevronDown size={24} color="#8298AF"/>

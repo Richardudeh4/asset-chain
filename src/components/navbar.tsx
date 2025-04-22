@@ -20,6 +20,7 @@ import metaMask from "../../public/assets/metaMask.svg";
 import walletConnect from "../../public/assets/walletConnet.svg";
 import trust from "../../public/assets/trust.svg";
 
+
 const circularStd = localFont({
   src: "../../public/fonts/CircularStd-Medium.woff2",
 });
@@ -233,9 +234,8 @@ const Navbar = () => {
               )
             }
           />
-          {/* <Button onClick={() => setIsConnected(!isConnected)} className='bg-[#2042B8] w-[133.01px] rounded-[25.26px]'>
-                        Connect Wallet
-                    </Button> */}
+        
+    
         </div>
       </div>
 

@@ -53,7 +53,7 @@ export function InputAmount({
       border-0 !border-none !outline-none 
       focus:border-0 focus:!border-none focus:!outline-none focus:!ring-0 
       active:border-0 active:!border-none active:!outline-none
-      !placeholder-[#8298AF] !text-[16px] !font-[450] 
+      !placeholder-[#67829e] !text-[16px] !font-[450] 
       ${readOnly ? "cursor-default opacity-80" : ""}
       [&:focus]:border-none [&:focus]:outline-none
     `}

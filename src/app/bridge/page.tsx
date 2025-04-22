@@ -564,7 +564,7 @@ const Bridge = () => {
 
               <div
                 onClick={toggle}
-                className="py-3 px-3  rounded-[50%] cursor-pointer hover:bg-[#269497]/90 md:mt-0 mt-4  border border-transparent bg-[#269497]"
+                className="py-3 px-3 rounded-[50%] cursor-pointer hover:bg-[#269497]/90 md:mb-20 mt-4  border border-transparent bg-[#269497]"
               >
                 <Image
                   src={repeat}
