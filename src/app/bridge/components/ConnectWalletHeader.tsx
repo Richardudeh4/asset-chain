@@ -37,7 +37,7 @@ import { Separator } from "@/components/ui/separator";
 const connectWalletItems = [
   { name: "MetaMask", icon: metaMask, key: "metamask" },
   { name: "Wallet Connect", icon: walletConnect, key: "walletconnect" },
-  { name: "Trust Wallet", icon: trust, key: "trust" },
+  { name: "Trust Wallet", icon: trust, key: "trustwallet" },
 ];
 
 export function ConnectWalletHeader({

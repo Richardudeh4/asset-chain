@@ -6,10 +6,16 @@ import { JsonRpcProvider, JsonRpcSigner } from "ethers";
 import { WalletType } from "@/lib/wallet";
 import { ChainId } from "@/lib/types";
 import { WalletHandler } from "@/lib/wallet/wallet-handler";
-import { chainIds, chains, defaultChainId, WALLET_STORAGE_KEY } from "@/lib/constants";
+import {
+  chainIds,
+  chains,
+  defaultChainId,
+  WALLET_STORAGE_KEY,
+} from "@/lib/constants";
 import { Metamask } from "@/lib/wallet/metamask";
 import { Walletconnect } from "@/lib/wallet/wallet-connect";
 import { getChainRpc } from "@/lib/node";
+import { TrustWallet } from "@/lib/wallet/trust-wallet";
 // import { Walletconnect } from '../utils/wallet/wallet-connect';
 
 interface WalletConnectionState {
@@ -19,9 +25,9 @@ interface WalletConnectionState {
   signer: JsonRpcSigner;
 }
 
-export type ChainBlock =  {
-  [key in ChainId]: number
-}
+export type ChainBlock = {
+  [key in ChainId]: number;
+};
 interface WalletContextType {
   walletHandler: WalletHandler | null;
   connect: (walletType: WalletType) => Promise<void>;
@@ -31,12 +37,10 @@ interface WalletContextType {
   isConnected: boolean;
   address: string | null;
   chainId: ChainId | null;
-  signer: JsonRpcSigner | null,
-  walletType: WalletType,
-  currentBlocks: ChainBlock
+  signer: JsonRpcSigner | null;
+  walletType: WalletType;
+  currentBlocks: ChainBlock;
 }
-
-
 
 const WalletContext = createContext<WalletContextType | null>(null);
 
@@ -48,7 +52,7 @@ export const useWallet = () => {
   return context;
 };
 
-const UPDATE_TIME = 20000
+const UPDATE_TIME = 20000;
 
 export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -60,8 +64,10 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   const [address, setAddress] = useState<string | null>(null);
   const [chainId, setChainId] = useState<ChainId | null>(null);
   const [signer, setSigner] = useState<JsonRpcSigner | null>(null);
-  const [walletType, setWalletType] = useState<WalletType>('metamask');
-  const [currentBlocks, setCurrentBlocks] = useState<ChainBlock>({} as ChainBlock);
+  const [walletType, setWalletType] = useState<WalletType>("metamask");
+  const [currentBlocks, setCurrentBlocks] = useState<ChainBlock>(
+    {} as ChainBlock
+  );
 
   useEffect(() => {
     const savedState = localStorage.getItem(WALLET_STORAGE_KEY);
@@ -74,27 +80,27 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(()=> {
-      getCurrentBlock()
-    }, UPDATE_TIME)
+    const timer = setInterval(() => {
+      getCurrentBlock();
+    }, UPDATE_TIME);
     return () => {
-      clearInterval(timer)
-    }
-  }, [])
+      clearInterval(timer);
+    };
+  }, []);
 
   function updateStore(
     signer: JsonRpcSigner | null,
     wallet: string | null,
     chainId: string | null,
     walletType: WalletType,
-    login?: boolean,
+    login?: boolean
   ) {
     const _chain = chainId ? chainId.toString() : null;
     setIsConnected(login ? login : false);
     setAddress(wallet);
     setChainId(_chain as ChainId);
     setSigner(signer);
-    setWalletType(walletType)
+    setWalletType(walletType);
 
     localStorage.setItem(
       WALLET_STORAGE_KEY,
@@ -119,6 +125,10 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
         break;
       case "walletconnect":
         handler = new Walletconnect(chainIds, defaultChainId, updateStore);
+        break;
+
+      case "trustwallet":
+        handler = new TrustWallet(chainIds, defaultChainId, updateStore);
         break;
       // Add other wallet types here
       default:
@@ -161,28 +171,29 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  async function checkChain(_chainId : ChainId) {
+  async function checkChain(_chainId: ChainId) {
     try {
-      if (!chainId) switchChain(_chainId)
-      if (chainId !== _chainId) await switchChain(_chainId)
+      if (!chainId) switchChain(_chainId);
+      if (chainId !== _chainId) await switchChain(_chainId);
     } catch (error) {
       console.error(error);
     }
   }
 
-   async function getCurrentBlock () {
-    const _currentBlock = {...currentBlocks}
+  async function getCurrentBlock() {
+    const _currentBlock = { ...currentBlocks };
 
-    await Promise.all(chains.map( async c => {
-      const provider = new JsonRpcProvider(getChainRpc(c.chainId))
+    await Promise.all(
+      chains.map(async (c) => {
+        const provider = new JsonRpcProvider(getChainRpc(c.chainId));
 
-      const block = await provider.getBlockNumber()
-      _currentBlock[c.chainId] = block
-    }))
+        const block = await provider.getBlockNumber();
+        _currentBlock[c.chainId] = block;
+      })
+    );
 
-    setCurrentBlocks(_currentBlock)
+    setCurrentBlocks(_currentBlock);
   }
-
 
   return (
     <WalletContext.Provider
@@ -197,7 +208,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
         signer,
         walletType,
         checkChain,
-        currentBlocks
+        currentBlocks,
       }}
     >
       {children}
