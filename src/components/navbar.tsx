@@ -135,7 +135,7 @@ const Navbar = () => {
     <div
       className={`w-full bg-[#1A2739] z-60 border-b-[1px] border-b-[#1A2739] ${circularStd.className}`}
     >
-      <div className="px-[27.38px] py-[27.43px] flex flex-row justify-between items-center">
+      <div className="md:px-[47.38px] px-[27.38px] py-[27.43px] flex flex-row justify-between items-center">
         {/* Mobile menu button and logo */}
         <div className="flex items-center space-x-4 md:hidden">
           {isMenuOpen ? (
@@ -166,10 +166,9 @@ const Navbar = () => {
           <div className="flex flex-row cursor-pointer space-x-3 items-center" 
           onClick={() => setOpenDesktopMenu(!openDesktopMenu)}
           ref={menuRef}
-
           >
-            <Image src={menuWidget} width={24} height={24} alt="menuWidget"/>
-            <h1 className="text-[16px] font-[500] text-[#FFFFFF]">Menu</h1>
+            <Image src={menuWidget} width={24} height={24} alt="menuWidget" className="hover:text-[#3CC9CD] hover:transition-all hover:duration-400 hover:ease-in"/>
+            <h1 className="text-[16px] font-[500] text-[#FFFFFF] hover:text-[#3CC9CD] hover:transition-all hover:duration-400 hover:ease-in">Menu</h1>
           </div>
         </div>
         {openDesktopMenu && (

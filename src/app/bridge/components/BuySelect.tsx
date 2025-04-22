@@ -222,7 +222,19 @@ export default function BuySelect({
           placeholder="Search network"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="mb-4 bg-[#030A13] rounded-[54.11px] hover:border-none  placeholder:text-[15px] placeholder:font-[450] placeholder-[#8298AF] border-none"
+          className={`
+           rounded-[54.11px] 
+            border !border-none !outline-none 
+            w-full
+            h-[48px]
+            bg-[#030A13] 
+            !active:border-[#2F87A5]
+            focus:border-0 focus:!border-none focus:!outline-none focus:!ring-0 
+            active:border-2  pl-8
+            !placeholder-[#8298AF] !text-[16px] !font-[450] 
+
+          `}
+          // className="bg-[#030A13] h-[48px] !hover:bg-[#030A13]/10 border !active:border-[#2F87A5] outline-offset-2 !outline-sky-500 !outline-72 !active:shadow-[10px] active:shadow-[#2F87A5]/10 hover:text-white text-white rounded-[54.11px]"
         />
         <div className="grid gap-2 ">
           {filteredItems.map((item) => (
