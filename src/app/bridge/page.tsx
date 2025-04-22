@@ -28,7 +28,7 @@ import {
 } from "@/context/bridge";
 import useDebounce from "@/hooks/use-debounce";
 import { BridgeDialog } from "./components/BridgeDialog";
-import {Faqs} from "./components/Faqs";
+import { Faqs } from "./components/Faqs";
 
 const circularStd = localFont({
   src: "../../../public/fonts/CircularStd-Medium.woff2",
@@ -36,7 +36,7 @@ const circularStd = localFont({
 
 const circularBook = localFont({
   src: "../../../public/fonts/CircularStd-Book.ttf",
-})
+});
 
 const defaultFromChain = chains.filter(
   (c) => c.chainId.toString() !== defaultChainId.toString()
@@ -85,14 +85,15 @@ function errorMessage(
   balance: number,
   symbol: string,
   contractBalance: number,
-  fromChain: ChainId,
+  fromChain: ChainId
 ) {
   if (!amount) return "Invalid Amount";
   const _amount = Number(amount);
   if (Number.isNaN(_amount)) return "Invalid Amount";
   if (limit <= _amount) return `Amount must be lower then ${limit} ${symbol}`;
   if (_amount > balance) return `Insufficient balance`;
-  if (fromChain === defaultChainId && _amount > contractBalance) return `Insufficient liquidity`;
+  if (fromChain === defaultChainId && _amount > contractBalance)
+    return `Insufficient liquidity`;
   return "";
 }
 
@@ -111,7 +112,7 @@ const Bridge = () => {
   const [amount, setAmount] = useState("");
   const [destinationAmount, setDestinationAmount] = useState("");
   const [tokens, setTokens] = useState<Token[]>([]);
-  const [fromChain, setFromChain] = useState<ChainId | null >(null);
+  const [fromChain, setFromChain] = useState<ChainId | null>(null);
   const [destinationChain, setDestinationChain] = useState<ChainId | null>(
     null
   );
@@ -343,7 +344,7 @@ const Bridge = () => {
       checkAllownce();
     } catch (error) {
       console.log(error);
-      const err = extractError(error)
+      const err = extractError(error);
       setDialogError({
         title: "Error",
         body: err.body,
@@ -420,18 +421,22 @@ const Bridge = () => {
   }
 
   const symbol = selectedToken ? selectedToken.value : "---";
-  const balance = fromChain && balances[fromChain]
-    ? balances[fromChain].find((b) => b.symbol === symbol)
-    : null;
-  const toBalance = destinationChain && balances[destinationChain]
-    ? balances[destinationChain].find((b) => b.symbol === symbol)
-    : null;
-  const decimal = fromChain && decimals[fromChain]
-    ? decimals[fromChain].find((b) => b.symbol === symbol)
-    : null;
-  const toDecimal = destinationChain && decimals[destinationChain]
-    ? decimals[destinationChain].find((b) => b.symbol === symbol)
-    : null;
+  const balance =
+    fromChain && balances[fromChain]
+      ? balances[fromChain].find((b) => b.symbol === symbol)
+      : null;
+  const toBalance =
+    destinationChain && balances[destinationChain]
+      ? balances[destinationChain].find((b) => b.symbol === symbol)
+      : null;
+  const decimal =
+    fromChain && decimals[fromChain]
+      ? decimals[fromChain].find((b) => b.symbol === symbol)
+      : null;
+  const toDecimal =
+    destinationChain && decimals[destinationChain]
+      ? decimals[destinationChain].find((b) => b.symbol === symbol)
+      : null;
   const tokenDecimal = decimal ? decimal.decimal : BigInt(18);
   const toTokenDecimal = toDecimal ? toDecimal.decimal : BigInt(18);
   const userBalance = balance
@@ -442,7 +447,8 @@ const Bridge = () => {
     : 0;
 
   const limit =
-    selectedToken && fromChain &&
+    selectedToken &&
+    fromChain &&
     bridgesFees[fromChain] &&
     bridgesFees[fromChain][selectedToken.value]
       ? +formatUnits(
@@ -458,7 +464,7 @@ const Bridge = () => {
     bridgesFees,
     selectedToken?.value,
     tokenDecimal
-  )
+  );
 
   const _amount = Number(amount);
   const isValidInput =
@@ -497,7 +503,9 @@ const Bridge = () => {
       </div>
       <div className="flex flex-col space-y-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-6xl mx-auto">
         <div className="flex flex-col gap-3 z-[50]">
-          <h1 className={`${circularBook.className} font-[450] text-[40px] font-circular`}>
+          <h1
+            className={`${circularBook.className} font-[450] text-[40px] font-circular`}
+          >
             Bridge
           </h1>
           <p className="text-[#8298AF] text-[16px] font-[450] leading-[120%] font-circular">
@@ -523,7 +531,6 @@ const Bridge = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[15px] md:gap-[15px]">
           <div className="py-4.5 px-5 col-span-[554.32px] border relative border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5">
-       
             <div className="flex md:flex-row flex-col md:justify-between items-center">
               <div className="flex flex-col gap-6 w-full border-none ">
                 <div className="flex flex-col gap-1.5">
@@ -638,9 +645,13 @@ const Bridge = () => {
                     onAction={bridge}
                     bridgeData={{
                       amount: _amount.toString(),
-                      fromChain: fromChain ? fromChain : defaultFromChain.chainId,
+                      fromChain: fromChain
+                        ? fromChain
+                        : defaultFromChain.chainId,
                       fromUser: "",
-                      toChain: destinationChain ? destinationChain : defaultToChain.chainId,
+                      toChain: destinationChain
+                        ? destinationChain
+                        : defaultToChain.chainId,
                       token: symbol,
                       tokenIsNative,
                     }}
@@ -668,10 +679,12 @@ const Bridge = () => {
           </div>
           <TransactionList />
         </div>
-       <div className="pt-6 flex flex-col gap-6">
-            <h1 className="pl-2.5 text-[24px] font-[450]">Frequently Asked Question</h1>
-            <Faqs/>
-       </div>
+        <div id='faqs' className="pt-6 flex flex-col gap-6">
+          <h1 className="pl-2.5 text-[24px] font-[450]">
+            Frequently Asked Question
+          </h1>
+          <Faqs />
+        </div>
       </div>
     </div>
   );
