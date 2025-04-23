@@ -149,8 +149,8 @@ export function ConnectWalletHeader({
         <DialogTrigger asChild>
           <Button
             onClick={handleButtonClick}
-            className={`px-3 bg-[#2042B8] cursor-pointer rounded-[25.26px] ${
-              isConnected ? "bg-transparent border border-[#243650]" : ""
+            className={`px-3 bg-[#2042B8] rounded-[25.26px] hover:bg-[#3CC9CD] hover:text-black  hover:transition-all hover:duration-400 hover:ease-in cursor-pointer  ${
+              isConnected ? "bg-transparent border hover:bg-transparent border-[#243650]  hover:transition-all hover:duration-400 hover:ease-in  hover:box-content hover:border-b-3 hover:border-b-[#3CC9CD] cursor-pointer" : ""
             }`}
           >
             {bottonLabel}

@@ -87,7 +87,7 @@ export function ConnectWallet() {
         <DialogTrigger asChild>
           <Button
             onClick={() => setOpen(true)}
-            className="w-[215px] bg-[#2042B8] cursor-pointer rounded-[25.26px]"
+            className="w-[215px] bg-[#2042B8] hover:bg-[#3CC9CD] hover:text-black  hover:transition-all hover:duration-400 hover:ease-in cursor-pointer rounded-[25.26px]"
           >
             Connect wallet
           </Button>

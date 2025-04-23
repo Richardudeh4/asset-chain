@@ -532,7 +532,9 @@ const Bridge = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[15px] md:gap-[15px]">
           <div className="py-4.5 px-5 col-span-[554.32px] border relative border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5">
             <div className="flex md:flex-row flex-col md:justify-between items-center">
-              <div className="flex flex-col gap-6 w-full border-none ">
+              {/* start of the first div */}
+             
+              <div className={`flex flex-col gap-6 w-full border-none ${isConnected ? "-mt-6.5" : "mt-0"}`}>
                 <div className="flex flex-col gap-1.5">
                   <h1>From</h1>
                   <p className="text-[#8298AF] text-[12px] font-[450]">
@@ -546,7 +548,7 @@ const Bridge = () => {
                   supportedChains={chains}
                 />
                 <div className="pt-10 flex flex-col gap-2">
-                  <h1 className="text-[16px] font-[450]  pl-5">You Send</h1>
+                  <h1 className="text-[16px] font-[450] pl-5">You Send</h1>
                   <div className="bg-[#030A13] rounded-[10px] text-white px-3.5 py-2 flex flex-col gap-4.5">
                     <SelectAsset tokens={tokens} />
                     <div className="flex flex-row justify-between items-center">
@@ -561,17 +563,17 @@ const Bridge = () => {
                     </div>
                   </div>
                   {isConnected && (
-                    <p className="font-medium text-[14px] font-circular text-[#8298AF] pl-2.5 pb-3">
+                    <p className="font-medium text-[14px] font-circular text-[#8298AF] pl-2.5">
                       Bal {userBalance}{" "}
                       {selectedToken ? selectedToken.value : "---"}
                     </p>
                   )}
                 </div>
               </div>
-
+                  {/* end of the first div */}
               <div
                 onClick={toggle}
-                className="py-3 px-3 rounded-[50%] cursor-pointer hover:bg-[#269497]/90 md:mb-20 mt-4  border border-transparent bg-[#269497]"
+                className="py-3 px-3 rounded-[50%] cursor-pointer hover:bg-[#269497]/90 md:mb-10 mt-4  border border-transparent bg-[#269497]"
               >
                 <Image
                   src={repeat}
@@ -666,7 +668,7 @@ const Bridge = () => {
                     claimTx={claimTx}
                   />
                 ) : (
-                  <ConnectWallet />
+                  <ConnectWallet/>
                 )}
               </div>
             </div>

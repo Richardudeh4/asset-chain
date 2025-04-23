@@ -239,7 +239,7 @@ const Navbar = () => {
           <ConnectWalletHeader
             bottonLabel={
               isConnected ? (
-                <div className="flex flex-row space-x-1.5 justify-between items-center">
+                <div className="flex flex-row space-x-1.5 justify-between  items-center">
                   <Image
                     src={connectedWallet ? connectedWallet.icon : blue}
                     width={22}
