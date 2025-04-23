@@ -23,6 +23,8 @@ import { useWallet } from "@/context/web3";
 import { WalletType } from "@/lib/wallet";
 import { extractError } from "@/lib/helpers";
 import { Separator } from "@/components/ui/separator";
+import { getChainScanner } from "@/lib/node";
+import Link from "next/link";
 
 // const Lottie = dynamic(
 //   () => {
@@ -53,8 +55,13 @@ export function ConnectWalletHeader({
   const [error, setError] = useState<any>(null);
   const [openLogoutModal, setOpenLogoutModal] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const { isConnected, connect, disconnect, address, walletType } = useWallet();
-  
+  const { isConnected, connect, disconnect, address, walletType, chainId } =
+    useWallet();
+
+  const scanner = chainId ? getChainScanner(chainId) : "#";
+
+  const scannerLink = address ? `${scanner}address/${address}` : `#`;
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -63,21 +70,21 @@ export function ConnectWalletHeader({
     };
 
     if (openLogoutModal) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openLogoutModal]);
 
   const truncatedAddress = address
     ? `${address.slice(0, 6)}...${address.slice(-4)}`
     : "";
-  const connectedWallet = connectWalletItems.find( w => w.key === walletType)
-  
+  const connectedWallet = connectWalletItems.find((w) => w.key === walletType);
+
   useEffect(() => {
     if (step === 2) {
       connectWallet();
@@ -93,7 +100,7 @@ export function ConnectWalletHeader({
   }
   async function connectWallet() {
     try {
-      setError(null)
+      setError(null);
       await connect(connectingWallet.key as WalletType);
       setOpen(false);
       setStep(1);
@@ -101,7 +108,7 @@ export function ConnectWalletHeader({
       console.error(error);
       const err = extractError(error);
       setError({
-        title: 'Something went wrong',
+        title: "Something went wrong",
         body: err.body,
       });
       // setOpen(false);
@@ -109,14 +116,30 @@ export function ConnectWalletHeader({
     }
   }
 
+  async function copyToClipboard() {
+    try {
+      if (!address) return;
+      await navigator.clipboard.writeText(address);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  }
+
   async function handleButtonClick() {
     try {
       if (isConnected) {
-          setOpenLogoutModal(true);
+        setOpenLogoutModal(true);
         // await disconnect();
       } else setOpen(true);
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async function _disconnect() {
+    if (isConnected) {
+      await disconnect();
+      setOpenLogoutModal(false);
     }
   }
 
@@ -134,30 +157,55 @@ export function ConnectWalletHeader({
           </Button>
         </DialogTrigger>
         {openLogoutModal && (
-        <div 
-          className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50"
-          onClick={() => setOpenLogoutModal(false)}
-        />
-      )}
+          <div
+            className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50"
+            onClick={() => setOpenLogoutModal(false)}
+          />
+        )}
         {openLogoutModal && (
-        <div 
-          className="absolute right-2 mt-[16px] w-[195px] bg-[#070E17] rounded-[10px] shadow-lg z-50"
-          ref={menuRef}
-        >
-          <div className="py-6 px-4 flex flex-col space-y-6 cursor-pointer">
-            <div className="flex items-center flex-row space-x-2 cursor-pointer">
-            <Image src={connectedWallet?.icon} width={22} height={19} alt="connetWalletImage"/>
-          <h1 className="text-white text-[12.51px] font-[450]">{isConnected ? `${truncatedAddress}` : ""}</h1>
-          <div className="pl-3 flex items-center flex-row space-x-2">
-          <Image src={copy} width={16} height={16} alt="copy"/>
-          <Image src={squareArrow} width={16} height={16} alt="squareArrow"/>
-          </div>
+          <div
+            className="absolute right-2 mt-[16px] w-[195px] bg-[#070E17] rounded-[10px] shadow-lg z-50"
+            ref={menuRef}
+          >
+            <div className="py-6 px-4 flex flex-col space-y-6 cursor-pointer">
+              <div className="flex items-center flex-row space-x-2 cursor-pointer">
+                <Image
+                  src={connectedWallet?.icon}
+                  width={22}
+                  height={19}
+                  alt="connetWalletImage"
+                />
+                <h1 className="text-white text-[12.51px] font-[450]">
+                  {truncatedAddress}
+                </h1>
+                <div className="pl-3 flex items-center flex-row space-x-2">
+                  <Image
+                    src={copy}
+                    width={16}
+                    height={16}
+                    alt="copy"
+                    onClick={copyToClipboard}
+                  />
+                  <Link href={scannerLink} target="_blank">
+                    <Image
+                      src={squareArrow}
+                      width={16}
+                      height={16}
+                      alt="squareArrow"
+                    />
+                  </Link>
+                </div>
+              </div>
+              <Separator className="bg-[#1A2739]" />
+              <h1
+                className="text-center text-[#ED8587] text-[14px] font-[450] cursor-pointer"
+                onClick={_disconnect}
+              >
+                Disconnect
+              </h1>
             </div>
-           <Separator className="bg-[#1A2739]"/>
-           <h1 className="text-center text-[#ED8587] text-[14px] font-[450] cursor-pointer">Disconnect</h1>
           </div>
-        </div>
-      )}
+        )}
 
         {open && step === 1 && (
           <DialogContent

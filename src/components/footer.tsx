@@ -27,7 +27,7 @@ const Footer = () => {
           <p>Explorer</p>
         </Link>
 
-        <Link href={'https://docs.assetchain.org/'} target="_blank">
+        <Link href={"https://docs.assetchain.org/"} target="_blank">
           <p>Docs</p>
         </Link>
       </div>
