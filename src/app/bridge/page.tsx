@@ -548,7 +548,7 @@ const Bridge = () => {
                   supportedChains={chains}
                 />
                 <div className="pt-10 flex flex-col gap-2">
-                  <h1 className="text-[16px] font-[450] pl-5">You Send</h1>
+                  <h1 className="text-[16px]  font-[450] pl-5">You Send</h1>
                   <div className="bg-[#030A13] rounded-[10px] text-white px-3.5 py-2 flex flex-col gap-4.5">
                     <SelectAsset tokens={tokens} />
                     <div className="flex flex-row justify-between items-center">

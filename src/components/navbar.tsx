@@ -22,6 +22,7 @@ import trust from "../../public/assets/trust.svg";
 import { isProd } from "@/config/env-var";
 
 
+
 const circularStd = localFont({
   src: "../../public/fonts/CircularStd-Medium.woff2",
 });
@@ -176,7 +177,7 @@ const Navbar = () => {
           </Link>
           <div className="border border-[#283B53] h-[32.93px]" />
           <div
-            className="flex flex-row cursor-pointer space-x-3 items-center"
+            className="flex flex-row cursor-pointer space-x-3 group relative items-center"
             onClick={() => setOpenDesktopMenu(!openDesktopMenu)}
             ref={menuRef}
           >
@@ -185,8 +186,9 @@ const Navbar = () => {
               width={24}
               height={24}
               alt="menuWidget"
-              className="hover:text-[#3CC9CD] hover:transition-all hover:duration-400 hover:ease-in"
+              className="hover:duration-400 transition-opacity  hover:ease-in"
             />
+  
             <h1 className="text-[16px] font-[500] text-[#FFFFFF] hover:text-[#3CC9CD] hover:transition-all hover:duration-400 hover:ease-in">
               Menu
             </h1>
