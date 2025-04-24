@@ -229,7 +229,7 @@ export default function BuySelect({
             h-[48px]
             bg-[#030A13] 
             !active:border-[#2F87A5]
-            focus:border-0 focus:!border-none focus:!outline-none focus:!ring-0 
+            focus:border-0 focus:!border-none focus:!outline-none focus:ring-3 focus:!ring-[#2F87A5]
             active:border-2  pl-8
             !placeholder-[#8298AF] !text-[16px] !font-[450] 
 

@@ -51,13 +51,14 @@ export default function SelectAsset({ isMain, tokens }: { isMain?: boolean, toke
           {selectedAsset ? (
             <div className="flex justify-between items-center w-full px-1 flex-row">
               <Image src={selectedAsset.icon} width={28} height={28} alt="assetIcon" className="rounded-[50%]" />
-              <h1>{selectedAsset.title}</h1>
+              <h1 className={`${isMain ? "pr-3": ""}`}>{selectedAsset.title}</h1>
               {!isMain && <ChevronDown size={24} color="#88FFF3" />}
             </div>
           ) : (
             <div className="flex justify-between items-center w-full px-1 flex-row">
               <Image src={greyCircle} width={28} height={28} alt="greyCircle" />
-              <ChevronDown size={24} color="#8298AF" />
+              {!isMain && <ChevronDown size={24} color="#8298AF" />}
+              {/* <ChevronDown size={24} color="#8298AF"/> */}
             </div>
           )}
         </Button>
@@ -69,7 +70,10 @@ export default function SelectAsset({ isMain, tokens }: { isMain?: boolean, toke
           placeholder="Search asset"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="mb-4 bg-[#030A13] rounded-[54.11px] placeholder:text-[15px] placeholder:font-[450] placeholder-[#8298AF] border-none"
+          className="mb-4 bg-[#030A13]
+          !active:border-[#2F87A5]
+            focus:border-0 focus:!border-none focus:!outline-none focus:ring-3 focus:!ring-[#2F87A5]
+           rounded-[54.11px] placeholder:text-[15px] placeholder:font-[450] placeholder-[#8298AF] border-none"
         />
         <div className="grid gap-2 ">
           {filteredItems.map(item => (

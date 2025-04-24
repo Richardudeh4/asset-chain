@@ -577,8 +577,8 @@ const Bridge = () => {
               >
                 <Image
                   src={repeat}
-                  width={22}
-                  height={22}
+                  width={32}
+                  height={35}
                   alt="repeat"
                   color="#3CCACE"
                   className=""
