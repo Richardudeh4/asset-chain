@@ -14,7 +14,7 @@ const explorer = isProd
 const Footer = () => {
   return (
     <div
-      className={`px-4 sm:px-8 md:px-[47.38px] py-4 sm:py-6 md:py-[27.43px] flex flex-col md:flex-row justify-between items-center ${circularStd.className}`}
+      className={`px-4 sm:px-8 md:px-[47.38px] py-4 bg-[#070E17] sm:py-6 md:py-[27.43px] flex flex-col md:flex-row justify-between items-center ${circularStd.className}`}
     >
       <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 text-[#8298AF] text-xs sm:text-sm md:text-[14px] font-medium mb-3 md:mb-0">
         <Link href={"#"}>

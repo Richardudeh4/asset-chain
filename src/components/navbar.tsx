@@ -146,7 +146,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`w-full bg-[#0B131E] z-60 border-b-[1px] border-b-[#1A2739] ${circularStd.className}`}
+      className={`w-full bg-[#0B131E] z-60  outline-[0.51px] outline-[#1A2739] ${circularStd.className}`}
     >
       <div className="md:px-[47.38px] px-[27.38px] py-[27.43px] flex flex-row justify-between items-center">
         {/* Mobile menu button and logo */}

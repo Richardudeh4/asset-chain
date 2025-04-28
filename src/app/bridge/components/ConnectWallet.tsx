@@ -20,6 +20,7 @@ import spin from "../../../../public/assets/spin.svg";
 import { useWallet } from "@/context/web3";
 import { WalletType } from "@/lib/wallet";
 import { extractError } from "@/lib/helpers";
+import localFont from "next/font/local";
 
 // const Lottie = dynamic(
 //   () => {
@@ -30,6 +31,11 @@ import { extractError } from "@/lib/helpers";
 //   },
 //   { ssr: false }
 // );
+
+
+const circularStd = localFont({
+  src: "../../../../public/fonts/CircularStd-Medium.woff",
+})
 
 const connectWalletItems = [
   { name: "MetaMask", icon: metaMask, key: "metamask" },
@@ -96,8 +102,8 @@ export function ConnectWallet() {
         {/* First modal - Connect Wallet */}
         {open && step === 1 && (
           <DialogContent
-            className="sm:max-w-[414px] bg-[#0B131E] border-none h-[546px] top-1/2 -translate-y-1/2 transition-all   
-           duration-500 ease-in-out"
+            className={`sm:max-w-[414px] bg-[#0B131E] border-none h-[546px] top-1/2 -translate-y-1/2 transition-all   
+           duration-500 ease-in-out  ${circularStd.className}`}
           >
             <div className="flex justify-center flex-col gap-2.5">
               <DialogHeader className="text-center">
@@ -111,13 +117,11 @@ export function ConnectWallet() {
               <div className="flex flex-col gap-2.5">
                 {connectWalletItems.map((item, index) => (
                   <div
-                    className="py-[23px] px-[33px] bg-[#0E1A29] rounded-[7.93px] hover:text-[#269497] hover:bg-[#1A2739] cursor-pointer"
+                    className="h-[70px] px-[33px] items-center flex justify-between flex-row bg-[#0E1A29] rounded-[7.93px] hover:text-[#269497] hover:bg-[#1A2739] cursor-pointer"
                     key={index}
+                    onClick={() => setWallet(item.key)}
                   >
-                    <div
-                      className="flex items-center justify-between flex-row hover:text-[#269497]"
-                      onClick={() => setWallet(item.key)}
-                    >
+                   
                       <h1 className="text-[16px] font-[450] text-[#FFFFFF] hover:text-[#269497]">
                         {item.name}
                       </h1>
@@ -128,7 +132,6 @@ export function ConnectWallet() {
                           item.icon === 1 ? "w-[38.16px] h-[23.65]" : ""
                         }`}
                       />
-                    </div>
                   </div>
                 ))}
               </div>
@@ -142,7 +145,7 @@ export function ConnectWallet() {
 
         {/* Second modal - MetaMask Connection */}
         {open && step === 2 && (
-          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[546px] translate-y-0 top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out">
+          <DialogContent className={`sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[546px] translate-y-0 top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out ${circularStd.className}`}>
             <div className="flex px-10 py-1.5 flex-col justify-between">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-[32px] font-[450] text-center text-[#FFFFFF] pt-5">
@@ -177,7 +180,7 @@ export function ConnectWallet() {
           </DialogContent>
         )}
         {open && step === 3 && !isConnected && error && (
-          <DialogContent className="sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[500px] translate-y-0 top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out">
+          <DialogContent className={`sm:max-w-[414px] bg-[#0B131E] rounded-[10px] border-none h-[500px] translate-y-0 top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out ${circularStd.className}`}>
             <div className="px-10 py-1.5">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-[25px] font-[450] text-center text-[#FFFFFF] pt-5">

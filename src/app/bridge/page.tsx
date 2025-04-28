@@ -492,7 +492,7 @@ const Bridge = () => {
 
   return (
     <div
-      className={`w-full relative py-8 bg-[#0B131E] min-h-screen text-white ${circularStd.className}`}
+      className={`w-full relative py-8 bg-[#070E17] min-h-screen text-white ${circularStd.className}`}
     >
       <div className="flex justify-center absolute top-1.5 [&>svg>path]:fill-[#0A111A] items-center">
         <Image
