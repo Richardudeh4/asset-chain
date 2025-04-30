@@ -18,8 +18,10 @@
   font-weight: 500;
   font-style: normal;
 } */
-
-
+.white-icon {
+  color: white !important;
+  stroke: white !important;
+}
 body {
   font-family: 'Circular Std', sans-serif;
 }
