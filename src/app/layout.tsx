@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   title: "Asset chain",
   description: "Africa's first blockchain",
   icons: {
-    icon: "/assetChain.ico",
+    icon: "/assetChainWhite.ico",
   },
 };
 
