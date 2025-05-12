@@ -29,6 +29,7 @@ import {
 import useDebounce from "@/hooks/use-debounce";
 import { BridgeDialog } from "./components/BridgeDialog";
 import { Faqs } from "./components/Faqs";
+import NewModal from "@/components/newModal";
 
 const circularStd = localFont({
   src: "../../../public/fonts/CircularStd-Medium.woff2",
@@ -109,8 +110,11 @@ function isNative(fromChain: ChainId, symbol: string) {
 }
 const Bridge = () => {
   //   const [value, setValue] = useState("");
+
+  
   const [amount, setAmount] = useState("");
   const [destinationAmount, setDestinationAmount] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [tokens, setTokens] = useState<Token[]>([]);
   const [fromChain, setFromChain] = useState<ChainId | null>(null);
   const [destinationChain, setDestinationChain] = useState<ChainId | null>(
@@ -686,6 +690,24 @@ const Bridge = () => {
             Frequently Asked Question
           </h1>
           <Faqs />
+          <Button onClick={() => setIsModalOpen(true)}>
+open modal
+      </Button>
+      <NewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <div className="p-6 z-30 text-black">
+          <h2 className="text-xl font-bold mb-4 text-black">Modal Title</h2>
+          <p className="mb-6">This is your modal content. It can be anything!</p>
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Close
+          </button>
+        </div>
+      </NewModal>
         </div>
       </div>
     </div>

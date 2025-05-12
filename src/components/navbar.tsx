@@ -175,7 +175,7 @@ const Navbar = () => {
               className=""
             />
           </Link>
-          <div className="border border-[#283B53] h-[32.93px]" />
+          <div className="border border-[#283B53] h-[32.93px]"/>
           <div
             className="flex flex-row cursor-pointer space-x-3 group relative items-center"
             onClick={() => setOpenDesktopMenu(!openDesktopMenu)}
