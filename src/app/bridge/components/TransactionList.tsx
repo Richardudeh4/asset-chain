@@ -366,7 +366,7 @@ export function TransactionList() {
                 return (
                   <div
                     key={index}
-                    className="px-3 bg-[#070E17] border border-[#1A2739] py-3 flex flex-col gap-5 rounded-[5px]"
+                    className="px-3 bg-[#070E17] border border-[#1A2739] py-3 flex flex-col gap-5 rounded-[5px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
                   >
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                       <div className="flex flex-row space-x-2.5">

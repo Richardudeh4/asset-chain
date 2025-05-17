@@ -534,7 +534,7 @@ const Bridge = () => {
           </Button>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[15px] md:gap-[15px]">
-          <div className="py-4.5 px-5 col-span-[554.32px] border relative border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5">
+          <div className="py-4.5 px-5 col-span-[554.32px] border relative border-[#1A2739] bg-[#070E17] rounded-[10px] z-50 flex flex-col gap-3.5 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
             <div className="flex md:flex-row flex-col md:justify-between items-center">
               {/* start of the first div */}
              
